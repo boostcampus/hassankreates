@@ -1,0 +1,3252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KreateBiz — Free Business Tools for Nigerian Small Businesses</title>
+    <meta name="description" content="KreateBiz provides simple free business tools, resources and creative services designed to help Nigerian entrepreneurs run their businesses smarter.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-deep: #0a5c3c;
+            --green-medium: #0d7a4f;
+            --green-light: #e8f5ee;
+            --green-muted: #a8d5c0;
+            --charcoal: #1a1a1a;
+            --near-black: #0d0d0d;
+            --off-white: #faf9f7;
+            --light-gray: #f0efec;
+            --white: #ffffff;
+            --border: #e0dfdc;
+            --text: #1a1a1a;
+            --text-secondary: #555555;
+            --text-light: #777777;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --max-width: 1200px;
+            --nav-height: 68px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --green-deep: #0d7a4f;
+            --green-medium: #10b981;
+            --green-light: #0a2e1f;
+            --green-muted: #1a4a35;
+            --charcoal: #e0e0e0;
+            --near-black: #f5f5f5;
+            --off-white: #0f0f0f;
+            --light-gray: #1a1a1a;
+            --white: #121212;
+            --border: #2a2a2a;
+            --text: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --text-light: #888888;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--off-white);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        img,
+        svg {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+            font-size: inherit;
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text);
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            width: 100%;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--green-medium);
+            box-shadow: 0 0 0 3px rgba(13, 122, 79, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--green-medium);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+        a:hover {
+            color: var(--green-deep);
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 clamp(16px, 4vw, 40px);
+        }
+
+        .section {
+            padding: clamp(48px, 8vw, 96px) 0;
+            position: relative;
+        }
+        .section--tight {
+            padding: clamp(32px, 5vw, 60px) 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--green-medium);
+            background: var(--green-light);
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin-bottom: 32px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .text-center .section-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+            text-align: center;
+            min-height: 48px;
+            white-space: nowrap;
+        }
+        .btn:focus-visible {
+            outline: 3px solid var(--green-medium);
+            outline-offset: 2px;
+        }
+
+        .btn--primary {
+            background: var(--green-deep);
+            color: var(--white);
+        }
+        .btn--primary:hover {
+            background: var(--green-medium);
+            color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn--secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+        .btn--secondary:hover {
+            border-color: var(--green-medium);
+            color: var(--green-medium);
+            background: var(--green-light);
+        }
+
+        .btn--outline-green {
+            background: transparent;
+            color: var(--green-deep);
+            border: 2px solid var(--green-deep);
+        }
+        .btn--outline-green:hover {
+            background: var(--green-deep);
+            color: var(--white);
+        }
+
+        .btn--whatsapp {
+            background: #25d366;
+            color: #fff;
+        }
+        .btn--whatsapp:hover {
+            background: #1ebe5d;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn--danger {
+            background: var(--error);
+            color: #fff;
+        }
+        .btn--danger:hover {
+            background: #dc2626;
+        }
+
+        .btn--sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            min-height: 36px;
+            border-radius: 6px;
+        }
+        .btn--xs {
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            min-height: 30px;
+            border-radius: 5px;
+        }
+
+        .btn--full {
+            width: 100%;
+        }
+
+        .btn--icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 6px;
+            min-height: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--off-white);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background var(--transition);
+            height: var(--nav-height);
+        }
+
+        .nav__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--nav-height);
+            gap: 16px;
+        }
+
+        .nav__logo {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--green-deep);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav__logo span {
+            color: var(--text);
+        }
+
+        .nav__links {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav__links a {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .nav__links a:hover {
+            color: var(--green-deep);
+            background: var(--green-light);
+        }
+
+        .nav__cta {
+            display: none;
+        }
+
+        .nav__toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: background var(--transition);
+        }
+        .nav__toggle:hover {
+            background: var(--light-gray);
+        }
+        .nav__toggle:focus-visible {
+            outline: 3px solid var(--green-medium);
+        }
+
+        @media (min-width: 900px) {
+            .nav__links {
+                display: flex;
+            }
+            .nav__cta {
+                display: inline-flex;
+            }
+            .nav__toggle {
+                display: none;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(320px, 85vw);
+            height: 100dvh;
+            background: var(--white);
+            z-index: 1001;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .mobile-menu--open {
+            right: 0;
+        }
+        .mobile-menu__overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .mobile-menu__overlay--open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mobile-menu__close {
+            font-size: 1.8rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--text);
+        }
+        .mobile-menu__close:hover {
+            background: var(--light-gray);
+        }
+
+        .mobile-menu__links {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-menu__links a {
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text);
+            transition: all var(--transition);
+            font-size: 1rem;
+        }
+        .mobile-menu__links a:hover {
+            background: var(--green-light);
+            color: var(--green-deep);
+        }
+
+        .mobile-menu__cta {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 8vw, 96px);
+            background: linear-gradient(180deg, var(--off-white) 0%, var(--light-gray) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero__grid {
+            display: grid;
+            gap: clamp(32px, 5vw, 56px);
+            align-items: center;
+        }
+        @media (min-width: 900px) {
+            .hero__grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .hero__badge {
+            display: inline-block;
+            background: var(--green-light);
+            color: var(--green-deep);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 8px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+        }
+
+        .hero__title {
+            font-size: clamp(1.9rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .hero__title-highlight {
+            color: var(--green-deep);
+            display: block;
+        }
+
+        .hero__text {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            max-width: 480px;
+        }
+
+        .hero__ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Hero dashboard preview */
+        .hero__preview {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: clamp(16px, 3vw, 28px);
+            border: 1px solid var(--border);
+        }
+        .hero__preview-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+        .hero__preview-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .hero__preview-stat {
+            background: var(--off-white);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+        }
+        .hero__preview-stat-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .hero__preview-stat-label {
+            font-size: 0.65rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* ===== CARDS ===== */
+        .cards-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 600px) {
+            .cards-grid--2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 900px) {
+            .cards-grid--3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .cards-grid--4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .card__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        .card__title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .card__text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        .card__action {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--green-deep);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .card__action:hover {
+            color: var(--green-medium);
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .dashboard__header {
+            padding: clamp(16px, 3vw, 24px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .dashboard__greeting {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .dashboard__business {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .dashboard__stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 16px;
+        }
+        @media (min-width: 600px) {
+            .dashboard__stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (min-width: 900px) {
+            .dashboard__stats {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+        .dashboard__stat {
+            background: var(--off-white);
+            border-radius: var(--radius-sm);
+            padding: 14px 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .dashboard__stat-value {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .dashboard__stat-value--green {
+            color: var(--green-deep);
+        }
+        .dashboard__stat-label {
+            font-size: 0.68rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+        .dashboard__body {
+            padding: 16px;
+            display: grid;
+            gap: 16px;
+        }
+        .dashboard__chart {
+            background: var(--off-white);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            min-height: 140px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dashboard__chart-empty {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .dashboard__lists {
+            display: grid;
+            gap: 12px;
+        }
+        @media (min-width: 900px) {
+            .dashboard__lists {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .dashboard__list-card {
+            background: var(--off-white);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            border: 1px solid var(--border);
+        }
+        .dashboard__list-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .dashboard__list-empty {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* ===== CHARTS ===== */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 100px;
+            width: 100%;
+            justify-content: center;
+        }
+        .bar-chart__bar {
+            width: clamp(16px, 5vw, 36px);
+            background: var(--green-medium);
+            border-radius: 4px 4px 0 0;
+            min-height: 4px;
+            transition: height 0.4s ease;
+        }
+        .bar-chart__bar:hover {
+            background: var(--green-deep);
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay--open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 640px;
+            max-height: 90dvh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay--open .modal {
+            transform: translateY(0) scale(1);
+        }
+        .modal--lg {
+            max-width: 800px;
+        }
+        .modal--sm {
+            max-width: 400px;
+        }
+        .modal__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 2;
+        }
+        .modal__title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .modal__close {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background var(--transition);
+        }
+        .modal__close:hover {
+            background: var(--light-gray);
+        }
+        .modal__body {
+            padding: 20px;
+        }
+        .modal__footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 599px) {
+            .modal-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
+            .modal {
+                max-width: 100%;
+                max-height: 92dvh;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                transform: translateY(100%);
+            }
+            .modal-overlay--open .modal {
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== FORMS ===== */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-row {
+            display: grid;
+            gap: 12px;
+        }
+        @media (min-width: 600px) {
+            .form-row--2 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-row--3 {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        /* ===== TABLES ===== */
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--white);
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 500px;
+        }
+        .table th {
+            background: var(--off-white);
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+        .table tr:hover td {
+            background: var(--off-white);
+        }
+        .table .actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== TOASTS ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            z-index: 1005;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            max-width: 90vw;
+        }
+        @media (min-width: 600px) {
+            .toast-container {
+                bottom: 20px;
+                right: 20px;
+                max-width: 360px;
+            }
+        }
+        .toast {
+            background: var(--near-black);
+            color: var(--off-white);
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast--visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast--success {
+            border-left: 4px solid var(--success);
+        }
+        .toast--info {
+            border-left: 4px solid var(--green-medium);
+        }
+        .toast--warning {
+            border-left: 4px solid var(--warning);
+        }
+        .toast--error {
+            border-left: 4px solid var(--error);
+        }
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .floating-wa {
+            position: fixed;
+            bottom: 20px;
+            right: 16px;
+            z-index: 999;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all var(--transition);
+            font-size: 1.6rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        .floating-wa:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+            color: #fff;
+        }
+        .floating-wa:focus-visible {
+            outline: 3px solid var(--green-medium);
+            outline-offset: 3px;
+        }
+        .floating-wa__tooltip {
+            position: absolute;
+            right: 60px;
+            background: var(--near-black);
+            color: var(--off-white);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .floating-wa:hover .floating-wa__tooltip {
+            opacity: 1;
+        }
+        @media (max-width: 599px) {
+            .floating-wa {
+                bottom: 12px;
+                right: 12px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
+            }
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .faq-item__trigger {
+            width: 100%;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: left;
+            color: var(--text);
+            transition: background var(--transition);
+        }
+        .faq-item__trigger:hover {
+            background: var(--off-white);
+        }
+        .faq-item__trigger:focus-visible {
+            outline: 3px solid var(--green-medium);
+            outline-offset: -3px;
+        }
+        .faq-item__trigger .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            color: var(--text-light);
+        }
+        .faq-item--open .faq-item__trigger .icon {
+            transform: rotate(45deg);
+        }
+        .faq-item__content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .faq-item--open .faq-item__content {
+            max-height: 400px;
+        }
+        .faq-item__body {
+            padding: 0 18px 16px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--near-black);
+            color: var(--off-white);
+            padding: clamp(40px, 6vw, 64px) 0 20px;
+        }
+        .footer__grid {
+            display: grid;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        @media (min-width: 600px) {
+            .footer__grid {
+                grid-template-columns: 2fr 1fr 1fr;
+            }
+        }
+        .footer__brand {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--green-muted);
+        }
+        .footer__text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+        .footer__links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .footer__links a {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            transition: color var(--transition);
+        }
+        .footer__links a:hover {
+            color: var(--off-white);
+        }
+        .footer__bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        /* ===== DATA NOTICE ===== */
+        .data-notice {
+            background: var(--green-light);
+            border: 1px solid var(--green-muted);
+            color: var(--green-deep);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            margin-top: 12px;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: clamp(24px, 4vw, 40px) 16px;
+            color: var(--text-light);
+        }
+        .empty-state__icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        .empty-state__title {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .empty-state__text {
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        /* ===== SETTINGS ===== */
+        .settings-grid {
+            display: grid;
+            gap: 16px;
+        }
+        @media (min-width: 600px) {
+            .settings-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ===== INVOICE/RECEIPT OUTPUT ===== */
+        .document-output {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: clamp(20px, 3vw, 32px);
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #1a1a1a;
+            margin-top: 16px;
+            display: none;
+        }
+        .document-output--visible {
+            display: block;
+        }
+        .document-output__header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+        .document-output__brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0a5c3c;
+        }
+        .document-output__table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .document-output__table th,
+        .document-output__table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        .document-output__table th {
+            background: #f5f5f5;
+            font-weight: 700;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+        .document-output__total {
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-top: 12px;
+        }
+        .document-output__footer {
+            margin-top: 24px;
+            padding-top: 12px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #555;
+            font-weight: 500;
+        }
+        .document-output__footer strong {
+            color: #0a5c3c;
+        }
+
+        /* ===== MISC ===== */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .badge--green {
+            background: var(--green-light);
+            color: var(--green-deep);
+        }
+        .badge--amber {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .badge--red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .badge--gray {
+            background: var(--light-gray);
+            color: var(--text-light);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 16px 0;
+        }
+
+        .text-green {
+            color: var(--green-deep);
+        }
+        .text-muted {
+            color: var(--text-light);
+        }
+        .font-bold {
+            font-weight: 700;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .mb-8 {
+            margin-bottom: 8px;
+        }
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        @media print {
+            .nav,
+            .floating-wa,
+            .toast-container,
+            .modal-overlay,
+            .mobile-menu,
+            .mobile-menu__overlay,
+            .hero__ctas,
+            .btn {
+                display: none !important;
+            }
+            .document-output {
+                display: block !important;
+                border: none;
+                padding: 0;
+            }
+            body {
+                background: #fff;
+            }
+            .section {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip link -->
+    <a href="#main-content" class="sr-only" style="position:fixed;top:8px;left:8px;z-index:9999;background:var(--green-deep);color:#fff;padding:8px 16px;border-radius:6px;">Skip to main content</a>
+
+    <!-- Navigation -->
+    <header class="nav" role="banner">
+        <div class="container nav__inner">
+            <a href="#" class="nav__logo" aria-label="KreateBiz home">
+                KREATE<span>BIZ</span>
+            </a>
+            <nav class="nav__links" aria-label="Main navigation">
+                <a href="#home">Home</a>
+                <a href="#tools">Free Tools</a>
+                <a href="#resources">Resources</a>
+                <a href="#services">Services</a>
+                <a href="#store">Digital Store</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a href="#tools" class="btn btn--primary btn--sm nav__cta">GET STARTED</a>
+            <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu__overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <div class="mobile-menu__header">
+            <span class="nav__logo">KREATE<span>BIZ</span></span>
+            <button class="mobile-menu__close" id="mobileMenuClose" aria-label="Close menu">✕</button>
+        </div>
+        <nav class="mobile-menu__links" aria-label="Mobile navigation links">
+            <a href="#home">Home</a>
+            <a href="#tools">Free Tools</a>
+            <a href="#resources">Resources</a>
+            <a href="#services">Services</a>
+            <a href="#store">Digital Store</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="mobile-menu__cta">
+            <a href="#tools" class="btn btn--primary btn--full">GET STARTED</a>
+        </div>
+    </div>
+
+    <main id="main-content">
+
+        <!-- HERO -->
+        <section class="hero" id="home" aria-label="Hero">
+            <div class="container hero__grid">
+                <div>
+                    <span class="hero__badge">🇳🇬 BUILT FOR NIGERIAN SMALL BUSINESSES</span>
+                    <h1 class="hero__title">RUN YOUR BUSINESS SMARTER.<span class="hero__title-highlight">GROW IT FASTER.</span></h1>
+                    <p class="hero__text">Simple free tools to help you track sales, expenses, stock, customers and business activity — all from your phone.</p>
+                    <div class="hero__ctas">
+                        <a href="#tools" class="btn btn--primary">EXPLORE FREE TOOLS</a>
+                        <a href="https://wa.me/2348086556841?text=Hello%20HassanKreates%2C%20I%20need%20business%20help." target="_blank" rel="noopener noreferrer" class="btn btn--secondary">GET BUSINESS HELP</a>
+                    </div>
+                    <div class="data-notice mt-16">
+                        🔒 Your information is currently stored locally on this device. Cloud backup is coming soon.
+                    </div>
+                </div>
+                <div class="hero__preview" aria-label="Dashboard preview">
+                    <div class="hero__preview-label">Your Business Dashboard</div>
+                    <div class="hero__preview-stats" id="heroPreviewStats">
+                        <div class="hero__preview-stat"><div class="hero__preview-stat-value" id="heroPrevSales">₦0</div><div class="hero__preview-stat-label">Today's Sales</div></div>
+                        <div class="hero__preview-stat"><div class="hero__preview-stat-value" id="heroPrevExpenses">₦0</div><div class="hero__preview-stat-label">Expenses</div></div>
+                        <div class="hero__preview-stat"><div class="hero__preview-stat-value" id="heroPrevProfit">₦0</div><div class="hero__preview-stat-label">Profit</div></div>
+                    </div>
+                    <div style="text-align:center;padding:20px 0;color:var(--text-light);font-size:0.85rem;" id="heroPrevEmpty">✨ Start recording sales to see your dashboard come alive.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK BENEFITS -->
+        <section class="section section--tight" aria-label="Quick benefits">
+            <div class="container">
+                <div class="cards-grid cards-grid--4" style="gap:12px;">
+                    <div class="card"><span class="card__icon">📱</span><div class="card__title">Mobile-First</div><div class="card__text" style="margin-bottom:0;">Works smoothly on any phone.</div></div>
+                    <div class="card"><span class="card__icon">⚡</span><div class="card__title">Fast & Simple</div><div class="card__text" style="margin-bottom:0;">No complicated setup.</div></div>
+                    <div class="card"><span class="card__icon">₦</span><div class="card__title">Naira Ready</div><div class="card__text" style="margin-bottom:0;">Built for Nigerian businesses.</div></div>
+                    <div class="card"><span class="card__icon">📊</span><div class="card__title">Real Tracking</div><div class="card__text" style="margin-bottom:0;">Know your numbers.</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD SECTION -->
+        <section class="section" id="dashboard" aria-label="Business Dashboard">
+            <div class="container">
+                <span class="section-label">Your Dashboard</span>
+                <h2 class="section-title">Track Everything That Matters</h2>
+                <p class="section-subtitle">Your numbers update automatically as you record your business activity.</p>
+                <div class="dashboard">
+                    <div class="dashboard__header">
+                        <div>
+                            <div class="dashboard__greeting" id="dashGreeting">Good morning 👋</div>
+                            <div class="dashboard__business" id="dashBusinessName">Your Business</div>
+                        </div>
+                        <button class="btn btn--secondary btn--sm" id="btnSettings" aria-label="Open settings">⚙️ Settings</button>
+                    </div>
+                    <div class="dashboard__stats">
+                        <div class="dashboard__stat"><div class="dashboard__stat-value" id="dashTodaySales">₦0</div><div class="dashboard__stat-label">Today's Sales</div></div>
+                        <div class="dashboard__stat"><div class="dashboard__stat-value" id="dashTodayExpenses">₦0</div><div class="dashboard__stat-label">Expenses</div></div>
+                        <div class="dashboard__stat"><div class="dashboard__stat-value dashboard__stat-value--green" id="dashProfit">₦0</div><div class="dashboard__stat-label">Est. Profit</div></div>
+                        <div class="dashboard__stat"><div class="dashboard__stat-value" id="dashOrders">0</div><div class="dashboard__stat-label">Orders</div></div>
+                        <div class="dashboard__stat"><div class="dashboard__stat-value" id="dashLowStock">0</div><div class="dashboard__stat-label">Low Stock</div></div>
+                        <div class="dashboard__stat"><div class="dashboard__stat-value" id="dashDebt">₦0</div><div class="dashboard__stat-label">Outstanding</div></div>
+                    </div>
+                    <div class="dashboard__body">
+                        <div class="dashboard__chart" id="dashChartContainer">
+                            <div class="dashboard__chart-empty" id="dashChartEmpty">📈 No sales data yet. Your sales overview will appear here when you record your first sale.<br><button class="btn btn--primary btn--sm mt-8" id="btnFirstSale">ADD FIRST SALE</button></div>
+                            <div class="bar-chart" id="dashChart" style="display:none;width:100%;"></div>
+                        </div>
+                        <div class="dashboard__lists">
+                            <div class="dashboard__list-card">
+                                <div class="dashboard__list-title">Recent Sales</div>
+                                <div class="dashboard__list-empty" id="dashRecentSales">No sales recorded yet.</div>
+                            </div>
+                            <div class="dashboard__list-card">
+                                <div class="dashboard__list-title">Recent Expenses</div>
+                                <div class="dashboard__list-empty" id="dashRecentExpenses">No expenses recorded yet.</div>
+                            </div>
+                            <div class="dashboard__list-card">
+                                <div class="dashboard__list-title">Low Stock Alerts</div>
+                                <div class="dashboard__list-empty" id="dashLowStockList">All your products are currently okay. ✅</div>
+                            </div>
+                            <div class="dashboard__list-card">
+                                <div class="dashboard__list-title">Recent Orders</div>
+                                <div class="dashboard__list-empty" id="dashRecentOrders">No orders recorded yet.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;justify-content:center;">
+                    <button class="btn btn--secondary btn--sm" id="btnExportData">📥 Export Data</button>
+                    <button class="btn btn--secondary btn--sm" id="btnImportData">📤 Import Data</button>
+                    <button class="btn btn--danger btn--sm" id="btnResetData">🗑️ Reset Data</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FREE TOOLS -->
+        <section class="section" id="tools" aria-label="Free Business Tools">
+            <div class="container">
+                <span class="section-label">Free Toolkit</span>
+                <h2 class="section-title">Your Free Business Toolkit</h2>
+                <p class="section-subtitle">Simple tools for the everyday problems of running a business.</p>
+                <div class="cards-grid cards-grid--3" id="toolsGrid">
+                    <button class="card" data-tool="sales" aria-label="Open Sales Tracker"><span class="card__icon">💰</span><span class="card__title">Sales Tracker</span><span class="card__text">Record and monitor all your sales.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="expenses" aria-label="Open Expense Tracker"><span class="card__icon">📉</span><span class="card__title">Expense Tracker</span><span class="card__text">Log every business expense.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="inventory" aria-label="Open Inventory Tracker"><span class="card__icon">📦</span><span class="card__title">Inventory Tracker</span><span class="card__text">Manage products and stock levels.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="stock" aria-label="Open Stock In/Out"><span class="card__icon">🔄</span><span class="card__title">Stock In / Out</span><span class="card__text">Move stock in and out easily.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="invoice" aria-label="Open Invoice Generator"><span class="card__icon">🧾</span><span class="card__title">Invoice Generator</span><span class="card__text">Create professional invoices.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="receipt" aria-label="Open Receipt Generator"><span class="card__icon">📄</span><span class="card__title">Receipt Generator</span><span class="card__text">Issue clean receipts fast.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="calculator" aria-label="Open Profit Calculator"><span class="card__icon">🧮</span><span class="card__title">Profit & Price Calculator</span><span class="card__text">Calculate profit and pricing.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="customers" aria-label="Open Customer Database"><span class="card__icon">👥</span><span class="card__title">Customer Database</span><span class="card__text">Keep track of your customers.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="orders" aria-label="Open Order Management"><span class="card__icon">📋</span><span class="card__title">Order Management</span><span class="card__text">Track orders from start to finish.</span><span class="card__action">Open →</span></button>
+                    <button class="card" data-tool="debtors" aria-label="Open Debtor Tracker"><span class="card__icon">⏳</span><span class="card__title">Debtor Tracker</span><span class="card__text">Never lose track of debts.</span><span class="card__action">Open →</span></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES / TUTORIALS -->
+        <section class="section" id="resources" aria-label="Learn How to Use KreateBiz">
+            <div class="container">
+                <span class="section-label">Learn</span>
+                <h2 class="section-title">Learn How to Use KreateBiz</h2>
+                <p class="section-subtitle">Step-by-step guides for every free tool.</p>
+                <div class="cards-grid cards-grid--3" id="resourcesGrid">
+                    <div class="card"><span class="card__icon">📊</span><div class="card__title">How to Track Sales</div><div class="card__text">Step 1: Open Sales Tracker. Step 2: Enter the product or service. Step 3: Enter quantity and price. Step 4: Save the sale. Step 5: Check your dashboard.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="sales">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">📉</span><div class="card__title">How to Track Expenses</div><div class="card__text">Open Expense Tracker, enter the expense name, category, amount, and date. Save it to update your dashboard automatically.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="expenses">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">📦</span><div class="card__title">How to Manage Inventory</div><div class="card__text">Add products, set stock levels, and use Stock In/Out to update inventory in real time.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="inventory">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">🧾</span><div class="card__title">How to Create an Invoice</div><div class="card__text">Fill in your business and customer info, add items, and generate a professional invoice you can download or share.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="invoice">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">⏳</span><div class="card__title">How to Track Debtors</div><div class="card__text">Record amounts owed, set due dates, and send WhatsApp reminders to customers who owe you.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="debtors">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">🧮</span><div class="card__title">How to Calculate Profit</div><div class="card__text">Enter your costs and desired profit percentage to get a suggested selling price instantly.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="calculator">TRY THIS TOOL</button></div>
+                    <div class="card"><span class="card__icon">📱</span><div class="card__title">How to Use the Dashboard</div><div class="card__text">Your dashboard updates automatically based on your sales, expenses, and stock. It shows your real business performance.</div><button class="card__action mt-8 btn btn--outline-green btn--sm" data-tool="sales">TRY THIS TOOL</button></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY KREATEBIZ -->
+        <section class="section" id="why" aria-label="Why We Built KreateBiz">
+            <div class="container">
+                <span class="section-label">Why</span>
+                <h2 class="section-title">Why We Built KreateBiz</h2>
+                <p class="section-subtitle">Built for the entrepreneur who wants to run their business with clarity.</p>
+                <div class="cards-grid cards-grid--4" style="gap:12px;">
+                    <div class="card"><span class="card__icon">✅</span><div class="card__title">Simple</div><div class="card__text" style="margin-bottom:0;">Business tools without unnecessary complexity.</div></div>
+                    <div class="card"><span class="card__icon">📱</span><div class="card__title">Mobile-First</div><div class="card__text" style="margin-bottom:0;">Designed to work comfortably from your phone.</div></div>
+                    <div class="card"><span class="card__icon">🛠️</span><div class="card__title">Practical</div><div class="card__text" style="margin-bottom:0;">Built around everyday business tasks.</div></div>
+                    <div class="card"><span class="card__icon">📈</span><div class="card__title">Growth-Focused</div><div class="card__text" style="margin-bottom:0;">Tools designed to help you make better decisions.</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VALUE SECTION -->
+        <section class="section section--tight" aria-label="Value Proposition">
+            <div class="container text-center">
+                <span class="section-label">More Than a Tool</span>
+                <h2 class="section-title">Everything Your Business Needs</h2>
+                <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">Business organization, creative resources, education, and creative services — all in one place.</p>
+                <p style="font-size:1.1rem;font-weight:600;color:var(--green-deep);">Start free. Use what you need. Upgrade only when you need more.</p>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="section" id="services" aria-label="HassanKreates Services">
+            <div class="container">
+                <span class="section-label">Services</span>
+                <h2 class="section-title">Need Something Custom?</h2>
+                <p class="section-subtitle">HassanKreates provides professional creative services for your business.</p>
+                <div class="cards-grid cards-grid--3">
+                    <div class="card"><span class="card__icon">🎨</span><div class="card__title">Flyer Design</div><div class="card__text">Eye-catching flyers for your business.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Flyer Design">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">🏷️</span><div class="card__title">Logo Design</div><div class="card__text">Professional logos that stand out.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Logo Design">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">💼</span><div class="card__title">Brand Identity</div><div class="card__text">Complete brand identity packages.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Brand Identity">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">📱</span><div class="card__title">Social Media Design</div><div class="card__text">Content that gets noticed.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Social Media Design">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">🎬</span><div class="card__title">Video Editing</div><div class="card__text">Professional video editing.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Video Editing">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">🌐</span><div class="card__title">Mini Website</div><div class="card__text">Simple, effective business websites.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Mini Website">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">✨</span><div class="card__title">Custom Creative Work</div><div class="card__text">Anything else you need created.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Custom Creative Work">REQUEST SERVICE</button></div>
+                    <div class="card"><span class="card__icon">🏗️</span><div class="card__title">Business Setup</div><div class="card__text">Get help setting up your business.</div><button class="btn btn--whatsapp btn--sm mt-8" data-service="Business Setup">REQUEST SERVICE</button></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIGITAL STORE -->
+        <section class="section" id="store" aria-label="Digital Store">
+            <div class="container">
+                <span class="section-label">Digital Store</span>
+                <h2 class="section-title">HassanKreates Digital Store</h2>
+                <p class="section-subtitle">Premium digital products to grow your creative skills.</p>
+                <div class="cards-grid cards-grid--3">
+                    <div class="card" style="display:flex;flex-direction:column;">
+                        <span class="card__icon">📖</span>
+                        <div class="card__title">AI Design Prompt Manual</div>
+                        <div class="card__text">500+ prompts for image editing and flyer design. Unlock AI-powered creativity.</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:var(--green-deep);margin-bottom:8px;">₦5,000</div>
+                        <button class="btn btn--whatsapp btn--sm mt-auto" data-product="AI Design Prompt Manual">GET THE PROMPT MANUAL</button>
+                    </div>
+                    <div class="card" style="display:flex;flex-direction:column;">
+                        <span class="card__icon">🎁</span>
+                        <div class="card__title">The Ultimate Creator's Asset Pack</div>
+                        <div class="card__text">900+ SFX & Music, 100+ Sketch Elements, 150+ Fonts, 350+ Images, 90+ Green Screen Assets, 120+ HD Backgrounds.</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:var(--green-deep);margin-bottom:8px;">₦5,000</div>
+                        <button class="btn btn--whatsapp btn--sm mt-auto" data-product="Creator Asset Pack">GET THE ASSET PACK</button>
+                    </div>
+                    <div class="card" style="display:flex;flex-direction:column;">
+                        <span class="card__icon">🎓</span>
+                        <div class="card__title">11-in-1 Creator & Digital Skills Course</div>
+                        <div class="card__text">Master digital skills with this comprehensive course.</div>
+                        <div style="font-size:1.3rem;font-weight:800;color:var(--green-deep);margin-bottom:4px;">₦10,000 <span style="font-size:0.8rem;color:var(--text-light);text-decoration:line-through;">₦15,000</span></div>
+                        <div class="badge badge--amber mb-8">LAUNCH PRICE</div>
+                        <button class="btn btn--whatsapp btn--sm mt-auto" data-product="11-in-1 Course">GET THE COURSE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATOR BUNDLE -->
+        <section class="section section--tight" aria-label="Creator Bundle">
+            <div class="container">
+                <div class="card" style="text-align:center;padding:clamp(24px,4vw,40px);border:2px solid var(--green-deep);">
+                    <span class="card__icon" style="margin:0 auto 12px;">🔥</span>
+                    <div class="card__title" style="font-size:1.4rem;">THE CREATOR BUNDLE</div>
+                    <div class="card__text" style="font-size:0.95rem;">Prompt Manual (₦5,000) + Creator Asset Pack (₦5,000) + 11-in-1 Course (₦7,500)</div>
+                    <div style="font-size:2rem;font-weight:900;color:var(--green-deep);margin:8px 0;">₦15,000</div>
+                    <div class="badge badge--green mb-8">SAVE ₦5,000</div>
+                    <br>
+                    <button class="btn btn--whatsapp btn--primary" data-product="Creator Bundle">GET THE CREATOR BUNDLE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROMOTION -->
+        <section class="section" id="promotion" aria-label="Business Promotion">
+            <div class="container">
+                <span class="section-label">Promotion</span>
+                <h2 class="section-title">Promote Your Business with HassanKreates</h2>
+                <p class="section-subtitle">Request promotional content for your business.</p>
+                <div class="cards-grid cards-grid--2">
+                    <div class="card">
+                        <span class="card__icon">🖼️</span>
+                        <div class="card__title">Image Promotion</div>
+                        <div class="card__text">Have a product or business you want us to feature? Get a professional promotional image.</div>
+                        <button class="btn btn--whatsapp btn--sm mt-8" data-service="Image Promotion">REQUEST PROMOTION</button>
+                    </div>
+                    <div class="card">
+                        <span class="card__icon">🎥</span>
+                        <div class="card__title">Video Promotion</div>
+                        <div class="card__text">Video promotion is coming soon as our audience grows.</div>
+                        <div class="badge badge--amber mt-8">COMING SOON</div>
+                        <p style="font-size:0.75rem;color:var(--text-light);margin-top:8px;">Reach varies based on audience, content quality and platform performance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMING SOON FEATURES -->
+        <section class="section section--tight" id="coming-soon" aria-label="Coming Soon Features">
+            <div class="container">
+                <span class="section-label">Future</span>
+                <h2 class="section-title">More Powerful Features Are Coming</h2>
+                <p class="section-subtitle">We're building the next level of KreateBiz.</p>
+                <div class="cards-grid cards-grid--3" style="gap:12px;">
+                    <div class="card"><span class="card__icon">☁️</span><div class="card__title">Cloud Backup</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">📱</span><div class="card__title">Multi-device Access</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">🏢</span><div class="card__title">Business Accounts</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">📊</span><div class="card__title">Advanced Analytics</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">♾️</span><div class="card__title">Unlimited Records</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">👥</span><div class="card__title">Staff Management</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">📈</span><div class="card__title">Advanced Reports</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">⏰</span><div class="card__title">Customer Reminders</div><div class="badge badge--gray">COMING SOON</div></div>
+                    <div class="card"><span class="card__icon">🏷️</span><div class="card__title">Multiple Businesses</div><div class="badge badge--gray">COMING SOON</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="section" id="testimonials" aria-label="Testimonials">
+            <div class="container text-center">
+                <span class="section-label">Testimonials</span>
+                <h2 class="section-title">Built to Create Real Value</h2>
+                <div class="empty-state" style="border:1px solid var(--border);border-radius:var(--radius-md);background:var(--white);">
+                    <div class="empty-state__icon">💬</div>
+                    <div class="empty-state__title">Customer stories are coming soon.</div>
+                    <div class="empty-state__text">We're currently collecting feedback from businesses using KreateBiz and HassanKreates services.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq" aria-label="FAQ">
+            <div class="container">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-list" id="faqList">
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Is KreateBiz free?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Yes! All the core business tools are completely free to use.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Which tools are free?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Sales Tracker, Expense Tracker, Inventory, Invoice Generator, Receipt Generator, Profit Calculator, Customer Database, Order Management, and Debtor Tracker are all free.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Can I use KreateBiz on my phone?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Absolutely! KreateBiz is designed mobile-first and works perfectly on any smartphone.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Where is my data stored?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Your data is stored locally in your browser using localStorage. Cloud backup is coming soon.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Can I access my data from another phone?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Not yet. Currently data is device-specific. Use the Export/Import feature to transfer your data between devices.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">How do I generate an invoice?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Open the Invoice Generator tool, fill in your business and customer details, add items, and click Generate Invoice. You can download, print, or share via WhatsApp.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Can I print my invoice?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Yes! After generating an invoice, you can print it directly or save it as a PDF.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Why does HassanKreates appear on my generated document?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">HassanKreates is the creative brand behind KreateBiz. The footer credit is a small way we brand our free tools. We appreciate your support!</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">How can I buy the Prompt Manual?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Click the "Get the Prompt Manual" button and it will open WhatsApp with a pre-filled message to complete your purchase.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">What is included in the Creator Asset Pack?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">900+ SFX & Music, 100+ Sketch Elements, 150+ Fonts, 350+ Images, 90+ Green Screen Assets, 120+ HD Backgrounds, and Motion Backgrounds.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">How do I request a design?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Click any "Request Service" button and it opens WhatsApp with a pre-filled message. HassanKreates will get back to you.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">How do I contact HassanKreates?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">WhatsApp: 0808 655 6841 or email: hassankreates@gmail.com</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">How do I request promotion?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Click the "Request Promotion" button in the promotion section to open WhatsApp directly.</div></div></div>
+                    <div class="faq-item"><button class="faq-item__trigger" aria-expanded="false">Are advanced features available?<span class="icon">+</span></button><div class="faq-item__content"><div class="faq-item__body">Not yet. Cloud backup, multi-device access, and other advanced features are coming soon. Stay tuned!</div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section section--tight" id="contact" aria-label="Contact">
+            <div class="container text-center">
+                <span class="section-label">Contact</span>
+                <h2 class="section-title">Need Help?</h2>
+                <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">Reach out to HassanKreates directly.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+                    <a href="https://wa.me/2348086556841?text=Hello%20HassanKreates%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">💬 CHAT WITH HASSANKREATES</a>
+                    <a href="mailto:hassankreates@gmail.com" class="btn btn--secondary">✉️ EMAIL US</a>
+                </div>
+                <div style="margin-top:16px;font-size:0.9rem;color:var(--text-secondary);">
+                    <p>WhatsApp: <strong>0808 655 6841</strong></p>
+                    <p>Email: <strong>hassankreates@gmail.com</strong></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__grid">
+                <div>
+                    <div class="footer__brand">KREATEBIZ</div>
+                    <p class="footer__text">Powered by HassanKreates<br>Simple tools for people running real businesses.</p>
+                </div>
+                <div>
+                    <div style="font-weight:700;margin-bottom:8px;color:var(--off-white);">Links</div>
+                    <div class="footer__links">
+                        <a href="#tools">Free Tools</a>
+                        <a href="#resources">Resources</a>
+                        <a href="#store">Digital Store</a>
+                        <a href="#services">Services</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight:700;margin-bottom:8px;color:var(--off-white);">Follow</div>
+                    <div class="footer__links">
+                        <a href="https://www.tiktok.com/@hassankreates?_r=1&_t=ZN-98zu4kCv0vG" target="_blank" rel="noopener noreferrer">TikTok</a>
+                        <a href="https://youtube.com/@hassankreates?si=jqjY461lRqgAs2GG" target="_blank" rel="noopener noreferrer">YouTube</a>
+                        <a href="https://www.facebook.com/hassankreates" target="_blank" rel="noopener noreferrer">Facebook</a>
+                        <a href="https://whatsapp.com/channel/0029Vb8XUZiJf05ftY9AGI2i" target="_blank" rel="noopener noreferrer">WhatsApp Channel</a>
+                    </div>
+                    <div style="margin-top:12px;font-size:0.8rem;color:var(--text-light);">
+                        <p>📞 0808 655 6841</p>
+                        <p>✉️ hassankreates@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <span>© <span id="footerYear"></span> KreateBiz — Powered by HassanKreates</span>
+                <span>Privacy · Terms</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/2348086556841?text=Hello%20HassanKreates!" target="_blank" rel="noopener noreferrer" class="floating-wa" aria-label="Chat with HassanKreates on WhatsApp">
+        <span aria-hidden="true">💬</span>
+        <span class="floating-wa__tooltip">Chat with HassanKreates</span>
+    </a>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer" role="alert" aria-live="polite"></div>
+
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent" role="dialog" aria-modal="true"></div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".json" style="display:none;" aria-hidden="true">
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ===== STORAGE KEYS =====
+            const KEYS = {
+                sales: 'kreatebiz_sales',
+                expenses: 'kreatebiz_expenses',
+                inventory: 'kreatebiz_inventory',
+                customers: 'kreatebiz_customers',
+                orders: 'kreatebiz_orders',
+                debts: 'kreatebiz_debts',
+                settings: 'kreatebiz_settings',
+                theme: 'kreatebiz_theme'
+            };
+
+            // ===== DATA LAYER =====
+            const DataStore = {
+                get(key, defaultVal = []) {
+                    try {
+                        const raw = localStorage.getItem(key);
+                        return raw ? JSON.parse(raw) : defaultVal;
+                    } catch { return defaultVal; }
+                },
+                set(key, val) {
+                    try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+                },
+                getAll() {
+                    return {
+                        sales: this.get(KEYS.sales),
+                        expenses: this.get(KEYS.expenses),
+                        inventory: this.get(KEYS.inventory),
+                        customers: this.get(KEYS.customers),
+                        orders: this.get(KEYS.orders),
+                        debts: this.get(KEYS.debts),
+                        settings: this.get(KEYS.settings, { businessName: 'Your Business' })
+                    };
+                },
+                saveAll(data) {
+                    this.set(KEYS.sales, data.sales || []);
+                    this.set(KEYS.expenses, data.expenses || []);
+                    this.set(KEYS.inventory, data.inventory || []);
+                    this.set(KEYS.customers, data.customers || []);
+                    this.set(KEYS.orders, data.orders || []);
+                    this.set(KEYS.debts, data.debts || []);
+                    this.set(KEYS.settings, data.settings || { businessName: 'Your Business' });
+                },
+                clearAll() {
+                    Object.values(KEYS).forEach(k => localStorage.removeItem(k));
+                }
+            };
+
+            // ===== HELPERS =====
+            const fmtNaira = (amount) => {
+                return '₦' + new Intl.NumberFormat('en-NG', { maximumFractionDigits: 0 }).format(amount || 0);
+            };
+
+            const fmtDate = (dateStr) => {
+                try {
+                    const d = new Date(dateStr);
+                    if (isNaN(d.getTime())) return dateStr || '—';
+                    return d.toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' });
+                } catch { return dateStr || '—'; }
+            };
+
+            const todayStr = () => new Date().toISOString().split('T')[0];
+            const now = () => new Date().toISOString();
+
+            const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+            const escapeHtml = (str) => {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            };
+
+            const isToday = (dateStr) => {
+                try { return new Date(dateStr).toDateString() === new Date().toDateString(); } catch { return false; }
+            };
+
+            const getGreeting = () => {
+                const h = new Date().getHours();
+                if (h < 12) return 'Good morning 👋';
+                if (h < 17) return 'Good afternoon 👋';
+                return 'Good evening 👋';
+            };
+
+            // ===== TOAST SYSTEM =====
+            const toastContainer = document.getElementById('toastContainer');
+            function showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast--${type}`;
+                toast.innerHTML = `${message}`;
+                toastContainer.appendChild(toast);
+                requestAnimationFrame(() => { toast.classList.add('toast--visible'); });
+                setTimeout(() => {
+                    toast.classList.remove('toast--visible');
+                    setTimeout(() => toast.remove(), 350);
+                }, 3200);
+            }
+
+            // ===== MODAL SYSTEM =====
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
+            let modalCloseCallback = null;
+
+            function openModal(html, size = '') {
+                modalContent.className = 'modal ' + size;
+                modalContent.innerHTML = html;
+                modalOverlay.classList.add('modal-overlay--open');
+                document.body.style.overflow = 'hidden';
+                // Close button
+                const closeBtn = modalContent.querySelector('.modal__close');
+                if (closeBtn) closeBtn.addEventListener('click', closeModal);
+                // Re-bind tool events
+                bindToolEvents();
+                modalCloseCallback = null;
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('modal-overlay--open');
+                document.body.style.overflow = '';
+                if (modalCloseCallback) modalCloseCallback();
+            }
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (modalOverlay.classList.contains('modal-overlay--open')) closeModal();
+                    closeMobileMenu();
+                }
+            });
+
+            // ===== NAVIGATION =====
+            const navToggle = document.getElementById('navToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+            function openMobileMenu() {
+                mobileMenu.classList.add('mobile-menu--open');
+                mobileMenuOverlay.classList.add('mobile-menu__overlay--open');
+                navToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('mobile-menu--open');
+                mobileMenuOverlay.classList.remove('mobile-menu__overlay--open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            navToggle.addEventListener('click', openMobileMenu);
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+            document.querySelectorAll('.mobile-menu__links a, .mobile-menu__cta a').forEach(a => {
+                a.addEventListener('click', closeMobileMenu);
+            });
+
+            // Smooth scroll for all anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    const targetId = a.getAttribute('href');
+                    if (targetId.length > 1 && targetId.startsWith('#')) {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            closeMobileMenu();
+                        }
+                    }
+                });
+            });
+
+            // ===== THEME =====
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                DataStore.set(KEYS.theme, theme);
+            }
+
+            const savedTheme = DataStore.get(KEYS.theme, 'light');
+            applyTheme(savedTheme);
+
+            // ===== SETTINGS =====
+            function getSettings() {
+                return DataStore.get(KEYS.settings, { businessName: 'Your Business' });
+            }
+
+            function saveSettings(settings) {
+                DataStore.set(KEYS.settings, settings);
+            }
+
+            // ===== WHATSAPP =====
+            function openWhatsApp(message) {
+                const encoded = encodeURIComponent(message);
+                const url = `https://wa.me/2348086556841?text=${encoded}`;
+                window.open(url, '_blank', 'noopener,noreferrer');
+                showToast('Opening WhatsApp…', 'info');
+            }
+
+            // ===== DASHBOARD =====
+            function getSales() { return DataStore.get(KEYS.sales); }
+
+            function getExpenses() { return DataStore.get(KEYS.expenses); }
+
+            function getInventory() { return DataStore.get(KEYS.inventory); }
+
+            function getCustomers() { return DataStore.get(KEYS.customers); }
+
+            function getOrders() { return DataStore.get(KEYS.orders); }
+
+            function getDebts() { return DataStore.get(KEYS.debts); }
+
+            function calculateDashboard() {
+                const sales = getSales();
+                const expenses = getExpenses();
+                const inventory = getInventory();
+                const orders = getOrders();
+                const debts = getDebts();
+                const settings = getSettings();
+
+                // Today's sales
+                const todaySales = sales.filter(s => isToday(s.date)).reduce((sum, s) => sum + (Number(s
+                    .total) || 0), 0);
+                const todayExpenses = expenses.filter(e => isToday(e.date)).reduce((sum, e) => sum + (Number(e
+                    .amount) || 0), 0);
+                const profit = todaySales - todayExpenses;
+
+                const lowStock = inventory.filter(item => Number(item.currentStock) <= Number(item
+                    .threshold)).length;
+
+                const outstandingDebt = debts.filter(d => d.status !== 'PAID').reduce((sum, d) => sum + (Number(
+                    d.amount) || 0), 0);
+
+                const activeOrders = orders.filter(o => !['DELIVERED', 'CANCELLED'].includes(o.status)).length;
+
+                // Update DOM
+                document.getElementById('dashTodaySales').textContent = fmtNaira(todaySales);
+                document.getElementById('dashTodayExpenses').textContent = fmtNaira(todayExpenses);
+                document.getElementById('dashProfit').textContent = fmtNaira(profit);
+                document.getElementById('dashOrders').textContent = activeOrders;
+                document.getElementById('dashLowStock').textContent = lowStock;
+                document.getElementById('dashDebt').textContent = fmtNaira(outstandingDebt);
+
+                // Hero preview
+                document.getElementById('heroPrevSales').textContent = fmtNaira(todaySales);
+                document.getElementById('heroPrevExpenses').textContent = fmtNaira(todayExpenses);
+                document.getElementById('heroPrevProfit').textContent = fmtNaira(profit);
+
+                // Greeting & business name
+                document.getElementById('dashGreeting').textContent = getGreeting();
+                document.getElementById('dashBusinessName').textContent = settings.businessName ||
+                    'Your Business';
+
+                // Chart
+                renderChart(sales);
+
+                // Recent lists
+                renderRecentLists(sales, expenses, inventory, orders);
+            }
+
+            function renderChart(sales) {
+                const emptyEl = document.getElementById('dashChartEmpty');
+                const chartEl = document.getElementById('dashChart');
+                if (!sales || sales.length === 0) {
+                    emptyEl.style.display = 'block';
+                    chartEl.style.display = 'none';
+                    return;
+                }
+                emptyEl.style.display = 'none';
+                chartEl.style.display = 'flex';
+
+                // Last 7 days of sales
+                const days = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const dateStr = d.toISOString().split('T')[0];
+                    const total = sales.filter(s => s.date === dateStr).reduce((sum, s) => sum + (Number(s
+                        .total) || 0), 0);
+                    days.push({ date: dateStr, total });
+                }
+
+                const maxVal = Math.max(...days.map(d => d.total), 1);
+                chartEl.innerHTML = days.map(d => {
+                    const height = Math.max((d.total / maxVal) * 80, 4);
+                    const dayLabel = new Date(d.date).toLocaleDateString('en-NG', { weekday: 'short' });
+                    return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <span style="font-size:0.7rem;font-weight:600;color:var(--text-secondary);">${fmtNaira(d.total)}</span>
+                    <div class="bar-chart__bar" style="height:${height}px;" title="${dayLabel}: ${fmtNaira(d.total)}"></div>
+                    <span style="font-size:0.65rem;color:var(--text-light);">${dayLabel}</span>
+                  </div>`;
+                }).join('');
+            }
+
+            function renderRecentLists(sales, expenses, inventory, orders) {
+                // Recent sales
+                const recentSalesEl = document.getElementById('dashRecentSales');
+                if (sales.length === 0) {
+                    recentSalesEl.textContent = 'No sales recorded yet.';
+                } else {
+                    const recent = sales.slice(-3).reverse();
+                    recentSalesEl.innerHTML = recent.map(s =>
+                        `<div style="font-size:0.8rem;padding:4px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(s.product)}</strong> — ${fmtNaira(s.total)} (${fmtDate(s.date)})</div>`
+                        ).join('');
+                }
+
+                // Recent expenses
+                const recentExpEl = document.getElementById('dashRecentExpenses');
+                if (expenses.length === 0) {
+                    recentExpEl.textContent = 'No expenses recorded yet.';
+                } else {
+                    const recent = expenses.slice(-3).reverse();
+                    recentExpEl.innerHTML = recent.map(e =>
+                        `<div style="font-size:0.8rem;padding:4px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(e.name)}</strong> — ${fmtNaira(e.amount)} (${fmtDate(e.date)})</div>`
+                        ).join('');
+                }
+
+                // Low stock
+                const lowStockEl = document.getElementById('dashLowStockList');
+                const lowItems = inventory.filter(i => Number(i.currentStock) <= Number(i.threshold));
+                if (lowItems.length === 0) {
+                    lowStockEl.textContent = 'All your products are currently okay. ✅';
+                } else {
+                    lowStockEl.innerHTML = lowItems.map(i =>
+                        `<div style="font-size:0.8rem;padding:4px 0;border-bottom:1px solid var(--border);color:var(--warning);font-weight:600;">⚠️ ${escapeHtml(i.name)} — ${i.currentStock} left</div>`
+                        ).join('');
+                }
+
+                // Recent orders
+                const recentOrdersEl = document.getElementById('dashRecentOrders');
+                if (orders.length === 0) {
+                    recentOrdersEl.textContent = 'No orders recorded yet.';
+                } else {
+                    const recent = orders.slice(-3).reverse();
+                    recentOrdersEl.innerHTML = recent.map(o =>
+                        `<div style="font-size:0.8rem;padding:4px 0;border-bottom:1px solid var(--border);"><strong>${escapeHtml(o.customer || 'Customer')}</strong> — ${escapeHtml(o.status)}</div>`
+                        ).join('');
+                }
+            }
+
+            // ===== TOOL INTERFACES =====
+            function bindToolEvents() {
+                // Tool buttons in modals
+                document.querySelectorAll('[data-tool-action]').forEach(btn => {
+                    btn.removeEventListener('click', handleToolAction);
+                    btn.addEventListener('click', handleToolAction);
+                });
+
+                // Re-bind modal tool triggers
+                document.querySelectorAll('[data-tool]').forEach(el => {
+                    el.removeEventListener('click', handleToolTrigger);
+                    el.addEventListener('click', handleToolTrigger);
+                });
+            }
+
+            function handleToolTrigger(e) {
+                const tool = e.currentTarget.getAttribute('data-tool');
+                if (tool) openToolModal(tool);
+            }
+
+            function handleToolAction(e) {
+                const action = e.currentTarget.getAttribute('data-tool-action');
+                if (action) {
+                    e.preventDefault();
+                    handleAction(action, e.currentTarget);
+                }
+            }
+
+            // ===== TOOL MODALS =====
+            function openToolModal(tool) {
+                const html = getToolHTML(tool);
+                openModal(html, 'modal--lg');
+                bindToolEvents();
+                afterToolModalOpen(tool);
+            }
+
+            function getToolHTML(tool) {
+                const tools = {
+                    sales: `<div class="modal__header"><h3 class="modal__title">💰 Sales Tracker</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Product/Service</label><input type="text" id="saleProduct" placeholder="e.g. Ankara Fabric"></div>
+                    <div class="form-group"><label>Quantity</label><input type="number" id="saleQty" value="1" min="0.01" step="0.01"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Unit Price (₦)</label><input type="number" id="salePrice" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Total (₦)</label><input type="number" id="saleTotal" readonly style="background:var(--light-gray);font-weight:700;"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer</label><input type="text" id="saleCustomer" placeholder="Customer name"></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="saleDate" value="${todayStr()}"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Payment Status</label><select id="saleStatus"><option value="PAID">Paid</option><option value="PENDING">Pending</option><option value="PARTIAL">Partial</option></select></div>
+                    <div class="form-group"><label>Payment Method</label><select id="saleMethod"><option value="CASH">Cash</option><option value="TRANSFER">Transfer</option><option value="POS">POS</option><option value="CREDIT">Credit</option><option value="OTHER">Other</option></select></div>
+                  </div>
+                  <div class="form-group"><label>Notes</label><input type="text" id="saleNotes" placeholder="Optional notes"></div>
+                  <button class="btn btn--primary btn--full" id="btnAddSale">➕ ADD SALE</button>
+                  <hr class="divider">
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;">
+                    <div style="font-weight:700;font-size:0.9rem;">Total Sales: <span id="saleTotalCount">0</span></div>
+                    <div style="font-weight:700;font-size:0.9rem;">Value: <span id="saleTotalValue" style="color:var(--green-deep);">₦0</span></div>
+                  </div>
+                  <div class="table-wrap mt-16" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Product</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="salesTableBody"></tbody></table></div>
+                </div>`,
+
+                    expenses: `<div class="modal__header"><h3 class="modal__title">📉 Expense Tracker</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Expense Name</label><input type="text" id="expName" placeholder="e.g. Transport"></div>
+                    <div class="form-group"><label>Category</label><select id="expCategory"><option>Transport</option><option>Data</option><option>Electricity</option><option>Rent</option><option>Staff</option><option>Supplies</option><option>Marketing</option><option>Packaging</option><option>Other</option></select></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Amount (₦)</label><input type="number" id="expAmount" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="expDate" value="${todayStr()}"></div>
+                  </div>
+                  <div class="form-group"><label>Notes</label><input type="text" id="expNotes" placeholder="Optional notes"></div>
+                  <button class="btn btn--primary btn--full" id="btnAddExpense">➕ ADD EXPENSE</button>
+                  <hr class="divider">
+                  <div style="font-weight:700;font-size:0.9rem;">Total Expenses: <span id="expTotalValue" style="color:var(--error);">₦0</span></div>
+                  <div class="table-wrap mt-16" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Name</th><th>Category</th><th>Date</th><th>Amount</th><th>Actions</th></tr></thead><tbody id="expensesTableBody"></tbody></table></div>
+                </div>`,
+
+                    inventory: `<div class="modal__header"><h3 class="modal__title">📦 Inventory Tracker</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Product Name</label><input type="text" id="invName" placeholder="e.g. Ankara Fabric"></div>
+                    <div class="form-group"><label>SKU</label><input type="text" id="invSku" placeholder="Optional SKU"></div>
+                  </div>
+                  <div class="form-row form-row--3">
+                    <div class="form-group"><label>Selling Price (₦)</label><input type="number" id="invPrice" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Current Stock</label><input type="number" id="invStock" value="0" min="0"></div>
+                    <div class="form-group"><label>Low-stock Threshold</label><input type="number" id="invThreshold" value="5" min="0"></div>
+                  </div>
+                  <button class="btn btn--primary btn--full" id="btnAddInventory">➕ ADD PRODUCT</button>
+                  <hr class="divider">
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:0.85rem;font-weight:600;">
+                    <span class="badge badge--green">In Stock: <span id="invInStock">0</span></span>
+                    <span class="badge badge--amber">Low Stock: <span id="invLowStockCount">0</span></span>
+                    <span class="badge badge--red">Out of Stock: <span id="invOutStock">0</span></span>
+                  </div>
+                  <div class="table-wrap mt-16" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Product</th><th>SKU</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead><tbody id="inventoryTableBody"></tbody></table></div>
+                </div>`,
+
+                    stock: `<div class="modal__header"><h3 class="modal__title">🔄 Stock In / Out</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Product</label><select id="stockProduct"></select></div>
+                    <div class="form-group"><label>Movement Type</label><select id="stockType"><option value="IN">STOCK IN</option><option value="OUT">STOCK OUT</option></select></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Quantity</label><input type="number" id="stockQty" value="1" min="1"></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="stockDate" value="${todayStr()}"></div>
+                  </div>
+                  <div class="form-group"><label>Reason</label><input type="text" id="stockReason" placeholder="e.g. New stock purchase"></div>
+                  <button class="btn btn--primary btn--full" id="btnStockMove">📦 RECORD MOVEMENT</button>
+                  <hr class="divider">
+                  <div class="table-wrap mt-16" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Date</th><th>Product</th><th>Type</th><th>Qty</th><th>Reason</th></tr></thead><tbody id="stockTableBody"></tbody></table></div>
+                </div>`,
+
+                    invoice: `<div class="modal__header"><h3 class="modal__title">🧾 Invoice Generator</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Business Name</label><input type="text" id="invBusName" value="${escapeHtml(getSettings().businessName || '')}" placeholder="Your business name"></div>
+                    <div class="form-group"><label>Business Phone</label><input type="text" id="invBusPhone" placeholder="Phone"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Business Email</label><input type="email" id="invBusEmail" placeholder="Email"></div>
+                    <div class="form-group"><label>Invoice Number</label><input type="text" id="invNumber" placeholder="e.g. INV-001"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer Name</label><input type="text" id="invCustName" placeholder="Customer name"></div>
+                    <div class="form-group"><label>Customer Phone</label><input type="text" id="invCustPhone" placeholder="Customer phone"></div>
+                  </div>
+                  <div class="form-group"><label>Date</label><input type="date" id="invDate" value="${todayStr()}"></div>
+                  <div style="margin-bottom:10px;font-weight:700;font-size:0.9rem;">Items</div>
+                  <div id="invoiceItems"></div>
+                  <button class="btn btn--secondary btn--sm" id="btnAddInvItem">➕ ADD ITEM</button>
+                  <hr class="divider">
+                  <div style="text-align:right;font-weight:700;font-size:1.1rem;">Total: <span id="invGrandTotal" style="color:var(--green-deep);">₦0</span></div>
+                  <button class="btn btn--primary btn--full mt-16" id="btnGenerateInvoice">📄 GENERATE INVOICE</button>
+                  <div class="document-output" id="invoiceOutput"></div>
+                </div>`,
+
+                    receipt: `<div class="modal__header"><h3 class="modal__title">📄 Receipt Generator</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Business Name</label><input type="text" id="recBusName" value="${escapeHtml(getSettings().businessName || '')}" placeholder="Your business name"></div>
+                    <div class="form-group"><label>Receipt Number</label><input type="text" id="recNumber" placeholder="e.g. RCP-001"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer Name</label><input type="text" id="recCustName" placeholder="Customer name"></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="recDate" value="${todayStr()}"></div>
+                  </div>
+                  <div style="margin-bottom:10px;font-weight:700;font-size:0.9rem;">Items</div>
+                  <div id="receiptItems"></div>
+                  <button class="btn btn--secondary btn--sm" id="btnAddRecItem">➕ ADD ITEM</button>
+                  <hr class="divider">
+                  <div style="text-align:right;font-weight:700;font-size:1.1rem;">Total: <span id="recGrandTotal" style="color:var(--green-deep);">₦0</span></div>
+                  <button class="btn btn--primary btn--full mt-16" id="btnGenerateReceipt">📄 GENERATE RECEIPT</button>
+                  <div class="document-output" id="receiptOutput"></div>
+                </div>`,
+
+                    calculator: `<div class="modal__header"><h3 class="modal__title">🧮 Profit & Price Calculator</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Product Cost (₦)</label><input type="number" id="calcCost" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Transportation (₦)</label><input type="number" id="calcTransport" placeholder="0" min="0" step="0.01"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Packaging (₦)</label><input type="number" id="calcPackaging" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Marketing (₦)</label><input type="number" id="calcMarketing" placeholder="0" min="0" step="0.01"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Other Cost (₦)</label><input type="number" id="calcOther" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label>Desired Profit %</label><input type="number" id="calcProfitPct" placeholder="20" min="0" step="0.1"></div>
+                  </div>
+                  <button class="btn btn--primary btn--full" id="btnCalcProfit">🧮 CALCULATE</button>
+                  <button class="btn btn--secondary btn--sm mt-8" id="btnCalcReset">🔄 RESET</button>
+                  <hr class="divider">
+                  <div style="display:grid;gap:10px;">
+                    <div style="display:flex;justify-content:space-between;padding:10px;background:var(--light-gray);border-radius:6px;"><span>Total Cost:</span><strong id="calcTotalCost">₦0</strong></div>
+                    <div style="display:flex;justify-content:space-between;padding:10px;background:var(--light-gray);border-radius:6px;"><span>Suggested Selling Price:</span><strong id="calcSellPrice" style="color:var(--green-deep);">₦0</strong></div>
+                    <div style="display:flex;justify-content:space-between;padding:10px;background:var(--light-gray);border-radius:6px;"><span>Estimated Profit:</span><strong id="calcProfit">₦0</strong></div>
+                    <div style="display:flex;justify-content:space-between;padding:10px;background:var(--light-gray);border-radius:6px;"><span>Profit Margin:</span><strong id="calcMargin">0%</strong></div>
+                  </div>
+                </div>`,
+
+                    customers: `<div class="modal__header"><h3 class="modal__title">👥 Customer Database</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer Name</label><input type="text" id="custName" placeholder="Full name"></div>
+                    <div class="form-group"><label>Phone</label><input type="tel" id="custPhone" placeholder="Phone number"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Email</label><input type="email" id="custEmail" placeholder="Email"></div>
+                    <div class="form-group"><label>Address</label><input type="text" id="custAddress" placeholder="Address"></div>
+                  </div>
+                  <div class="form-group"><label>Notes</label><input type="text" id="custNotes" placeholder="Optional notes"></div>
+                  <button class="btn btn--primary btn--full" id="btnAddCustomer">➕ ADD CUSTOMER</button>
+                  <hr class="divider">
+                  <div class="form-group"><label>Search</label><input type="search" id="custSearch" placeholder="Search by name or phone..."></div>
+                  <div class="table-wrap mt-8" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Actions</th></tr></thead><tbody id="customersTableBody"></tbody></table></div>
+                </div>`,
+
+                    orders: `<div class="modal__header"><h3 class="modal__title">📋 Order Management</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer</label><input type="text" id="ordCustomer" placeholder="Customer name"></div>
+                    <div class="form-group"><label>Status</label><select id="ordStatus"><option value="NEW">NEW</option><option value="CONFIRMED">CONFIRMED</option><option value="PROCESSING">PROCESSING</option><option value="READY">READY</option><option value="DELIVERED">DELIVERED</option><option value="CANCELLED">CANCELLED</option></select></div>
+                  </div>
+                  <div class="form-group"><label>Order Details</label><input type="text" id="ordDetails" placeholder="What's the order?"></div>
+                  <button class="btn btn--primary btn--full" id="btnAddOrder">➕ ADD ORDER</button>
+                  <hr class="divider">
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                    <button class="btn btn--xs btn--secondary" data-order-filter="ALL">All</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="NEW">New</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="CONFIRMED">Confirmed</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="PROCESSING">Processing</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="READY">Ready</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="DELIVERED">Delivered</button>
+                    <button class="btn btn--xs btn--secondary" data-order-filter="CANCELLED">Cancelled</button>
+                  </div>
+                  <div class="table-wrap" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Customer</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead><tbody id="ordersTableBody"></tbody></table></div>
+                </div>`,
+
+                    debtors: `<div class="modal__header"><h3 class="modal__title">⏳ Debtor Tracker</h3><button class="modal__close" aria-label="Close">✕</button></div>
+                <div class="modal__body">
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Customer</label><input type="text" id="debtCustomer" placeholder="Customer name"></div>
+                    <div class="form-group"><label>Amount Owed (₦)</label><input type="number" id="debtAmount" placeholder="0" min="0" step="0.01"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Date</label><input type="date" id="debtDate" value="${todayStr()}"></div>
+                    <div class="form-group"><label>Due Date</label><input type="date" id="debtDueDate"></div>
+                  </div>
+                  <div class="form-row form-row--2">
+                    <div class="form-group"><label>Status</label><select id="debtStatus"><option value="UNPAID">UNPAID</option><option value="PARTIALLY PAID">PARTIALLY PAID</option><option value="PAID">PAID</option></select></div>
+                    <div class="form-group"><label>Notes</label><input type="text" id="debtNotes" placeholder="Optional"></div>
+                  </div>
+                  <button class="btn btn--primary btn--full" id="btnAddDebt">➕ ADD DEBT</button>
+                  <hr class="divider">
+                  <div style="font-weight:700;font-size:1rem;">Total Outstanding: <span id="debtTotalOutstanding" style="color:var(--error);">₦0</span></div>
+                  <div class="table-wrap mt-16" style="max-height:280px;overflow-y:auto;"><table class="table"><thead><tr><th>Customer</th><th>Amount</th><th>Status</th><th>Due</th><th>Actions</th></tr></thead><tbody id="debtsTableBody"></tbody></table></div>
+                </div>`
+                };
+                return tools[tool] || '<p>Tool not found.</p>';
+            }
+
+            function afterToolModalOpen(tool) {
+                if (tool === 'sales') {
+                    updateSalesTable();
+                    const qty = document.getElementById('saleQty');
+                    const price = document.getElementById('salePrice');
+                    const total = document.getElementById('saleTotal');
+
+                    function calcSaleTotal() {
+                        const q = parseFloat(qty.value) || 0;
+                        const p = parseFloat(price.value) || 0;
+                        total.value = (q * p).toFixed(2);
+                    }
+                    qty.addEventListener('input', calcSaleTotal);
+                    price.addEventListener('input', calcSaleTotal);
+                    document.getElementById('btnAddSale').addEventListener('click', addSale);
+                } else if (tool === 'expenses') {
+                    updateExpensesTable();
+                    document.getElementById('btnAddExpense').addEventListener('click', addExpense);
+                } else if (tool === 'inventory') {
+                    updateInventoryTable();
+                    document.getElementById('btnAddInventory').addEventListener('click', addInventory);
+                } else if (tool === 'stock') {
+                    updateStockProductSelect();
+                    updateStockTable();
+                    document.getElementById('btnStockMove').addEventListener('click', addStockMovement);
+                } else if (tool === 'invoice') {
+                    setupInvoiceItems();
+                    document.getElementById('btnAddInvItem').addEventListener('click', () => addInvoiceItem());
+                    document.getElementById('btnGenerateInvoice').addEventListener('click', generateInvoice);
+                } else if (tool === 'receipt') {
+                    setupReceiptItems();
+                    document.getElementById('btnAddRecItem').addEventListener('click', () => addReceiptItem());
+                    document.getElementById('btnGenerateReceipt').addEventListener('click', generateReceipt);
+                } else if (tool === 'calculator') {
+                    document.getElementById('btnCalcProfit').addEventListener('click', calcProfit);
+                    document.getElementById('btnCalcReset').addEventListener('click', resetCalculator);
+                } else if (tool === 'customers') {
+                    updateCustomersTable();
+                    document.getElementById('btnAddCustomer').addEventListener('click', addCustomer);
+                    document.getElementById('custSearch').addEventListener('input', updateCustomersTable);
+                } else if (tool === 'orders') {
+                    updateOrdersTable();
+                    document.getElementById('btnAddOrder').addEventListener('click', addOrder);
+                    document.querySelectorAll('[data-order-filter]').forEach(btn => {
+                        btn.addEventListener('click', () => updateOrdersTable(btn.getAttribute(
+                            'data-order-filter')));
+                    });
+                } else if (tool === 'debtors') {
+                    updateDebtsTable();
+                    document.getElementById('btnAddDebt').addEventListener('click', addDebt);
+                }
+
+                // Generic tool buttons in resources
+                document.querySelectorAll('[data-tool]').forEach(el => {
+                    if (!el.hasAttribute('data-bound')) {
+                        el.setAttribute('data-bound', '1');
+                        el.addEventListener('click', (e) => {
+                            const t = e.currentTarget.getAttribute('data-tool');
+                            if (t) { closeModal();
+                                openToolModal(t); }
+                        });
+                    }
+                });
+            }
+
+            // ===== CRUD OPERATIONS =====
+            function addSale() {
+                const product = document.getElementById('saleProduct').value.trim();
+                const qty = parseFloat(document.getElementById('saleQty').value) || 0;
+                const price = parseFloat(document.getElementById('salePrice').value) || 0;
+                const total = parseFloat(document.getElementById('saleTotal').value) || (qty * price);
+                const customer = document.getElementById('saleCustomer').value.trim();
+                const date = document.getElementById('saleDate').value || todayStr();
+                const status = document.getElementById('saleStatus').value;
+                const method = document.getElementById('saleMethod').value;
+                const notes = document.getElementById('saleNotes').value.trim();
+
+                if (!product || total <= 0) {
+                    showToast('Please enter product and a valid price.', 'warning');
+                    return;
+                }
+
+                const sales = getSales();
+                sales.push({ id: generateId(), product, qty, price, total, customer, date, status, method,
+                    notes, createdAt: now() });
+                DataStore.set(KEYS.sales, sales);
+                updateSalesTable();
+                calculateDashboard();
+                showToast('Sale added successfully.', 'success');
+                // Clear form
+                document.getElementById('saleProduct').value = '';
+                document.getElementById('saleQty').value = '1';
+                document.getElementById('salePrice').value = '';
+                document.getElementById('saleTotal').value = '';
+                document.getElementById('saleCustomer').value = '';
+                document.getElementById('saleNotes').value = '';
+            }
+
+            function updateSalesTable() {
+                const sales = getSales();
+                const tbody = document.getElementById('salesTableBody');
+                if (!tbody) return;
+                const totalCount = sales.length;
+                const totalValue = sales.reduce((sum, s) => sum + (Number(s.total) || 0), 0);
+                document.getElementById('saleTotalCount').textContent = totalCount;
+                document.getElementById('saleTotalValue').textContent = fmtNaira(totalValue);
+                if (sales.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="6" style="text-align:center;color:var(--text-light);">No sales yet.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = sales.map(s => `
+                <tr>
+                  <td>${escapeHtml(s.product)}</td>
+                  <td>${escapeHtml(s.customer || '—')}</td>
+                  <td>${fmtDate(s.date)}</td>
+                  <td>${fmtNaira(s.total)}</td>
+                  <td><span class="badge ${s.status === 'PAID' ? 'badge--green' : s.status === 'PENDING' ? 'badge--amber' : 'badge--red'}">${escapeHtml(s.status)}</span></td>
+                  <td><div class="actions">
+                    <button class="btn btn--xs btn--danger" onclick="deleteRecord('${s.id}','sales')">✕</button>
+                  </div></td>
+                </tr>`).join('');
+            }
+
+            function addExpense() {
+                const name = document.getElementById('expName').value.trim();
+                const category = document.getElementById('expCategory').value;
+                const amount = parseFloat(document.getElementById('expAmount').value) || 0;
+                const date = document.getElementById('expDate').value || todayStr();
+                const notes = document.getElementById('expNotes').value.trim();
+                if (!name || amount <= 0) {
+                    showToast('Please enter expense name and amount.', 'warning');
+                    return;
+                }
+                const expenses = getExpenses();
+                expenses.push({ id: generateId(), name, category, amount, date, notes, createdAt: now() });
+                DataStore.set(KEYS.expenses, expenses);
+                updateExpensesTable();
+                calculateDashboard();
+                showToast('Expense saved.', 'success');
+                document.getElementById('expName').value = '';
+                document.getElementById('expAmount').value = '';
+                document.getElementById('expNotes').value = '';
+            }
+
+            function updateExpensesTable() {
+                const expenses = getExpenses();
+                const tbody = document.getElementById('expensesTableBody');
+                if (!tbody) return;
+                const total = expenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+                document.getElementById('expTotalValue').textContent = fmtNaira(total);
+                if (expenses.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align:center;color:var(--text-light);">No expenses yet.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = expenses.map(e => `
+                <tr>
+                  <td>${escapeHtml(e.name)}</td>
+                  <td>${escapeHtml(e.category)}</td>
+                  <td>${fmtDate(e.date)}</td>
+                  <td>${fmtNaira(e.amount)}</td>
+                  <td><div class="actions"><button class="btn btn--xs btn--danger" onclick="deleteRecord('${e.id}','expenses')">✕</button></div></td>
+                </tr>`).join('');
+            }
+
+            function addInventory() {
+                const name = document.getElementById('invName').value.trim();
+                const sku = document.getElementById('invSku').value.trim();
+                const price = parseFloat(document.getElementById('invPrice').value) || 0;
+                const stock = parseInt(document.getElementById('invStock').value) || 0;
+                const threshold = parseInt(document.getElementById('invThreshold').value) || 5;
+                if (!name) { showToast('Please enter product name.', 'warning'); return; }
+                const inventory = getInventory();
+                inventory.push({ id: generateId(), name, sku, price, currentStock: stock, threshold,
+                    createdAt: now() });
+                DataStore.set(KEYS.inventory, inventory);
+                updateInventoryTable();
+                calculateDashboard();
+                showToast('Product updated.', 'success');
+                document.getElementById('invName').value = '';
+                document.getElementById('invSku').value = '';
+                document.getElementById('invPrice').value = '';
+                document.getElementById('invStock').value = '0';
+            }
+
+            function updateInventoryTable() {
+                const inventory = getInventory();
+                const tbody = document.getElementById('inventoryTableBody');
+                if (!tbody) return;
+                const inStock = inventory.filter(i => Number(i.currentStock) > Number(i.threshold)).length;
+                const lowStock = inventory.filter(i => Number(i.currentStock) <= Number(i.threshold) && Number(i
+                    .currentStock) > 0).length;
+                const outStock = inventory.filter(i => Number(i.currentStock) <= 0).length;
+                document.getElementById('invInStock').textContent = inStock;
+                document.getElementById('invLowStockCount').textContent = lowStock;
+                document.getElementById('invOutStock').textContent = outStock;
+                if (inventory.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="6" style="text-align:center;color:var(--text-light);">No products added yet.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = inventory.map(i => {
+                    const status = Number(i.currentStock) <= 0 ? 'Out of Stock' : Number(i.currentStock) <=
+                        Number(i.threshold) ? 'Low Stock' : 'In Stock';
+                    const badgeClass = status === 'In Stock' ? 'badge--green' : status ===
+                        'Low Stock' ? 'badge--amber' : 'badge--red';
+                    return `<tr>
+                  <td>${escapeHtml(i.name)}</td>
+                  <td>${escapeHtml(i.sku || '—')}</td>
+                  <td>${fmtNaira(i.price)}</td>
+                  <td>${i.currentStock}</td>
+                  <td><span class="badge ${badgeClass}">${status}</span></td>
+                  <td><div class="actions"><button class="btn btn--xs btn--danger" onclick="deleteRecord('${i.id}','inventory')">✕</button></div></td>
+                </tr>`;
+                }).join('');
+            }
+
+            function updateStockProductSelect() {
+                const inventory = getInventory();
+                const sel = document.getElementById('stockProduct');
+                if (!sel) return;
+                sel.innerHTML = inventory.length === 0 ?
+                    '<option>No products yet — add inventory first</option>' :
+                    inventory.map(i => `<option value="${i.id}">${escapeHtml(i.name)}</option>`).join('');
+            }
+
+            function updateStockTable() {
+                const tbody = document.getElementById('stockTableBody');
+                if (!tbody) return;
+                // Stock movements are stored in a separate array for simplicity
+                const movements = DataStore.get('kreatebiz_stock_movements', []);
+                if (movements.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align:center;color:var(--text-light);">No stock movements yet.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = movements.slice(-20).reverse().map(m => `
+                <tr>
+                  <td>${fmtDate(m.date)}</td>
+                  <td>${escapeHtml(m.productName || '—')}</td>
+                  <td><span class="badge ${m.type === 'IN' ? 'badge--green' : 'badge--red'}">${m.type}</span></td>
+                  <td>${m.qty}</td>
+                  <td>${escapeHtml(m.reason || '—')}</td>
+                </tr>`).join('');
+            }
+
+            function addStockMovement() {
+                const sel = document.getElementById('stockProduct');
+                const inventory = getInventory();
+                const productId = sel.value;
+                const product = inventory.find(i => i.id === productId);
+                if (!product) { showToast('Please add a product in Inventory first.', 'warning'); return; }
+                const type = document.getElementById('stockType').value;
+                const qty = parseInt(document.getElementById('stockQty').value) || 0;
+                const date = document.getElementById('stockDate').value || todayStr();
+                const reason = document.getElementById('stockReason').value.trim();
+                if (qty <= 0) { showToast('Please enter valid quantity.', 'warning'); return; }
+
+                const currentStock = Number(product.currentStock);
+                if (type === 'OUT' && qty > currentStock) {
+                    showToast(`Not enough stock! Only ${currentStock} available.`, 'error');
+                    return;
+                }
+                product.currentStock = type === 'IN' ? currentStock + qty : currentStock - qty;
+                DataStore.set(KEYS.inventory, inventory);
+
+                const movements = DataStore.get('kreatebiz_stock_movements', []);
+                movements.push({ id: generateId(), productId, productName: product.name, type, qty, date,
+                    reason });
+                DataStore.set('kreatebiz_stock_movements', movements);
+                updateInventoryTable();
+                updateStockTable();
+                updateStockProductSelect();
+                calculateDashboard();
+                showToast(`Stock ${type === 'IN' ? 'added' : 'removed'} successfully.`, 'success');
+                document.getElementById('stockQty').value = '1';
+                document.getElementById('stockReason').value = '';
+            }
+
+            function addCustomer() {
+                const name = document.getElementById('custName').value.trim();
+                const phone = document.getElementById('custPhone').value.trim();
+                const email = document.getElementById('custEmail').value.trim();
+                const address = document.getElementById('custAddress').value.trim();
+                const notes = document.getElementById('custNotes').value.trim();
+                if (!name) { showToast('Please enter customer name.', 'warning'); return; }
+                const customers = getCustomers();
+                customers.push({ id: generateId(), name, phone, email, address, notes, createdAt: now() });
+                DataStore.set(KEYS.customers, customers);
+                updateCustomersTable();
+                showToast('Customer added.', 'success');
+                document.getElementById('custName').value = '';
+                document.getElementById('custPhone').value = '';
+                document.getElementById('custEmail').value = '';
+                document.getElementById('custAddress').value = '';
+                document.getElementById('custNotes').value = '';
+            }
+
+            function updateCustomersTable() {
+                const customers = getCustomers();
+                const search = document.getElementById('custSearch')?.value?.toLowerCase() || '';
+                const filtered = customers.filter(c => c.name.toLowerCase().includes(search) || (c.phone || '')
+                    .toLowerCase().includes(search));
+                const tbody = document.getElementById('customersTableBody');
+                if (!tbody) return;
+                if (filtered.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="text-align:center;color:var(--text-light);">No customers found.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = filtered.map(c => `
+                <tr>
+                  <td>${escapeHtml(c.name)}</td>
+                  <td>${escapeHtml(c.phone || '—')}</td>
+                  <td>${escapeHtml(c.email || '—')}</td>
+                  <td><div class="actions">
+                    ${c.phone ? `<button class="btn btn--xs btn--whatsapp" onclick="waCustomer('${c.phone}')">💬</button>` : ''}
+                    <button class="btn btn--xs btn--danger" onclick="deleteRecord('${c.id}','customers')">✕</button>
+                  </div></td>
+                </tr>`).join('');
+            }
+
+            function addOrder() {
+                const customer = document.getElementById('ordCustomer').value.trim();
+                const status = document.getElementById('ordStatus').value;
+                const details = document.getElementById('ordDetails').value.trim();
+                if (!customer && !details) { showToast('Please enter order info.', 'warning'); return; }
+                const orders = getOrders();
+                orders.push({ id: generateId(), customer, details, status, createdAt: now() });
+                DataStore.set(KEYS.orders, orders);
+                updateOrdersTable();
+                calculateDashboard();
+                showToast('Order added.', 'success');
+                document.getElementById('ordCustomer').value = '';
+                document.getElementById('ordDetails').value = '';
+            }
+
+            function updateOrdersTable(filter = 'ALL') {
+                const orders = getOrders();
+                const tbody = document.getElementById('ordersTableBody');
+                if (!tbody) return;
+                const filtered = filter === 'ALL' ? orders : orders.filter(o => o.status === filter);
+                if (filtered.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="text-align:center;color:var(--text-light);">No orders found.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = filtered.map(o => `
+                <tr>
+                  <td>${escapeHtml(o.customer || '—')}</td>
+                  <td>${escapeHtml(o.details || '—')}</td>
+                  <td><span class="badge ${o.status === 'DELIVERED' ? 'badge--green' : o.status === 'CANCELLED' ? 'badge--red' : 'badge--amber'}">${escapeHtml(o.status)}</span></td>
+                  <td><div class="actions">
+                    <select onchange="updateOrderStatus('${o.id}', this.value)" style="width:auto;padding:4px;font-size:0.75rem;min-height:0;">
+                      <option value="NEW" ${o.status==='NEW'?'selected':''}>NEW</option>
+                      <option value="CONFIRMED" ${o.status==='CONFIRMED'?'selected':''}>CONFIRMED</option>
+                      <option value="PROCESSING" ${o.status==='PROCESSING'?'selected':''}>PROCESSING</option>
+                      <option value="READY" ${o.status==='READY'?'selected':''}>READY</option>
+                      <option value="DELIVERED" ${o.status==='DELIVERED'?'selected':''}>DELIVERED</option>
+                      <option value="CANCELLED" ${o.status==='CANCELLED'?'selected':''}>CANCELLED</option>
+                    </select>
+                    <button class="btn btn--xs btn--danger" onclick="deleteRecord('${o.id}','orders')">✕</button>
+                  </div></td>
+                </tr>`).join('');
+            }
+
+            function addDebt() {
+                const customer = document.getElementById('debtCustomer').value.trim();
+                const amount = parseFloat(document.getElementById('debtAmount').value) || 0;
+                const date = document.getElementById('debtDate').value || todayStr();
+                const dueDate = document.getElementById('debtDueDate').value;
+                const status = document.getElementById('debtStatus').value;
+                const notes = document.getElementById('debtNotes').value.trim();
+                if (!customer || amount <= 0) { showToast('Please enter customer and amount.', 'warning'); return; }
+                const debts = getDebts();
+                debts.push({ id: generateId(), customer, amount, date, dueDate, status, notes, createdAt: now() });
+                DataStore.set(KEYS.debts, debts);
+                updateDebtsTable();
+                calculateDashboard();
+                showToast('Debt recorded.', 'success');
+                document.getElementById('debtCustomer').value = '';
+                document.getElementById('debtAmount').value = '';
+                document.getElementById('debtNotes').value = '';
+            }
+
+            function updateDebtsTable() {
+                const debts = getDebts();
+                const tbody = document.getElementById('debtsTableBody');
+                if (!tbody) return;
+                const outstanding = debts.filter(d => d.status !== 'PAID').reduce((sum, d) => sum + (Number(d
+                    .amount) || 0), 0);
+                document.getElementById('debtTotalOutstanding').textContent = fmtNaira(outstanding);
+                if (debts.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align:center;color:var(--text-light);">No debts recorded.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = debts.map(d => `
+                <tr>
+                  <td>${escapeHtml(d.customer)}</td>
+                  <td>${fmtNaira(d.amount)}</td>
+                  <td><span class="badge ${d.status === 'PAID' ? 'badge--green' : d.status === 'PARTIALLY PAID' ? 'badge--amber' : 'badge--red'}">${escapeHtml(d.status)}</span></td>
+                  <td>${d.dueDate ? fmtDate(d.dueDate) : '—'}</td>
+                  <td><div class="actions">
+                    <button class="btn btn--xs btn--whatsapp" onclick="waDebtReminder('${escapeHtml(d.customer)}', ${d.amount})">💬</button>
+                    <button class="btn btn--xs btn--danger" onclick="deleteRecord('${d.id}','debts')">✕</button>
+                  </div></td>
+                </tr>`).join('');
+            }
+
+            // ===== GLOBAL FUNCTIONS (exposed to window) =====
+            window.deleteRecord = function(id, type) {
+                let data, key;
+                switch (type) {
+                    case 'sales':
+                        key = KEYS.sales;
+                        break;
+                    case 'expenses':
+                        key = KEYS.expenses;
+                        break;
+                    case 'inventory':
+                        key = KEYS.inventory;
+                        break;
+                    case 'customers':
+                        key = KEYS.customers;
+                        break;
+                    case 'orders':
+                        key = KEYS.orders;
+                        break;
+                    case 'debts':
+                        key = KEYS.debts;
+                        break;
+                    default:
+                        return;
+                }
+                data = DataStore.get(key);
+                const filtered = data.filter(item => item.id !== id);
+                DataStore.set(key, filtered);
+                if (type === 'sales') updateSalesTable();
+                if (type === 'expenses') updateExpensesTable();
+                if (type === 'inventory') updateInventoryTable();
+                if (type === 'customers') updateCustomersTable();
+                if (type === 'orders') updateOrdersTable();
+                if (type === 'debts') updateDebtsTable();
+                calculateDashboard();
+                showToast('Record deleted.', 'info');
+            };
+
+            window.updateOrderStatus = function(id, newStatus) {
+                const orders = getOrders();
+                const order = orders.find(o => o.id === id);
+                if (order) {
+                    order.status = newStatus;
+                    DataStore.set(KEYS.orders, orders);
+                    updateOrdersTable();
+                    calculateDashboard();
+                    showToast('Order status updated.', 'success');
+                }
+            };
+
+            window.waCustomer = function(phone) {
+                const cleanPhone = phone.replace(/[^\d+]/g, '');
+                const msg = 'Hello, I found you on KreateBiz.';
+                const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank', 'noopener,noreferrer');
+                showToast('Opening WhatsApp…', 'info');
+            };
+
+            window.waDebtReminder = function(customer, amount) {
+                const msg =
+                    `Hello ${customer}, this is a friendly reminder about an outstanding payment of ${fmtNaira(amount)}. Kindly let us know when you can settle. Thank you!`;
+                openWhatsApp(msg);
+            };
+
+            // ===== INVOICE =====
+            function setupInvoiceItems() {
+                const container = document.getElementById('invoiceItems');
+                if (!container) return;
+                container.innerHTML = '';
+                addInvoiceItem();
+            }
+
+            function addInvoiceItem() {
+                const container = document.getElementById('invoiceItems');
+                if (!container) return;
+                const idx = container.children.length;
+                const div = document.createElement('div');
+                div.className = 'form-row form-row--3';
+                div.style.marginBottom = '8px';
+                div.innerHTML = `
+                <input type="text" placeholder="Item description" class="inv-item-desc" aria-label="Item description">
+                <input type="number" placeholder="Qty" value="1" min="1" class="inv-item-qty" aria-label="Quantity">
+                <input type="number" placeholder="Price (₦)" min="0" step="0.01" class="inv-item-price" aria-label="Price">
+              `;
+                container.appendChild(div);
+                div.querySelectorAll('input').forEach(inp => {
+                    inp.addEventListener('input', updateInvoiceTotal);
+                });
+            }
+
+            function updateInvoiceTotal() {
+                const items = document.querySelectorAll('#invoiceItems .form-row');
+                let total = 0;
+                items.forEach(item => {
+                    const qty = parseFloat(item.querySelector('.inv-item-qty')?.value) || 0;
+                    const price = parseFloat(item.querySelector('.inv-item-price')?.value) || 0;
+                    total += qty * price;
+                });
+                const el = document.getElementById('invGrandTotal');
+                if (el) el.textContent = fmtNaira(total);
+            }
+
+            function generateInvoice() {
+                const busName = document.getElementById('invBusName').value.trim() || getSettings().businessName ||
+                    'Your Business';
+                const busPhone = document.getElementById('invBusPhone').value.trim();
+                const busEmail = document.getElementById('invBusEmail').value.trim();
+                const invNumber = document.getElementById('invNumber').value.trim() || 'INV-' + Date.now();
+                const custName = document.getElementById('invCustName').value.trim();
+                const custPhone = document.getElementById('invCustPhone').value.trim();
+                const date = document.getElementById('invDate').value || todayStr();
+                const items = document.querySelectorAll('#invoiceItems .form-row');
+                const itemList = [];
+                items.forEach(item => {
+                    const desc = item.querySelector('.inv-item-desc')?.value.trim();
+                    const qty = parseFloat(item.querySelector('.inv-item-qty')?.value) || 0;
+                    const price = parseFloat(item.querySelector('.inv-item-price')?.value) || 0;
+                    if (desc && qty > 0 && price >= 0) {
+                        itemList.push({ desc, qty, price, total: qty * price });
+                    }
+                });
+                if (itemList.length === 0) { showToast('Please add at least one item.', 'warning'); return; }
+                const grandTotal = itemList.reduce((sum, i) => sum + i.total, 0);
+
+                const output = document.getElementById('invoiceOutput');
+                output.innerHTML = `
+                <div class="document-output__header">
+                  <div><div class="document-output__brand">${escapeHtml(busName)}</div>
+                  ${busPhone ? `<div style="font-size:0.8rem;">📞 ${escapeHtml(busPhone)}</div>` : ''}
+                  ${busEmail ? `<div style="font-size:0.8rem;">✉️ ${escapeHtml(busEmail)}</div>` : ''}</div>
+                  <div style="text-align:right;"><div style="font-weight:800;font-size:1rem;">INVOICE</div>
+                  <div style="font-size:0.8rem;">#${escapeHtml(invNumber)}</div>
+                  <div style="font-size:0.8rem;">${fmtDate(date)}</div></div>
+                </div>
+                <div style="margin-bottom:12px;"><strong>Customer:</strong> ${escapeHtml(custName || '—')}${custPhone ? ` — ${escapeHtml(custPhone)}` : ''}</div>
+                <table class="document-output__table">
+                  <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                  <tbody>${itemList.map(i => `<tr><td>${escapeHtml(i.desc)}</td><td>${i.qty}</td><td>${fmtNaira(i.price)}</td><td>${fmtNaira(i.total)}</td></tr>`).join('')}</tbody>
+                </table>
+                <div class="document-output__total">TOTAL: ${fmtNaira(grandTotal)}</div>
+                <div class="document-output__footer">
+                  <strong>Designed by HassanKreates</strong><br>
+                  More information: 0808 655 6841
+                </div>
+                <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                  <button class="btn btn--primary btn--sm" onclick="window.print()">🖨️ Print</button>
+                  <button class="btn btn--whatsapp btn--sm" onclick="shareInvoiceWhatsApp('${escapeHtml(invNumber)}', ${grandTotal})">📱 WhatsApp</button>
+                </div>
+              `;
+                output.classList.add('document-output--visible');
+                showToast('Invoice generated.', 'success');
+            }
+
+            window.shareInvoiceWhatsApp = function(invNum, total) {
+                const msg = `Invoice ${invNum} — Total: ${fmtNaira(total)}. From KreateBiz.`;
+                openWhatsApp(msg);
+            };
+
+            // ===== RECEIPT =====
+            function setupReceiptItems() {
+                const container = document.getElementById('receiptItems');
+                if (!container) return;
+                container.innerHTML = '';
+                addReceiptItem();
+            }
+
+            function addReceiptItem() {
+                const container = document.getElementById('receiptItems');
+                if (!container) return;
+                const div = document.createElement('div');
+                div.className = 'form-row form-row--3';
+                div.style.marginBottom = '8px';
+                div.innerHTML = `
+                <input type="text" placeholder="Item description" class="rec-item-desc" aria-label="Item description">
+                <input type="number" placeholder="Qty" value="1" min="1" class="rec-item-qty" aria-label="Quantity">
+                <input type="number" placeholder="Price (₦)" min="0" step="0.01" class="rec-item-price" aria-label="Price">
+              `;
+                container.appendChild(div);
+                div.querySelectorAll('input').forEach(inp => {
+                    inp.addEventListener('input', updateReceiptTotal);
+                });
+            }
+
+            function updateReceiptTotal() {
+                const items = document.querySelectorAll('#receiptItems .form-row');
+                let total = 0;
+                items.forEach(item => {
+                    const qty = parseFloat(item.querySelector('.rec-item-qty')?.value) || 0;
+                    const price = parseFloat(item.querySelector('.rec-item-price')?.value) || 0;
+                    total += qty * price;
+                });
+                const el = document.getElementById('recGrandTotal');
+                if (el) el.textContent = fmtNaira(total);
+            }
+
+            function generateReceipt() {
+                const busName = document.getElementById('recBusName').value.trim() || getSettings().businessName ||
+                    'Your Business';
+                const recNumber = document.getElementById('recNumber').value.trim() || 'RCP-' + Date.now();
+                const custName = document.getElementById('recCustName').value.trim();
+                const date = document.getElementById('recDate').value || todayStr();
+                const items = document.querySelectorAll('#receiptItems .form-row');
+                const itemList = [];
+                items.forEach(item => {
+                    const desc = item.querySelector('.rec-item-desc')?.value.trim();
+                    const qty = parseFloat(item.querySelector('.rec-item-qty')?.value) || 0;
+                    const price = parseFloat(item.querySelector('.rec-item-price')?.value) || 0;
+                    if (desc && qty > 0 && price >= 0) {
+                        itemList.push({ desc, qty, price, total: qty * price });
+                    }
+                });
+                if (itemList.length === 0) { showToast('Please add at least one item.', 'warning'); return; }
+                const grandTotal = itemList.reduce((sum, i) => sum + i.total, 0);
+
+                const output = document.getElementById('receiptOutput');
+                output.innerHTML = `
+                <div class="document-output__header">
+                  <div><div class="document-output__brand">${escapeHtml(busName)}</div></div>
+                  <div style="text-align:right;"><div style="font-weight:800;font-size:1rem;">RECEIPT</div>
+                  <div style="font-size:0.8rem;">#${escapeHtml(recNumber)}</div>
+                  <div style="font-size:0.8rem;">${fmtDate(date)}</div></div>
+                </div>
+                ${custName ? `<div style="margin-bottom:12px;"><strong>Customer:</strong> ${escapeHtml(custName)}</div>` : ''}
+                <table class="document-output__table">
+                  <thead><tr><th>Description</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                  <tbody>${itemList.map(i => `<tr><td>${escapeHtml(i.desc)}</td><td>${i.qty}</td><td>${fmtNaira(i.price)}</td><td>${fmtNaira(i.total)}</td></tr>`).join('')}</tbody>
+                </table>
+                <div class="document-output__total">TOTAL: ${fmtNaira(grandTotal)}</div>
+                <div class="document-output__footer">
+                  <strong>Designed by HassanKreates</strong><br>
+                  More information: 0808 655 6841
+                </div>
+                <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                  <button class="btn btn--primary btn--sm" onclick="window.print()">🖨️ Print</button>
+                  <button class="btn btn--whatsapp btn--sm" onclick="shareReceiptWhatsApp('${escapeHtml(recNumber)}', ${grandTotal})">📱 WhatsApp</button>
+                </div>
+              `;
+                output.classList.add('document-output--visible');
+                showToast('Receipt generated.', 'success');
+            }
+
+            window.shareReceiptWhatsApp = function(recNum, total) {
+                const msg = `Receipt ${recNum} — Total: ${fmtNaira(total)}. From KreateBiz.`;
+                openWhatsApp(msg);
+            };
+
+            // ===== CALCULATOR =====
+            function calcProfit() {
+                const cost = parseFloat(document.getElementById('calcCost').value) || 0;
+                const transport = parseFloat(document.getElementById('calcTransport').value) || 0;
+                const packaging = parseFloat(document.getElementById('calcPackaging').value) || 0;
+                const marketing = parseFloat(document.getElementById('calcMarketing').value) || 0;
+                const other = parseFloat(document.getElementById('calcOther').value) || 0;
+                const profitPct = parseFloat(document.getElementById('calcProfitPct').value) || 0;
+
+                const totalCost = cost + transport + packaging + marketing + other;
+                const sellPrice = totalCost * (1 + profitPct / 100);
+                const profit = sellPrice - totalCost;
+                const margin = totalCost > 0 ? (profit / sellPrice) * 100 : 0;
+
+                document.getElementById('calcTotalCost').textContent = fmtNaira(totalCost);
+                document.getElementById('calcSellPrice').textContent = fmtNaira(sellPrice);
+                document.getElementById('calcProfit').textContent = fmtNaira(profit);
+                document.getElementById('calcMargin').textContent = margin.toFixed(1) + '%';
+            }
+
+            function resetCalculator() {
+                ['calcCost', 'calcTransport', 'calcPackaging', 'calcMarketing', 'calcOther', 'calcProfitPct']
+                .forEach(id => document.getElementById(id).value = '');
+                document.getElementById('calcTotalCost').textContent = '₦0';
+                document.getElementById('calcSellPrice').textContent = '₦0';
+                document.getElementById('calcProfit').textContent = '₦0';
+                document.getElementById('calcMargin').textContent = '0%';
+            }
+
+            // ===== SETTINGS MODAL =====
+            function openSettingsModal() {
+                const settings = getSettings();
+                const html = `
+              <div class="modal__header"><h3 class="modal__title">⚙️ Settings</h3><button class="modal__close" aria-label="Close">✕</button></div>
+              <div class="modal__body">
+                <div class="form-group"><label>Business Name</label><input type="text" id="setBusinessName" value="${escapeHtml(settings.businessName || '')}" placeholder="Your business name"></div>
+                <div class="form-group"><label>Theme</label><select id="setTheme"><option value="light" ${document.documentElement.getAttribute('data-theme')==='light'?'selected':''}>Light</option><option value="dark" ${document.documentElement.getAttribute('data-theme')==='dark'?'selected':''}>Dark</option></select></div>
+                <button class="btn btn--primary btn--full" id="btnSaveSettings">💾 SAVE SETTINGS</button>
+                <hr class="divider">
+                <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+                  <button class="btn btn--secondary btn--sm" id="btnExportDataModal">📥 Export Data</button>
+                  <button class="btn btn--secondary btn--sm" id="btnImportDataModal">📤 Import Data</button>
+                  <button class="btn btn--danger btn--sm" id="btnResetDataModal">🗑️ Reset Data</button>
+                </div>
+                <div class="data-notice mt-16">Your data is stored on this device. Cloud backup coming soon.</div>
+              </div>
+            `;
+                openModal(html, 'modal--sm');
+                document.getElementById('btnSaveSettings').addEventListener('click', () => {
+                    const name = document.getElementById('setBusinessName').value.trim() || 'Your Business';
+                    const theme = document.getElementById('setTheme').value;
+                    saveSettings({ ...getSettings(), businessName: name });
+                    applyTheme(theme);
+                    calculateDashboard();
+                    showToast('Settings saved.', 'success');
+                    closeModal();
+                });
+                document.getElementById('btnExportDataModal').addEventListener('click', exportData);
+                document.getElementById('btnImportDataModal').addEventListener('click', () => {
+                    document.getElementById('importFileInput').click();
+                });
+                document.getElementById('btnResetDataModal').addEventListener('click', confirmResetData);
+            }
+
+            // ===== EXPORT / IMPORT / RESET =====
+            function exportData() {
+                const data = DataStore.getAll();
+                data.exportedAt = now();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `kreatebiz_backup_${todayStr()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Data exported successfully.', 'success');
+            }
+
+            function importData(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.sales !== undefined && data.expenses !== undefined) {
+                            DataStore.saveAll(data);
+                            calculateDashboard();
+                            showToast('Data imported successfully.', 'success');
+                        } else {
+                            showToast('Invalid data file.', 'error');
+                        }
+                    } catch (err) {
+                        showToast('Error importing data.', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            function confirmResetData() {
+                openModal(`
+              <div class="modal__header"><h3 class="modal__title">⚠️ Reset Data</h3><button class="modal__close" aria-label="Close">✕</button></div>
+              <div class="modal__body">
+                <p style="font-weight:600;color:var(--error);">This will permanently remove locally stored KreateBiz data from this browser.</p>
+                <p style="margin-top:8px;font-size:0.9rem;color:var(--text-secondary);">This action cannot be undone.</p>
+              </div>
+              <div class="modal__footer">
+                <button class="btn btn--secondary" id="btnCancelReset">CANCEL</button>
+                <button class="btn btn--danger" id="btnConfirmReset">RESET DATA</button>
+              </div>
+            `, 'modal--sm');
+                document.getElementById('btnCancelReset').addEventListener('click', closeModal);
+                document.getElementById('btnConfirmReset').addEventListener('click', () => {
+                    DataStore.clearAll();
+                    calculateDashboard();
+                    closeModal();
+                    showToast('All data has been reset.', 'warning');
+                });
+            }
+
+            // ===== EVENT LISTENERS =====
+            document.getElementById('btnSettings').addEventListener('click', openSettingsModal);
+            document.getElementById('btnExportData').addEventListener('click', exportData);
+            document.getElementById('btnImportData').addEventListener('click', () => {
+                document.getElementById('importFileInput').click();
+            });
+            document.getElementById('btnResetData').addEventListener('click', confirmResetData);
+
+            document.getElementById('importFileInput').addEventListener('change', (e) => {
+                if (e.target.files[0]) {
+                    importData(e.target.files[0]);
+                    e.target.value = '';
+                }
+            });
+
+            // Tool card buttons on the main page
+            document.querySelectorAll('[data-tool]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const tool = e.currentTarget.getAttribute('data-tool');
+                    if (tool) openToolModal(tool);
+                });
+            });
+
+            // Service buttons
+            document.querySelectorAll('[data-service]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const service = e.currentTarget.getAttribute('data-service');
+                    const msg =
+                        `Hello HassanKreates, I'm interested in your ${service}. I'd like to discuss my project.`;
+                    openWhatsApp(msg);
+                });
+            });
+
+            // Product buttons
+            document.querySelectorAll('[data-product]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const product = e.currentTarget.getAttribute('data-product');
+                    const msg = `Hello HassanKreates, I want to get the ${product}.`;
+                    openWhatsApp(msg);
+                });
+            });
+
+            // "Add First Sale" button
+            document.getElementById('btnFirstSale').addEventListener('click', () => openToolModal('sales'));
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-item__trigger').forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const item = trigger.closest('.faq-item');
+                    const isOpen = item.classList.contains('faq-item--open');
+                    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove(
+                        'faq-item--open'));
+                    document.querySelectorAll('.faq-item__trigger').forEach(t => t.setAttribute(
+                        'aria-expanded', 'false'));
+                    if (!isOpen) {
+                        item.classList.add('faq-item--open');
+                        trigger.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            });
+
+            // ===== INITIALIZATION =====
+            function init() {
+                calculateDashboard();
+                document.getElementById('footerYear').textContent = new Date().getFullYear();
+                // Update dashboard greeting
+                document.getElementById('dashGreeting').textContent = getGreeting();
+                // If no business name set, show default
+                const settings = getSettings();
+                if (settings.businessName && settings.businessName !== 'Your Business') {
+                    document.getElementById('dashBusinessName').textContent = settings.businessName;
+                }
+            }
+
+            // Listen for storage changes (cross-tab)
+            window.addEventListener('storage', (e) => {
+                if (e.key && e.key.startsWith('kreatebiz_')) {
+                    calculateDashboard();
+                }
+            });
+
+            // Init on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            // Also expose openToolModal for inline usage
+            window.openToolModal = openToolModal;
+
+        })();
+    </script>
+</body>
+</html>

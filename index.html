@@ -458,14 +458,16 @@ a:hover{color:var(--green)}
 <div class="toasts" id="toasts"></div>
 <div class="mo" id="mo"><div class="mo__c" id="moC" role="dialog" aria-modal="true"></div></div>
 
-<!-- Firebase Compat SDK (regular scripts — much more reliable than ES modules) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
-<!-- Main Application (classic script — all functions global) -->
+<!-- ============================================================
+     MAIN APPLICATION — NO IIFE WRAPPER
+     All view_* and after_* functions are global so the router
+     can find them via window['view_' + name].
+============================================================ -->
 <script>
-(function(){
 'use strict';
 
 /* Global error handler */
@@ -485,7 +487,7 @@ if (typeof firebase === 'undefined') {
   document.getElementById('feMsg').textContent = 'Could not load Firebase. Check your internet connection and reload.';
   document.getElementById('feDetails').textContent = 'Firebase CDN scripts failed to load.';
   document.getElementById('fatalError').style.display = 'flex';
-  return;
+  throw new Error('Firebase not loaded');
 }
 
 /* ============ FIREBASE INIT ============ */
@@ -504,7 +506,7 @@ try {
 } catch(e) {
   document.getElementById('feMsg').textContent = 'Firebase init failed: ' + e.message;
   document.getElementById('fatalError').style.display = 'flex';
-  return;
+  throw e;
 }
 
 /* ============ CONSTANTS ============ */
@@ -684,7 +686,7 @@ $('lgBtn').addEventListener('click', function() {
   $('lgBtn').disabled = true;
   auth.signInWithEmailAndPassword(e, p).catch(function(err) {
     showErr($('lgErr'), friendlyAuthError(err));
-  }).finally(function() { $('lgBtn').disabled = false; });
+  }).then(function() { $('lgBtn').disabled = false; });
 });
 
 $('rgBtn').addEventListener('click', function() {
@@ -710,7 +712,7 @@ $('rgBtn').addEventListener('click', function() {
     });
   }).catch(function(err) {
     showErr($('rgErr'), friendlyAuthError(err));
-  }).finally(function() { $('rgBtn').disabled = false; });
+  }).then(function() { $('rgBtn').disabled = false; });
 });
 
 $('fgtBtn').addEventListener('click', function() {
@@ -733,7 +735,6 @@ function friendlyAuthError(e) {
 
 /* ============ GLOBAL DELEGATED CLICK HANDLER ============ */
 document.addEventListener('click', function(e) {
-  /* data-action buttons */
   var action = e.target.closest('[data-action]');
   if (action) {
     var a = action.getAttribute('data-action');
@@ -741,15 +742,11 @@ document.addEventListener('click', function(e) {
     if (a === 'show-signup') { KBNav.signup(); return; }
     if (a === 'back-landing') { show('landing'); return; }
   }
-
-  /* nav toggle */
   if (e.target.closest('#navTog')) {
     var links = $('navLinks');
     if (links) links.classList.toggle('nav__links--open');
     return;
   }
-
-  /* nav items (sidebar + bottom nav) */
   var navBtn = e.target.closest('.nav-item[data-view], .bnav__i[data-view]');
   if (navBtn) {
     var v = navBtn.getAttribute('data-view');
@@ -757,23 +754,12 @@ document.addEventListener('click', function(e) {
     navigate(v);
     return;
   }
-
-  /* more sheet items */
   var mvBtn = e.target.closest('[data-mv]');
   if (mvBtn) { closeModal(); setTimeout(function() { navigate(mvBtn.getAttribute('data-mv')); }, 120); return; }
-
-  /* admin nav */
   var avBtn = e.target.closest('[data-av]');
   if (avBtn) { renderAdminView(avBtn.getAttribute('data-av')); return; }
-
-  /* view links from any content */
   var vBtn = e.target.closest('[data-view]:not(.nav-item):not(.bnav__i)');
-  if (vBtn) {
-    var vv = vBtn.getAttribute('data-view');
-    if (vBtn.id === 'goToInventory') {}
-    navigate(vv);
-    return;
-  }
+  if (vBtn) { navigate(vBtn.getAttribute('data-view')); return; }
 });
 
 /* ============ KBNav ============ */
@@ -1014,7 +1000,6 @@ function startPayment(key, btn) {
   });
 }
 
-/* Payment callback */
 try {
   if (new URLSearchParams(location.search).get('payment') === 'callback') {
     setTimeout(function() {
@@ -2115,7 +2100,10 @@ function renderAdminView(v) {
   if (typeof fn !== 'function') { $('admMain').innerHTML = '<div class="card"><div class="fw7">View not found</div></div>'; return; }
   $('admMain').innerHTML = '<div class="card"><div class="hint">Loading…</div></div>';
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); })
-    .catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7">Error loading</div><div class="hint">' + esc(err.message) + '</div></div>'; console.error(err); });
+    .catch(function(err) { 
+      $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin access error</div><div class="hint mt-8">' + esc(err.message) + '</div><div class="card mt-16" style="background:var(--off)"><div class="fw7 mb-8" style="font-size:.85rem">How to fix:</div><ol style="font-size:.82rem;color:var(--tx2);padding-left:18px;display:flex;flex-direction:column;gap:5px"><li>Confirm you are signed in with <strong>hassankreates@gmail.com</strong></li><li>Open Firebase Console → Firestore → Rules and confirm the rules are published</li><li>Open Firestore → Data → <strong>users</strong> collection → find doc <code>Q53Gx0W46FSR3ZZICM3rxYDuJa53</code> → set field <strong>isAdmin</strong> as boolean true</li></ol></div></div>'; 
+      console.error(err); 
+    });
 }
 function bindAdminActions() {
   $('admMain').onclick = function(e) {
@@ -2225,8 +2213,6 @@ $('admOut').addEventListener('click', function() { auth.signOut().catch(function
 /* ============ INIT ============ */
 try { var t = localStorage.getItem(THEME_KEY); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 $('yr').textContent = new Date().getFullYear();
-
-})();
 </script>
 </body>
 </html>

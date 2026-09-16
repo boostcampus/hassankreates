@@ -106,7 +106,6 @@ a:hover{color:var(--green)}
 .plan--hot{border-color:var(--green);box-shadow:var(--sh2)}
 .plan--biz{border-color:var(--purple);box-shadow:0 12px 40px rgba(124,58,237,.14)}
 .plan--current{border-color:var(--green);background:var(--greenL)}
-.plan--gift{border-color:var(--gold);background:linear-gradient(135deg,#fdf7e8,var(--white))}
 .plan__name{font-size:1.05rem;font-weight:800;margin-bottom:2px}
 .plan__price{font-size:1.75rem;font-weight:900;color:var(--green);margin:10px 0 2px}
 .plan--biz .plan__price{color:var(--purple)}
@@ -118,7 +117,6 @@ a:hover{color:var(--green)}
 .plan__feat li.no::before{content:'✗';color:var(--err)}
 .plan__badge{position:absolute;top:-11px;right:14px;background:var(--green);color:#fff;font-size:.66rem;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase}
 .plan__badge--b{background:linear-gradient(135deg,#7c3aed,#5b21b6)}
-.plan__badge--gift{background:linear-gradient(135deg,#c8a45c,#a4822e)}
 .plan__you{position:absolute;top:-11px;left:14px;background:#7c3aed;color:#fff;font-size:.66rem;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase}
 .plan__you--gift{background:linear-gradient(135deg,#c8a45c,#a4822e)}
 .auth-wrap{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(180deg,var(--off),var(--gray))}
@@ -258,6 +256,7 @@ a:hover{color:var(--green)}
 .gift-banner__value-list div{display:flex;justify-content:space-between;gap:10px}
 .gift-banner__value-list strong{font-weight:800}
 .post-gift-banner{background:linear-gradient(135deg,#f0efec,#e0dfdc);color:var(--tx);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid #a4822e}
+.welcome-back-banner{background:linear-gradient(135deg,#f3ecff,#faf8ff);color:var(--tx);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid var(--purple)}
 .announce-banner{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1e3a5f;border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid #2563eb;position:relative}
 .announce-banner__head{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:800;font-size:.9rem}
 .announce-banner__msg{font-size:.85rem;line-height:1.5;color:#334155;white-space:pre-wrap}
@@ -325,15 +324,9 @@ a:hover{color:var(--green)}
 .tl-item--warn::before{background:var(--warn)}
 .tl-item--purple::before{background:var(--purple)}
 .tl-item--red::before{background:var(--err)}
-.value-acc{background:linear-gradient(135deg,#1a1a1a,#0d0d0d);color:#fff;border-radius:var(--r2);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
-.value-acc::before{content:'';position:absolute;top:-30%;right:-20%;width:180px;height:180px;background:radial-gradient(circle,rgba(200,164,92,.22),transparent 70%);border-radius:50%}
-.value-acc__h{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:#c8a45c;margin-bottom:10px;position:relative}
-.value-acc__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;position:relative}
-@media(min-width:600px){.value-acc__grid{grid-template-columns:repeat(3,1fr)}}
-.value-acc__item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:10px 12px}
-.value-acc__item-l{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:4px}
-.value-acc__item-v{font-size:.98rem;font-weight:800;color:#fff;word-break:break-word}
-.value-acc__item-v--gold{color:#e2bd6d}
+.maintenance-card{background:linear-gradient(135deg,#fffbeb,#fff);border:1px solid #fcd34d;border-radius:var(--r2);padding:14px;margin-bottom:16px}
+.maintenance-card .fw7{color:#92400e}
+.maintenance-card .hint{color:#a16207}
 </style>
 </head>
 <body>
@@ -403,9 +396,9 @@ a:hover{color:var(--green)}
     <div class="container text-center"><span class="sec-label">FAQ</span><h2 class="sec-title">Questions</h2></div>
     <div class="container" style="max-width:760px">
       <div class="card mb-8"><div class="fw7">Is KreateBiz free?</div><div class="hint mt-8">Yes. Free forever plan with generous limits. Plus a 14-day Pro trial on signup and an invitation to try Business free for 7 days once you start using the app seriously.</div></div>
-      <div class="card mb-8"><div class="fw7">What's the difference between Pro and Business?</div><div class="hint mt-8">Pro gives you unlimited tools to <strong>manage your business</strong>. Business is a different level — it lets you <strong>run your business and your people and your money and your stock and your growth</strong>, all connected: staff &amp; permissions, suppliers, purchases, budget, smart cash flow, advanced inventory, CRM, insights, smart alerts, profit analysis, backup and multiple businesses.</div></div>
+      <div class="card mb-8"><div class="fw7">What's the difference between Pro and Business?</div><div class="hint mt-8">Pro gives you unlimited tools to <strong>manage your business</strong>. Business is a different level — it lets you <strong>run your business and your people and your money and your stock and your growth</strong>, all connected.</div></div>
       <div class="card mb-8"><div class="fw7">Do I need a card for the trial or gift?</div><div class="hint mt-8">No. No card, no payment details, no catch. It's a real gift.</div></div>
-      <div class="card mb-8"><div class="fw7">What happens when it ends?</div><div class="hint mt-8">Your data stays. Everything you created during the trial or gift stays accessible forever. Only the ongoing premium features lock. If you don't upgrade, you drop back to the Free plan gracefully.</div></div>
+      <div class="card mb-8"><div class="fw7">What happens when my subscription ends?</div><div class="hint mt-8">Your data stays. Everything you created during the trial, gift or paid plan stays accessible forever. Only the ongoing premium features lock. You drop back to the Free plan gracefully, and we'll remember you as a past customer.</div></div>
       <div class="card mb-8"><div class="fw7">Contact support</div><div class="hint mt-8">WhatsApp 0808 655 6841 · hassankreates@gmail.com</div></div>
     </div>
   </section>
@@ -641,7 +634,6 @@ function money(n, d) { n = Number(n) || 0; var s = n < 0 ? '-' : ''; var a = Mat
 function moneyW(n) { return money(n, 0); }
 function fmtD(s) { var d = parseD(s); return d ? d.toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'; }
 function fmtDs(s) { var d = parseD(s); return d ? d.toLocaleDateString('en-NG', { day: 'numeric', month: 'short' }) : '—'; }
-function fmtDateTime(s) { var d = new Date(s); return isNaN(d.getTime()) ? '—' : d.toLocaleString('en-NG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
 function timeAgo(s) { var d = new Date(s); if (isNaN(d.getTime())) return '—'; var diff = Math.floor((new Date() - d) / 1000); if (diff < 60) return 'just now'; if (diff < 3600) return Math.floor(diff / 60) + 'm ago'; if (diff < 86400) return Math.floor(diff / 3600) + 'h ago'; if (diff < 604800) return Math.floor(diff / 86400) + 'd ago'; return fmtDs(s.slice(0, 10)); }
 function isToday(s) { var d = parseD(s); if (!d) return false; var t = new Date(); return d.getFullYear() === t.getFullYear() && d.getMonth() === t.getMonth() && d.getDate() === t.getDate(); }
 function inRange(s, f, t) { var d = parseD(s); if (!d) return false; var F = parseD(f), T = parseD(t); if (F && d < F) return false; if (T && d > T) return false; return true; }
@@ -660,7 +652,7 @@ function toast(msg, type) {
 }
 
 /* ============================================================
-   DOC STYLES (unchanged)
+   DOC STYLES
    ============================================================ */
 var DOC_CSS = `.doc-tpl,.doc-tpl *{box-sizing:border-box;margin:0;padding:0}.doc-tpl{background:#ffffff;color:#1a1a1a;width:100%;font-family:Arial,Helvetica,"Segoe UI",sans-serif;font-size:13px;line-height:1.5;overflow:hidden}.doc-tpl img{max-width:100%;display:block}.doc-tpl table{border-collapse:collapse;width:100%}.doc-tpl .d-header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start}.doc-tpl .d-logo{max-height:62px;max-width:190px;object-fit:contain;margin-bottom:10px}.doc-tpl .d-biz{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-.01em}.doc-tpl .d-meta{font-size:11px;color:#5b5b5b;margin-top:5px;line-height:1.65}.doc-tpl .d-type{font-size:24px;font-weight:800;letter-spacing:.12em;line-height:1.1;text-align:right}.doc-tpl .d-num{font-size:11px;font-weight:700;color:#6b6b6b;margin-top:6px;letter-spacing:.05em;text-align:right}.doc-tpl .d-info-grid{display:flex;gap:24px;margin:22px 0 6px}.doc-tpl .d-info-box{flex:1;min-width:0}.doc-tpl .d-info-box--right{text-align:right}.doc-tpl .d-info-box h4{font-size:9px;text-transform:uppercase;color:#9a9a9a;font-weight:800;letter-spacing:.14em;margin-bottom:8px}.doc-tpl .d-cust-name{font-size:13.5px;font-weight:700}.doc-tpl .d-cust-line{font-size:11.5px;color:#555;margin-top:3px}.doc-tpl .d-info-row{font-size:11.5px;color:#555;display:flex;justify-content:flex-end;gap:8px;padding:2.5px 0}.doc-tpl .d-info-row span{color:#9a9a9a}.doc-tpl .d-info-row strong{color:#1a1a1a;font-weight:700}.doc-tpl .d-tbl{width:100%;border-collapse:collapse;margin:20px 0;font-size:12px}.doc-tpl .d-tbl th{padding:10px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.doc-tpl .d-tbl td{padding:11px 12px;border-bottom:1px solid #eeeeee;vertical-align:top;word-break:break-word}.doc-tpl .d-tbl .c-qty{text-align:center;width:56px}.doc-tpl .d-tbl .c-price{text-align:right;width:112px}.doc-tpl .d-tbl .c-amt{text-align:right;width:120px}.doc-tpl .d-totals{max-width:320px;margin-left:auto;font-size:12px;margin-top:8px}.doc-tpl .d-totals .row{display:flex;justify-content:space-between;padding:6px 0;color:#555}.doc-tpl .d-totals .row strong{color:#1a1a1a}.doc-tpl .d-totals .row--due,.doc-tpl .d-totals .row--due strong{color:#b91c1c;font-weight:800}.doc-tpl .d-total{display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:800;padding:11px 0;margin-top:6px;border-top:2px solid #1a1a1a}.doc-tpl .d-stamp-wrap{text-align:right;margin-top:12px}.doc-tpl .d-stamp{display:inline-block;border:2px solid #10b981;color:#10b981;font-weight:900;font-size:13px;letter-spacing:.2em;padding:6px 16px;border-radius:6px;text-transform:uppercase;transform:rotate(-5deg)}.doc-tpl .d-account{margin-top:18px;padding:13px 15px;background:#f7f8f7;border-radius:8px;font-size:11px;color:#444}.doc-tpl .d-account h4{font-size:9px;text-transform:uppercase;color:#8a8a8a;letter-spacing:.14em;font-weight:800;margin-bottom:8px}.doc-tpl .d-account .d-acc-grid{display:flex;flex-wrap:wrap;gap:6px 26px}.doc-tpl .d-account .d-acc-grid div{min-width:130px}.doc-tpl .d-account strong{color:#1a1a1a}.doc-tpl .d-notes{margin-top:14px;padding:12px 14px;background:#f7f8f7;border-left:3px solid #0a5c3c;border-radius:0 6px 6px 0;font-size:11px;color:#444}.doc-tpl .d-notes strong{color:#1a1a1a;display:block;margin-bottom:4px;font-size:9px;text-transform:uppercase;letter-spacing:.12em}.doc-tpl .d-sign{display:flex;gap:48px;margin-top:40px}.doc-tpl .d-sign div{flex:1;border-top:1px solid #c9c9c9;padding-top:7px;font-size:9.5px;color:#8a8a8a;text-align:center;letter-spacing:.08em;text-transform:uppercase}.doc-tpl .d-footer{margin-top:26px;padding-top:13px;border-top:1px solid #e6e6e6;text-align:center;font-size:9.5px;color:#8a8a8a}.doc-tpl .d-footer strong{color:#0a5c3c}.tpl-classic{padding:34px 36px}.tpl-classic .d-header{padding-bottom:18px;border-bottom:3px solid #0a5c3c}.tpl-classic .d-biz{color:#0a5c3c}.tpl-classic .d-type{color:#0a5c3c}.tpl-classic .d-tbl th{background:#0a5c3c;color:#ffffff}.tpl-classic .d-total{color:#0a5c3c;border-top-color:#0a5c3c}.tpl-modern{padding:0}.tpl-modern .d-band{background:#0a5c3c;padding:28px 36px}.tpl-modern .d-band .d-biz,.tpl-modern .d-band .d-type{color:#ffffff}.tpl-modern .d-band .d-meta{color:rgba(255,255,255,.86)}.tpl-modern .d-band .d-num{color:rgba(255,255,255,.86)}.tpl-modern .d-body{padding:26px 36px 34px}.tpl-modern .d-tbl th{background:#e8f5ee;color:#0a5c3c;border-bottom:2px solid #0a5c3c}.tpl-modern .d-total{color:#0a5c3c;border-top-color:#0a5c3c}.tpl-minimal{padding:40px 42px}.tpl-minimal .d-header{padding-bottom:22px;border-bottom:1px solid #e2e2e2}.tpl-minimal .d-type{font-size:19px;font-weight:400;color:#9a9a9a;letter-spacing:.3em}.tpl-minimal .d-num{color:#9a9a9a;font-weight:500}.tpl-minimal .d-tbl{margin-top:26px}.tpl-minimal .d-tbl th{color:#8a8a8a;border-bottom:1px solid #1a1a1a;background:transparent;font-size:9px;letter-spacing:.2em}.tpl-minimal .d-tbl td{border-bottom:1px solid #f0f0f0;padding:12px}.tpl-minimal .d-total{border-top:1px solid #1a1a1a;font-size:15px}.tpl-bold{padding:0}.tpl-bold .d-band{background:#111111;padding:32px 36px}.tpl-bold .d-band .d-biz{color:#ffffff;font-size:24px;font-weight:900}.tpl-bold .d-band .d-meta{color:rgba(255,255,255,.72)}.tpl-bold .d-band .d-type{color:#10b981;font-size:32px;font-weight:900}.tpl-bold .d-band .d-num{color:rgba(255,255,255,.72)}.tpl-bold .d-body{padding:28px 36px 36px}.tpl-bold .d-tbl th{background:#111111;color:#ffffff}.tpl-bold .d-total{border-top:3px solid #111111;color:#0a5c3c;font-size:19px}.tpl-elegant{padding:40px 42px;font-family:Georgia,serif}.tpl-elegant .d-header{flex-direction:column;align-items:center;text-align:center;padding-bottom:22px;border-bottom:1px solid #d9c78a}.tpl-elegant .d-logo{margin:0 auto 10px}.tpl-elegant .d-biz{font-size:26px;letter-spacing:.08em;color:#1a1a1a;font-weight:400}.tpl-elegant .d-type{font-size:14px;letter-spacing:.5em;color:#b08d2f;font-weight:700;margin-top:18px;text-align:center}.tpl-elegant .d-num{color:#8a8a8a;text-align:center;font-weight:400}.tpl-elegant .d-info-box h4{color:#b08d2f}.tpl-elegant .d-tbl th{background:transparent;color:#b08d2f;border-bottom:1px solid #d9c78a}.tpl-elegant .d-tbl td{border-bottom:1px solid #f0ebdc;padding:12px}.tpl-elegant .d-total{border-top:1px solid #d9c78a;color:#1a1a1a}.tpl-corporate{padding:0}.tpl-corporate .d-band{background:#1e3a5f;padding:26px 36px;border-bottom:4px solid #0a5c3c}.tpl-corporate .d-band .d-biz{color:#ffffff}.tpl-corporate .d-band .d-meta{color:rgba(255,255,255,.82)}.tpl-corporate .d-band .d-type{color:#8fc0ee;font-size:22px}.tpl-corporate .d-band .d-num{color:rgba(255,255,255,.82)}.tpl-corporate .d-body{padding:26px 36px 34px}.tpl-corporate .d-tbl th{background:#eef3f9;color:#1e3a5f;border-bottom:2px solid #1e3a5f}.tpl-corporate .d-total{border-top-color:#1e3a5f;color:#1e3a5f}.tpl-premium{padding:0}.tpl-premium .d-band{background:#151a1e;padding:30px 36px;border-bottom:3px solid #c8a45c}.tpl-premium .d-band .d-biz{color:#ffffff}.tpl-premium .d-band .d-meta{color:rgba(255,255,255,.62)}.tpl-premium .d-band .d-type{color:#c8a45c;letter-spacing:.32em;font-size:20px}.tpl-premium .d-band .d-num{color:#c8a45c}.tpl-premium .d-body{padding:28px 36px 36px}.tpl-premium .d-tbl th{background:#151a1e;color:#c8a45c}.tpl-premium .d-total{border-top:2px solid #c8a45c;color:#151a1e}.tpl-creative{padding:0}.tpl-creative .d-band{background:linear-gradient(135deg,#6d28d9,#0ea5e9);padding:30px 36px}.tpl-creative .d-band .d-biz{color:#ffffff}.tpl-creative .d-band .d-meta{color:rgba(255,255,255,.9)}.tpl-creative .d-band .d-type{color:#fde68a;letter-spacing:.2em}.tpl-creative .d-band .d-num{color:rgba(255,255,255,.9)}.tpl-creative .d-body{padding:26px 36px 34px}.tpl-creative .d-tbl th{background:#f3ecff;color:#6d28d9;border-bottom:2px solid #6d28d9}.tpl-creative .d-total{border-top:2px solid #6d28d9;color:#6d28d9}.tpl-compact{padding:26px 28px;font-size:11.5px}.tpl-compact .d-header{padding-bottom:12px;border-bottom:2px solid #0a5c3c}.tpl-compact .d-biz{font-size:17px;color:#0a5c3c}.tpl-compact .d-type{font-size:17px;color:#0a5c3c}.tpl-compact .d-tbl th{background:#0a5c3c;color:#ffffff;padding:7px 9px;font-size:8.5px}.tpl-compact .d-tbl td{padding:7px 9px}.tpl-compact .d-total{font-size:14px}.tpl-luxury{padding:0;font-family:Georgia,serif}.tpl-luxury .d-band{background:#0b0b0b;padding:34px 40px;border-bottom:1px solid #c8a45c}.tpl-luxury .d-band .d-biz{color:#ffffff;letter-spacing:.16em;font-size:22px;font-weight:400}.tpl-luxury .d-band .d-meta{color:rgba(255,255,255,.55)}.tpl-luxury .d-band .d-type{color:#c8a45c;font-size:15px;letter-spacing:.5em;font-weight:400}.tpl-luxury .d-band .d-num{color:#c8a45c}.tpl-luxury .d-body{padding:32px 40px 38px}.tpl-luxury .d-tbl th{background:transparent;color:#0b0b0b;border-bottom:1px solid #c8a45c;letter-spacing:.22em;font-weight:400}.tpl-luxury .d-total{border-top:1px solid #c8a45c;color:#0b0b0b;font-weight:400}`;
 (function injectDocStyles() {
@@ -709,11 +701,7 @@ function openTemplatePicker(current, onPick, title, subtitle) {
     var el = e.target.closest('[data-tpl]');
     if (!el) return;
     var id = el.getAttribute('data-tpl');
-    if (tplLocked(id)) {
-      closeModal();
-      setTimeout(function() { openUpgradeOrGift('Unlock "' + tplName(id) + '" template', 'This template is part of the ' + (tplNeeds(id) === 2 ? 'Business' : 'Pro') + ' plan.', tplNeeds(id) === 2 ? 'business' : 'pro'); }, 200);
-      return;
-    }
+    if (tplLocked(id)) { closeModal(); setTimeout(function() { openUpgradeOrGift('Unlock "' + tplName(id) + '" template', 'This template is part of the ' + (tplNeeds(id) === 2 ? 'Business' : 'Pro') + ' plan.', tplNeeds(id) === 2 ? 'business' : 'pro'); }, 200); return; }
     closeModal(); onPick(id);
   });
   $('tplUpgradeBtn').addEventListener('click', function() { closeModal(); setTimeout(function() { openUpgradeOrGift('Unlock premium templates', 'Get all 10 designer templates.', 'pro'); }, 180); });
@@ -791,6 +779,18 @@ function flushSave() {
     .catch(function(e) { console.error('Firestore save failed:', e); toast('Sync pending — will retry', 'w'); savePending = true; if (saveTimer) clearTimeout(saveTimer); saveTimer = setTimeout(flushSave, 5000); });
 }
 function saveUsage() { try { localStorage.setItem(USAGE_KEY, JSON.stringify(USAGE)); } catch (e) {} }
+
+/* ---------- MONTHLY USAGE RESET ---------- */
+function checkUsageMonth() {
+  var cur = new Date().toISOString().slice(0, 7);
+  if (!USAGE || USAGE.month !== cur) {
+    USAGE = defaultUsage();
+    saveUsage();
+    return true;
+  }
+  return false;
+}
+
 function loadUserData(uid) {
   return db.collection('users').doc(uid).collection('data').doc('main').get().then(function(doc) {
     if (doc.exists) {
@@ -813,7 +813,7 @@ function loadUserData(uid) {
 }
 
 /* ============================================================
-   EVENT LOGGING (analytics — writes to /users/{uid}/events)
+   EVENT LOGGING
    ============================================================ */
 function logEvent(type, data) {
   if (!currentUser) return Promise.resolve();
@@ -849,15 +849,16 @@ function confirmBox(o, onYes) {
 
 /* ============================================================
    PLAN / TIER RESOLUTION
-   Priority: admin → paid → gift → trial → post-gift → free
    ============================================================ */
 function isAdmin() { return currentUser && currentUser.uid === ADMIN_UID; }
 function isGiftActive() { return subscription.tier === 'gift' && subscription.status === 'active' && subscription.expiresAt && new Date(subscription.expiresAt) > new Date(); }
 function isTrialActive() { return subscription.tier === 'trial' && subscription.status === 'active' && subscription.expiresAt && new Date(subscription.expiresAt) > new Date(); }
 function isPaidActive() { return (subscription.tier === 'pro' || subscription.tier === 'business') && subscription.status === 'active' && subscription.expiresAt && new Date(subscription.expiresAt) > new Date(); }
-function isPostGift() {
+function isPostGift() { if (isPaidActive() || isGiftActive() || isTrialActive()) return false; return userProfile && userProfile.plan === 'post-gift'; }
+function isLapsedPayer() {
+  if (!userProfile) return false;
   if (isPaidActive() || isGiftActive() || isTrialActive()) return false;
-  return userProfile && userProfile.plan === 'post-gift';
+  return !!userProfile.lastPaidTier && userProfile.plan === 'free';
 }
 function effectiveTier() {
   if (isAdmin()) return 'business';
@@ -871,6 +872,7 @@ function hasFeature(f) { return !!currentLimits()[f]; }
 function featureLevel(f) { return currentLimits()[f]; }
 function hasPlan(f) { return hasFeature(f); }
 function underLimit(k) {
+  checkUsageMonth();
   var l = currentLimits()[k];
   if (l === Infinity || l === true) return true;
   if (l === false || l === 0) return false;
@@ -897,27 +899,27 @@ function trialDaysLeft() { if (!isTrialActive()) return 0; return daysFromNow(su
 function isGiftEligible() {
   if (isAdmin()) return false;
   if (effectiveTier() !== 'free') return false;
-  if (subscription.giftUsedAt || userProfile && userProfile.giftUsedAt) return false;
+  if (subscription.giftUsedAt || (userProfile && userProfile.giftUsedAt)) return false;
   if (isPostGift()) return false;
+  if (isLapsedPayer()) return false;
   try { if (sessionStorage.getItem(GIFT_OFFER_KEY) === 'dismissed') return false; } catch (e) {}
   return true;
 }
-function bumpUsage(k, by) { by = by || 1; if (USAGE[k] === undefined) USAGE[k] = 0; USAGE[k] += by; saveUsage(); }
+function bumpUsage(k, by) {
+  checkUsageMonth();
+  by = by || 1;
+  if (USAGE[k] === undefined) USAGE[k] = 0;
+  USAGE[k] += by;
+  saveUsage();
+}
 
 /* ============================================================
-   SUBSCRIPTION WRITES (trial & gift — client-side)
+   SUBSCRIPTION WRITES (client-side: trial & gift only)
    ============================================================ */
 function activateTrial() {
   if (!currentUser) return Promise.reject(new Error('No user'));
   var end = new Date(); end.setDate(end.getDate() + TRIAL_DAYS);
-  var sub = {
-    userId: currentUser.uid,
-    tier: 'trial',
-    status: 'active',
-    startedAt: nowIso(),
-    expiresAt: end.toISOString(),
-    updatedAt: nowIso()
-  };
+  var sub = { userId: currentUser.uid, tier: 'trial', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), updatedAt: nowIso() };
   return db.collection('subscriptions').doc(currentUser.uid).set(sub).then(function() {
     subscription = sub;
     return db.collection('users').doc(currentUser.uid).update({ plan: 'trial', subscriptionStatus: 'active', trialStartedAt: nowIso(), trialEndsAt: end.toISOString() });
@@ -926,34 +928,11 @@ function activateTrial() {
 function activateGift(trigger) {
   if (!currentUser) return Promise.reject(new Error('No user'));
   var end = new Date(); end.setDate(end.getDate() + GIFT_DAYS);
-  var sub = {
-    userId: currentUser.uid,
-    tier: 'gift',
-    status: 'active',
-    startedAt: nowIso(),
-    expiresAt: end.toISOString(),
-    giftStartedAt: nowIso(),
-    giftTrigger: trigger || 'manual',
-    updatedAt: nowIso()
-  };
+  var sub = { userId: currentUser.uid, tier: 'gift', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), giftStartedAt: nowIso(), giftTrigger: trigger || 'manual', updatedAt: nowIso() };
   return db.collection('subscriptions').doc(currentUser.uid).set(sub).then(function() {
     subscription = sub;
     return db.collection('users').doc(currentUser.uid).update({ plan: 'gift', subscriptionStatus: 'active', giftUsedAt: nowIso(), giftEndsAt: end.toISOString(), giftTrigger: trigger || 'manual' });
-  }).then(function() {
-    logEvent('gift_unlocked', { trigger: trigger || 'manual', expiresAt: end.toISOString() });
-  });
-}
-function markGiftExpired() {
-  if (!currentUser) return Promise.resolve();
-  var sub = Object.assign({}, subscription, { tier: 'free', status: 'expired', updatedAt: nowIso() });
-  return db.collection('subscriptions').doc(currentUser.uid).set(sub).then(function() {
-    subscription = sub;
-    return db.collection('users').doc(currentUser.uid).update({ plan: 'post-gift', subscriptionStatus: 'expired', postGiftSince: nowIso() });
-  }).then(function() {
-    userProfile = userProfile || {};
-    userProfile.plan = 'post-gift';
-    logEvent('gift_expired');
-  });
+  }).then(function() { logEvent('gift_unlocked', { trigger: trigger || 'manual', expiresAt: end.toISOString() }); });
 }
 
 /* ============================================================
@@ -1004,20 +983,11 @@ $('rgBtn').addEventListener('click', function() {
   auth.createUserWithEmailAndPassword(e, p).then(function(cred) {
     var end = new Date(); end.setDate(end.getDate() + TRIAL_DAYS);
     return cred.user.updateProfile({ displayName: n }).then(function() {
-      return db.collection('users').doc(cred.user.uid).set({
-        email: e, displayName: n, isAdmin: false, plan: 'trial', subscriptionStatus: 'active',
-        trialStartedAt: nowIso(), trialEndsAt: end.toISOString(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      return db.collection('users').doc(cred.user.uid).set({ email: e, displayName: n, isAdmin: false, plan: 'trial', subscriptionStatus: 'active', trialStartedAt: nowIso(), trialEndsAt: end.toISOString(), createdAt: firebase.firestore.FieldValue.serverTimestamp() });
     }).then(function() {
-      return db.collection('subscriptions').doc(cred.user.uid).set({
-        userId: cred.user.uid, tier: 'trial', status: 'active',
-        startedAt: nowIso(), expiresAt: end.toISOString(), updatedAt: nowIso()
-      });
-    }).then(function() {
-      return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'signup_completed', at: nowIso() }).catch(function() {});
-    }).then(function() {
-      return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'trial_started', at: nowIso(), expiresAt: end.toISOString() }).catch(function() {});
-    });
+      return db.collection('subscriptions').doc(cred.user.uid).set({ userId: cred.user.uid, tier: 'trial', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), updatedAt: nowIso() });
+    }).then(function() { return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'signup_completed', at: nowIso() }).catch(function() {}); })
+      .then(function() { return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'trial_started', at: nowIso(), expiresAt: end.toISOString() }).catch(function() {}); });
   }).catch(function(err) { showErr($('rgErr'), friendlyAuthError(err)); $('rgBtn').disabled = false; });
 });
 $('fgtBtn').addEventListener('click', function() {
@@ -1076,7 +1046,7 @@ var KBNav = {
 window.KBNav = KBNav;
 
 /* ============================================================
-   AUTH STATE
+   AUTH STATE — LIFECYCLE HANDLING
    ============================================================ */
 auth.onAuthStateChanged(function(user) {
   if (user) {
@@ -1090,30 +1060,42 @@ auth.onAuthStateChanged(function(user) {
     }).catch(function() { subscription = { tier: 'free', status: 'inactive', expiresAt: null }; });
 
     Promise.all([userDocP, subDocP]).then(function() {
-      // Auto-expiry checks
+      /* ---------- EXPIRY HANDLING ---------- */
       var now = new Date();
       if (subscription.expiresAt && subscription.status === 'active' && new Date(subscription.expiresAt) < now) {
         var wasGift = subscription.tier === 'gift';
         var wasTrial = subscription.tier === 'trial';
-        subscription.status = 'expired';
-        subscription.tier = 'free';
+        var wasPaid = subscription.tier === 'pro' || subscription.tier === 'business';
         var userPatch = { subscriptionStatus: 'expired', updatedAt: nowIso() };
-        if (wasGift) { userPatch.plan = 'post-gift'; userPatch.postGiftSince = nowIso(); }
-        else if (wasTrial) { userPatch.plan = 'free'; userPatch.trialExpiredAt = nowIso(); }
-        else { userPatch.plan = 'free'; }
-        db.collection('subscriptions').doc(user.uid).update({ status: 'expired', tier: 'free', updatedAt: nowIso() }).catch(function() {});
-        db.collection('users').doc(user.uid).update(userPatch).catch(function() {});
+
         if (wasGift) {
-          userProfile.plan = 'post-gift';
+          userPatch.plan = 'post-gift';
+          userPatch.postGiftSince = nowIso();
+          subscription.tier = 'free'; subscription.status = 'expired';
+          db.collection('subscriptions').doc(user.uid).update({ status: 'expired', tier: 'free', updatedAt: nowIso() }).catch(function() {});
           logEvent('gift_expired');
         } else if (wasTrial) {
-          userProfile.plan = 'free';
+          userPatch.plan = 'free';
+          userPatch.trialExpiredAt = nowIso();
+          subscription.tier = 'free'; subscription.status = 'expired';
+          db.collection('subscriptions').doc(user.uid).update({ status: 'expired', tier: 'free', updatedAt: nowIso() }).catch(function() {});
           logEvent('trial_expired');
+        } else if (wasPaid) {
+          userPatch.plan = 'free';
+          userPatch.lastPaidTier = subscription.tier;
+          userPatch.paidExpiredAt = nowIso();
+          subscription.tier = 'free'; subscription.status = 'expired';
+          logEvent('paid_subscription_expired', { tier: userPatch.lastPaidTier });
         }
+
+        db.collection('users').doc(user.uid).update(userPatch).catch(function() {});
+        if (userProfile) Object.assign(userProfile, userPatch);
       }
       return loadUserData(user.uid);
     }).then(function() {
       try { var r = localStorage.getItem(USAGE_KEY); USAGE = r ? Object.assign(defaultUsage(), JSON.parse(r)) : defaultUsage(); } catch (e) { USAGE = defaultUsage(); }
+      checkUsageMonth();
+
       if (isAdmin()) {
         $('admEmail').textContent = user.email;
         show('admin');
@@ -1133,6 +1115,8 @@ auth.onAuthStateChanged(function(user) {
           setTimeout(function() { toast('🎁 Your 7-day Business gift is active.', 's'); }, 1200);
         } else if (isTrialActive()) {
           setTimeout(showUpgradeAdvice, 3500);
+        } else if (isLapsedPayer()) {
+          setTimeout(function() { toast('👋 Welcome back — your data is all here.', 'i'); }, 1200);
         }
       }
     }).catch(function(e) { console.error('Auth state error:', e); toast('Could not load your data. Please refresh.', 'e'); show('landing'); });
@@ -1155,10 +1139,7 @@ function loadAnnouncements() {
     renderShell();
     if (currentView === 'dashboard') renderView('dashboard');
     if (currentView === 'announcements') renderView('announcements');
-  }).catch(function(e) {
-    console.warn('Announcements load failed:', e);
-    announcementsLoaded = true;
-  });
+  }).catch(function(e) { console.warn('Announcements load failed:', e); announcementsLoaded = true; });
 }
 function unreadAnnouncements() {
   if (!userProfile) return [];
@@ -1168,10 +1149,7 @@ function unreadAnnouncements() {
 function markAnnouncementsSeen() {
   if (!currentUser) return;
   var now = nowIso();
-  db.collection('users').doc(currentUser.uid).update({ lastSeenAnnouncementAt: now }).then(function() {
-    if (userProfile) userProfile.lastSeenAnnouncementAt = now;
-    renderShell();
-  }).catch(function() {});
+  db.collection('users').doc(currentUser.uid).update({ lastSeenAnnouncementAt: now }).then(function() { if (userProfile) userProfile.lastSeenAnnouncementAt = now; renderShell(); }).catch(function() {});
 }
 
 /* ============================================================
@@ -1231,7 +1209,7 @@ function navigate(view) {
   if (isViewLocked(view)) {
     var v = VIEWS[view];
     var need = v.biz ? 'business' : 'pro';
-    openUpgradeOrGift('Unlock ' + v.label, v.biz ? 'This is a Business-tier feature. Upgrade to run your business, your people, your money, your stock and your growth — all connected.' : 'This feature is part of the Pro plan.', need);
+    openUpgradeOrGift('Unlock ' + v.label, v.biz ? 'This is a Business-tier feature.' : 'This feature is part of the Pro plan.', need);
     return;
   }
   currentView = view;
@@ -1331,7 +1309,7 @@ function nextDocNum(type) {
 }
 
 /* ============================================================
-   VALUE ACCUMULATOR (during gift)
+   VALUE ACCUMULATOR + BANNERS
    ============================================================ */
 function computeGiftValue() {
   var m = analytics('month');
@@ -1345,15 +1323,7 @@ function computeGiftValue() {
   var upcomingDebts = DATA.debts.filter(function(d) { return debtBal(d) > 0 && d.dueDate && parseD(d.dueDate) >= new Date(new Date().toDateString()); });
   var expectedIn = upcomingDebts.reduce(function(s, d) { return s + debtBal(d); }, 0);
   var topCustCount = (function() { var c = {}; m.sales.forEach(function(s) { c[s.customerId || s.customerName] = (c[s.customerId || s.customerName] || 0) + (Number(s.total) || 0); }); return Object.keys(c).length; })();
-  return {
-    slowStockCount: slowStock.length,
-    slowStockValue: slowValue,
-    projectedCash: cash.net,
-    expectedIn: expectedIn,
-    topCustomers: topCustCount,
-    monthSales: m.grossSales,
-    monthProfit: m.profit
-  };
+  return { slowStockCount: slowStock.length, slowStockValue: slowValue, projectedCash: cash.net, expectedIn: expectedIn, topCustomers: topCustCount, monthSales: m.grossSales, monthProfit: m.profit };
 }
 function businessCashPosition() {
   var m = analytics('month');
@@ -1371,6 +1341,12 @@ function renderPostGiftBanner() {
   if (!isPostGift()) return '';
   return '<div class="post-gift-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">🛬</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Your Business gift ended — but your data stays</div><div class="hint" style="margin-top:2px">Everything you built is safe. Only the ongoing premium features are paused. Ready to keep the insights coming?</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--primary btn--sm" data-action="go-gift-lockin">🎁 Lock in founder rate</button><button class="btn btn--secondary btn--sm" data-view="plans">See plans</button></div></div>';
 }
+function renderWelcomeBackBanner() {
+  if (!isLapsedPayer()) return '';
+  var lastTier = userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro';
+  var when = userProfile.paidExpiredAt ? fmtD(userProfile.paidExpiredAt.slice(0, 10)) : '';
+  return '<div class="welcome-back-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">👋</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Welcome back — you were on ' + lastTier + (when ? ' until ' + when : '') + '</div><div class="hint" style="margin-top:2px">All your data is still here. Reactivate anytime and pick up right where you left off. Founder rate still available for the first 500 businesses — 50% off forever.</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--purple btn--sm" data-action="reactivate">⚡ Reactivate ' + lastTier + '</button><button class="btn btn--secondary btn--sm" data-view="plans">See all plans</button></div></div>';
+}
 function renderAnnounceBanner() {
   var unread = unreadAnnouncements();
   if (!unread.length) return '';
@@ -1379,57 +1355,21 @@ function renderAnnounceBanner() {
 }
 
 /* ============================================================
-   GIFT OFFER MODAL
+   GIFT OFFER
    ============================================================ */
 function offerGift(trigger) {
   if (!isGiftEligible()) return false;
-  var triggerMsg = {
-    invoice_limit: 'You just made your 5th invoice. Nice work.',
-    sales_limit: 'You just logged your 30th sale. Your business is moving.',
-    locked_view: 'You tapped into a Business feature.',
-    manual: 'We wanted you to see what Business can do for you.',
-    post_upgrade: 'Before you upgrade, try Business free.'
-  }[trigger] || 'We wanted you to see what Business can do for you.';
-  openModal(
-    '<div class="mo__h" style="background:linear-gradient(135deg,#c8a45c,#a4822e);color:#fff;border-bottom:none"><h3 class="mo__t" style="color:#fff">🎁 A gift from KreateBiz</h3><button class="mo__x" style="color:#fff">✕</button></div>' +
-    '<div class="mo__b" style="padding:22px">' +
-      '<div style="background:linear-gradient(135deg,#fdf7e8,var(--white));border:1px solid #e8d6a8;border-radius:12px;padding:16px;margin-bottom:16px">' +
-        '<div class="fw8" style="font-size:1.05rem;margin-bottom:4px">' + esc(triggerMsg) + '</div>' +
-        '<div class="hint">Here is your reward: full Business access, free, for 7 days. No card. No payment details. No catch.</div>' +
-      '</div>' +
-      '<div class="fw7 mb-8" style="font-size:.9rem">What you get for the next 7 days</div>' +
-      '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">' +
-        '<div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">📊</div><div><div class="fw7" style="font-size:.85rem">Smart Cash Flow forecast</div><div class="hint">See your projected month-end cash</div></div></div>' +
-        '<div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🧠</div><div><div class="fw7" style="font-size:.85rem">Insights on your real numbers</div><div class="hint">Top profit-makers, slow-movers, growth trend</div></div></div>' +
-        '<div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">👔</div><div><div class="fw7" style="font-size:.85rem">Staff, permissions & performance</div><div class="hint">Know who sells what for you</div></div></div>' +
-        '<div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎯</div><div><div class="fw7" style="font-size:.85rem">Budget planner + alerts</div><div class="hint">Spend smarter by category</div></div></div>' +
-        '<div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎨</div><div><div class="fw7" style="font-size:.85rem">All 10 designer templates</div><div class="hint">Premium, Luxury, Elegant and more</div></div></div>' +
-      '</div>' +
-      '<div class="hint" style="text-align:center;font-size:.74rem">You keep everything you make during the gift. Always.</div>' +
-    '</div>' +
-    '<div class="mo__f" style="justify-content:space-between"><button class="btn btn--ghost" id="giftLater">Maybe later</button><button class="btn btn--gold" id="giftActivate">🎁 Activate my gift</button></div>',
-    'mo__c--lg'
-  );
+  var triggerMsg = { invoice_limit: 'You just made your 5th invoice. Nice work.', sales_limit: 'You just logged your 30th sale. Your business is moving.', locked_view: 'You tapped into a Business feature.', manual: 'We wanted you to see what Business can do for you.', post_upgrade: 'Before you upgrade, try Business free.' }[trigger] || 'We wanted you to see what Business can do for you.';
+  openModal('<div class="mo__h" style="background:linear-gradient(135deg,#c8a45c,#a4822e);color:#fff;border-bottom:none"><h3 class="mo__t" style="color:#fff">🎁 A gift from KreateBiz</h3><button class="mo__x" style="color:#fff">✕</button></div><div class="mo__b" style="padding:22px"><div style="background:linear-gradient(135deg,#fdf7e8,var(--white));border:1px solid #e8d6a8;border-radius:12px;padding:16px;margin-bottom:16px"><div class="fw8" style="font-size:1.05rem;margin-bottom:4px">' + esc(triggerMsg) + '</div><div class="hint">Here is your reward: full Business access, free, for 7 days. No card. No payment details. No catch.</div></div><div class="fw7 mb-8" style="font-size:.9rem">What you get for the next 7 days</div><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">📊</div><div><div class="fw7" style="font-size:.85rem">Smart Cash Flow forecast</div><div class="hint">See your projected month-end cash</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🧠</div><div><div class="fw7" style="font-size:.85rem">Insights on your real numbers</div><div class="hint">Top profit-makers, slow-movers, growth trend</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">👔</div><div><div class="fw7" style="font-size:.85rem">Staff, permissions & performance</div><div class="hint">Know who sells what for you</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎯</div><div><div class="fw7" style="font-size:.85rem">Budget planner + alerts</div><div class="hint">Spend smarter by category</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎨</div><div><div class="fw7" style="font-size:.85rem">All 10 designer templates</div><div class="hint">Premium, Luxury, Elegant and more</div></div></div></div><div class="hint" style="text-align:center;font-size:.74rem">You keep everything you make during the gift. Always.</div></div><div class="mo__f" style="justify-content:space-between"><button class="btn btn--ghost" id="giftLater">Maybe later</button><button class="btn btn--gold" id="giftActivate">🎁 Activate my gift</button></div>', 'mo__c--lg');
   logEvent('gift_offered', { trigger: trigger });
   $('giftActivate').addEventListener('click', function() {
     var b = this; b.disabled = true; b.textContent = 'Activating…';
-    activateGift(trigger).then(function() {
-      closeModal();
-      updatePlanBadge();
-      renderShell();
-      renderView(currentView);
-      toast('🎁 Business gift active — enjoy 7 days!', 's');
-    }).catch(function(e) { console.error(e); toast('Could not activate gift. Try again.', 'e'); b.disabled = false; b.textContent = '🎁 Activate my gift'; });
+    activateGift(trigger).then(function() { closeModal(); updatePlanBadge(); renderShell(); renderView(currentView); toast('🎁 Business gift active — enjoy 7 days!', 's'); }).catch(function(e) { console.error(e); toast('Could not activate gift. Try again.', 'e'); b.disabled = false; b.textContent = '🎁 Activate my gift'; });
   });
-  $('giftLater').addEventListener('click', function() {
-    try { sessionStorage.setItem(GIFT_OFFER_KEY, 'dismissed'); } catch (e) {}
-    logEvent('gift_dismissed', { trigger: trigger });
-    closeModal();
-  });
+  $('giftLater').addEventListener('click', function() { try { sessionStorage.setItem(GIFT_OFFER_KEY, 'dismissed'); } catch (e) {} logEvent('gift_dismissed', { trigger: trigger }); closeModal(); });
   return true;
 }
 function openUpgradeOrGift(title, message, highlight) {
-  // If eligible for gift and this is a real wall, offer gift first
   if (isGiftEligible() && (highlight === 'business' || highlight === 'pro')) {
     var trigger = 'locked_view';
     if (message && message.indexOf('limit') !== -1) trigger = 'invoice_limit';
@@ -1439,12 +1379,11 @@ function openUpgradeOrGift(title, message, highlight) {
 }
 
 /* ============================================================
-   UPGRADE MODAL (paid)
+   UPGRADE MODAL
    ============================================================ */
 function openUpgrade(title, message, highlight) {
   var current = effectiveTier();
-  var postGift = isPostGift();
-  var founderMsg = postGift ? '<div class="card" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8;padding:11px;margin-bottom:12px"><div class="fw7" style="font-size:.85rem;color:#8a6a1e">🎁 Early adopter — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses only: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>' : '';
+  var founderMsg = (isPostGift() || isLapsedPayer()) ? '<div class="card" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8;padding:11px;margin-bottom:12px"><div class="fw7" style="font-size:.85rem;color:#8a6a1e">🎁 Early adopter — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses only: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>' : '';
   var proCard = '<div class="plan' + (highlight === 'pro' ? ' plan--hot' : '') + (current === 'pro' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'pro' ? '<span class="plan__you">YOUR PLAN</span>' : (highlight === 'pro' ? '<span class="plan__badge">Recommended</span>' : '')) + '<div class="plan__name">Pro · ₦2,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Manage your business — unlimited everything.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Unlimited sales, expenses, customers, products</li><li>✓ Orders + Quotations + Catalogue</li><li>✓ Basic reports + CSV export</li><li>✓ Custom branding + logo</li><li>✓ Advanced WhatsApp tools</li><li>✓ 6 designer PDF templates</li></ul>' + (current === 'pro' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : (current === 'business' ? '<div class="hint" style="text-align:center">Included in your Business plan</div>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-pay="pro-monthly">Monthly ₦2,000</button><button class="btn btn--secondary btn--sm" data-pay="pro-yearly">Yearly ₦20,000</button></div>')) + '</div>';
   var bizCard = '<div class="plan plan--biz' + (current === 'business' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'business' ? '<span class="plan__you">YOUR PLAN</span>' : '<span class="plan__badge plan__badge--b">Full power</span>') + '<div class="plan__name">Business · ₦4,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Run your business, people, money, stock and growth — connected.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Everything in Pro</li><li>✓ Staff, permissions & performance</li><li>✓ Suppliers + Purchases + Advanced inventory</li><li>✓ Smart cash flow + Budget planner</li><li>✓ CRM + Smart alerts + Insights</li><li>✓ Advanced profit analysis + Backup</li><li>✓ Multiple businesses + VAT</li><li>✓ All 10 designer templates</li></ul>' + (current === 'business' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-pay="business-monthly" style="background:var(--purple);border-color:var(--purple)">Monthly ₦4,000</button><button class="btn btn--secondary btn--sm" data-pay="business-yearly">Yearly ₦40,000</button></div>') + '</div>';
   openModal('<div class="mo__h"><h3 class="mo__t">💎 ' + esc(title || 'Upgrade KreateBiz') + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.88rem;color:var(--tx2);margin-bottom:14px">' + esc(message || '') + '</p>' + founderMsg + '<div style="display:flex;flex-direction:column;gap:12px">' + proCard + bizCard + '</div><div class="hint mt-12" style="text-align:center">Secure payment via Flutterwave. Cancel anytime.</div></div>', 'mo__c--lg');
@@ -1452,9 +1391,6 @@ function openUpgrade(title, message, highlight) {
   $('moC').addEventListener('click', function(ev) { var b = ev.target.closest('[data-pay]'); if (b) startPayment(b.getAttribute('data-pay'), b); });
 }
 
-/* ============================================================
-   TRIAL ADVICE
-   ============================================================ */
 function showUpgradeAdvice() {
   if (effectiveTier() !== 'free' && !isTrialActive()) return;
   try { if (sessionStorage.getItem(ADVICE_KEY)) return; sessionStorage.setItem(ADVICE_KEY, '1'); } catch (e) {}
@@ -1543,10 +1479,14 @@ function view_dashboard() {
   var trial = isTrialActive();
   var gift = isGiftActive();
   var postGift = isPostGift();
-  var free = effectiveTier() === 'free' && !postGift;
+  var lapsed = isLapsedPayer();
+  var free = effectiveTier() === 'free' && !postGift && !lapsed;
   var fn = ((userProfile && userProfile.displayName) || '').split(' ')[0] || 'there';
+
   var out = '<div class="ph"><div><div class="ph__t">Hi ' + esc(fn) + ' 👋</div><div class="ph__s">' + esc(DATA.settings.businessName || 'Your Business') + ' · ' + planLabel() + '</div></div><button class="btn btn--primary btn--sm" data-action="quick-sale">＋ Sale</button></div>';
+
   out += renderAnnounceBanner();
+  out += renderWelcomeBackBanner();
   if (gift) out += renderGiftBanner();
   if (trial && !gift) out += '<div class="trial-b"><div style="flex:1"><strong>Pro trial: ' + trialDaysLeft() + ' day' + (trialDaysLeft() === 1 ? '' : 's') + ' left</strong></div><button class="btn btn--primary btn--sm" data-action="go-upgrade">UPGRADE</button></div>';
   if (postGift) out += renderPostGiftBanner();
@@ -1582,7 +1522,7 @@ function view_dashboard() {
     out += '<div class="card mb-16"><div class="flex between mb-8"><div class="fw7">Last 14 days</div><div class="hint">🟢 Sales · 🔴 Expenses</div></div><div style="display:flex;align-items:flex-end;gap:3px;height:100px;justify-content:center">' + series.map(function(d) { return '<div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:1px"><div style="display:flex;gap:1px;align-items:flex-end;height:80px"><div style="width:6px;height:' + Math.max((d.sales / maxVal) * 80, 2) + 'px;background:var(--green);border-radius:2px 2px 0 0"></div><div style="width:6px;height:' + Math.max((d.exps / maxVal) * 80, 2) + 'px;background:#dc2626;border-radius:2px 2px 0 0"></div></div><span style="font-size:.5rem;color:var(--tx3)">' + fmtDs(d.date) + '</span></div>'; }).join('') + '</div></div>';
   }
   out += '<div class="card mb-16"><div class="fw7 mb-8">Recent Activity</div>' + recentActivity() + '</div>';
-  if (!isProTier) out += '<div class="card" style="background:linear-gradient(135deg,#e8f5ee,var(--white));border-color:var(--greenM)"><div class="fw7 mb-8">💡 What you unlock with Pro</div><div style="font-size:.84rem;color:var(--tx2);display:flex;flex-direction:column;gap:6px"><div>✓ Unlimited sales, expenses, customers, products</div><div>✓ Orders + Quotations + Catalogue</div><div>✓ Reports + CSV export</div><div>✓ Custom branding + logo on documents</div></div><button class="btn btn--primary btn--sm mt-12" data-action="go-upgrade">See Pro — ₦2,000/mo</button></div>';
+  if (!isProTier && !lapsed && !postGift) out += '<div class="card" style="background:linear-gradient(135deg,#e8f5ee,var(--white));border-color:var(--greenM)"><div class="fw7 mb-8">💡 What you unlock with Pro</div><div style="font-size:.84rem;color:var(--tx2);display:flex;flex-direction:column;gap:6px"><div>✓ Unlimited sales, expenses, customers, products</div><div>✓ Orders + Quotations + Catalogue</div><div>✓ Reports + CSV export</div><div>✓ Custom branding + logo on documents</div></div><button class="btn btn--primary btn--sm mt-12" data-action="go-upgrade">See Pro — ₦2,000/mo</button></div>';
   if (isProTier && !isBiz) out += '<div class="card" style="background:linear-gradient(135deg,#f3ecff,var(--white));border-color:#c4b5fd"><div class="fw7 mb-8 text-purple">🏢 What you unlock with Business</div><div style="font-size:.84rem;color:var(--tx2);display:flex;flex-direction:column;gap:6px"><div>✓ Staff, permissions & performance</div><div>✓ Suppliers, purchases & advanced inventory</div><div>✓ Smart cash flow + budget planner</div><div>✓ CRM + insights + smart alerts</div><div>✓ Advanced profit analysis + backup</div><div>✓ Multiple businesses + VAT</div></div><button class="btn btn--primary btn--sm mt-12" data-action="go-biz" style="background:var(--purple)">Go Business — ₦4,000/mo</button></div>';
   return out;
 }
@@ -1604,11 +1544,7 @@ function buildSmartAlerts() {
       if (totalLimit > 0 && m.totalExpenses > totalLimit) alerts.push({ i: '🚨', t: 'Monthly budget exceeded', sub: 'Spent ' + moneyW(m.totalExpenses) + ' of ' + moneyW(totalLimit), v: 'budget' });
       else if (totalLimit > 0 && m.totalExpenses > totalLimit * 0.85) alerts.push({ i: '📊', t: 'Budget at ' + Math.round((m.totalExpenses / totalLimit) * 100) + '%', sub: 'Nearing your monthly limit', v: 'budget' });
     }
-    var slow = DATA.inventory.filter(function(p) {
-      var lastSale = DATA.sales.filter(function(s) { return (s.items || []).some(function(i) { return i.productId === p.id; }); }).sort(function(a, b) { return a.date < b.date ? 1 : -1; })[0];
-      if (!lastSale) return true;
-      return dayDiff(today(), lastSale.date) > 30;
-    }).length;
+    var slow = DATA.inventory.filter(function(p) { var lastSale = DATA.sales.filter(function(s) { return (s.items || []).some(function(i) { return i.productId === p.id; }); }).sort(function(a, b) { return a.date < b.date ? 1 : -1; })[0]; if (!lastSale) return true; return dayDiff(today(), lastSale.date) > 30; }).length;
     if (slow > 0) alerts.push({ i: '🐢', t: slow + ' slow-moving product' + (slow === 1 ? '' : 's'), sub: 'No sales in 30 days', v: 'insights' });
     if ((DATA.staff || []).length === 0) alerts.push({ i: '👔', t: 'No staff added yet', sub: 'Track who sells what', v: 'staff' });
   }
@@ -1631,6 +1567,7 @@ function after_dashboard() {
     if (e.target.closest('[data-action="go-upgrade"]')) { openUpgradeOrGift('Upgrade KreateBiz', 'Unlock all tools and remove limits.', 'pro'); return; }
     if (e.target.closest('[data-action="go-biz"]')) { openUpgradeOrGift('Upgrade to Business', 'Run your business, people, money, stock and growth — connected.', 'business'); return; }
     if (e.target.closest('[data-action="go-gift-lockin"]')) { openUpgrade('Lock in your founder rate', 'First 500 businesses only — 50% off forever.', 'pro'); return; }
+    if (e.target.closest('[data-action="reactivate"]')) { var t = (userProfile && userProfile.lastPaidTier) || 'pro'; openUpgrade('Welcome back', 'Reactivate your ' + (t === 'business' ? 'Business' : 'Pro') + ' plan and pick up right where you left off.', t); return; }
     if (e.target.closest('[data-action="open-announcements"]')) { navigate('announcements'); return; }
   };
 }
@@ -1653,9 +1590,8 @@ function view_announcements() {
   var unread = unreadAnnouncements();
   var unreadIds = unread.map(function(a) { return a.id; });
   var out = '<div class="ph"><div><div class="ph__t">📢 Announcements</div><div class="ph__s">' + announcements.length + ' message' + (announcements.length === 1 ? '' : 's') + (unread.length ? ' · ' + unread.length + ' new' : '') + '</div></div>' + (announcements.length > 1 ? '<button class="btn btn--secondary btn--sm" data-action="refresh-announce">↻ Refresh</button>' : '') + '</div>';
-  if (!announcements.length) {
-    out += '<div class="empty"><div class="empty__i">📢</div><div class="empty__t">No announcements yet</div><div class="empty__x">Updates from the KreateBiz team will appear here. Tips, new features and early access offers.</div></div>';
-  } else {
+  if (!announcements.length) out += '<div class="empty"><div class="empty__i">📢</div><div class="empty__t">No announcements yet</div><div class="empty__x">Updates from the KreateBiz team will appear here. Tips, new features and early access offers.</div></div>';
+  else {
     out += '<div class="card" style="padding:0;overflow:hidden">';
     out += announcements.map(function(a) {
       var isNew = unreadIds.indexOf(a.id) !== -1;
@@ -1666,7 +1602,6 @@ function view_announcements() {
   return out;
 }
 function after_announcements() {
-  // Mark as read after render
   setTimeout(markAnnouncementsSeen, 400);
   $('main').onclick = function(e) {
     if (e.target.closest('[data-action="refresh-announce"]')) { loadAnnouncements().then(function() { toast('Refreshed.', 's'); }); }
@@ -1767,7 +1702,6 @@ function openSaleForm(editId) {
     if (saleBal(sale) > 0.001 && sale.customerId) { var linked = DATA.debts.filter(function(d) { return d.sourceSaleId === sale.id; })[0]; if (linked) linked.originalAmount = saleBal(sale); else DATA.debts.push({ id: uid(), customerId: sale.customerId, customerName: sale.customerName, originalAmount: saleBal(sale), payments: [], dueDate: addDays(sale.date, 14), notes: 'Balance from sale', sourceSaleId: sale.id, createdAt: nowIso() }); }
     if (sale.customerId) { var cust = customerById(sale.customerId); if (cust) { cust.lastPurchase = sale.date; cust.lastActivity = nowIso(); } }
     saveData(); closeModal(); toast(ex ? 'Sale updated.' : 'Sale recorded.', 's'); renderView(currentView);
-    // Gift trigger — after 30th sale, offer Business gift
     if (!ex && (USAGE.sales || 0) >= 30 && isGiftEligible()) setTimeout(function() { offerGift('sales_limit'); }, 1400);
   });
 }
@@ -1786,11 +1720,7 @@ function view_expenses() {
   if (over) out += '<div class="ub"><div class="ub__t"><strong>Monthly limit reached</strong>Upgrade for unlimited.</div><button class="btn btn--primary btn--sm" data-action="go-upgrade">UPGRADE</button></div>';
   out += '<div class="chips">' + [['today', 'Today'], ['week', 'Week'], ['month', 'Month'], ['lastmonth', 'Last Month'], ['year', 'Year']].map(function(p) { return '<button class="chip' + (expFilter === p[0] ? ' chip--on' : '') + '" data-ef="' + p[0] + '">' + p[1] + '</button>'; }).join('') + '</div>';
   out += '<div class="stat mb-16"><div class="stat__l">Total expenses</div><div class="stat__v stat__v--r">' + moneyW(total) + '</div></div>';
-  if (Object.keys(cats).length) out += '<div class="card mb-16"><div class="fw7 mb-8">By category</div>' + Object.keys(cats).sort(function(a, b) { return cats[b] - cats[a]; }).map(function(c) {
-    var budgetForCat = (DATA.budgets || []).filter(function(b) { return b.month === new Date().toISOString().slice(0, 7) && b.category === c; })[0];
-    var overBudget = budgetForCat && cats[c] > Number(budgetForCat.limit);
-    return '<div style="margin-bottom:9px"><div class="flex between" style="font-size:.8rem"><span>' + esc(c) + (overBudget ? ' <span class="bdg bdg--r" style="font-size:.5rem">OVER BUDGET</span>' : '') + '</span><strong>' + moneyW(cats[c]) + (budgetForCat ? ' <span class="hint">/ ' + moneyW(budgetForCat.limit) + '</span>' : '') + '</strong></div><div class="bar"><div class="bar__f' + (overBudget ? ' bar__f--over' : '') + '" style="width:' + (total > 0 ? (cats[c] / total) * 100 : 0) + '%"></div></div></div>';
-  }).join('') + '</div>';
+  if (Object.keys(cats).length) out += '<div class="card mb-16"><div class="fw7 mb-8">By category</div>' + Object.keys(cats).sort(function(a, b) { return cats[b] - cats[a]; }).map(function(c) { var budgetForCat = (DATA.budgets || []).filter(function(b) { return b.month === new Date().toISOString().slice(0, 7) && b.category === c; })[0]; var overBudget = budgetForCat && cats[c] > Number(budgetForCat.limit); return '<div style="margin-bottom:9px"><div class="flex between" style="font-size:.8rem"><span>' + esc(c) + (overBudget ? ' <span class="bdg bdg--r" style="font-size:.5rem">OVER BUDGET</span>' : '') + '</span><strong>' + moneyW(cats[c]) + (budgetForCat ? ' <span class="hint">/ ' + moneyW(budgetForCat.limit) + '</span>' : '') + '</strong></div><div class="bar"><div class="bar__f' + (overBudget ? ' bar__f--over' : '') + '" style="width:' + (total > 0 ? (cats[c] / total) * 100 : 0) + '%"></div></div></div>'; }).join('') + '</div>';
   if (list.length) out += list.map(function(e) { return '<div class="rec"><div class="rec__b"><div class="rec__t">' + esc(e.name) + '</div><div class="rec__m"><span>' + fmtD(e.date) + '</span><span>' + esc(e.category) + '</span></div><div class="rec__a"><button class="btn btn--xs btn--secondary" data-action="edit-exp" data-id="' + e.id + '">Edit</button><button class="btn btn--xs btn--danger" data-action="del-exp" data-id="' + e.id + '">Delete</button></div></div><div class="rec__amt rec__amt--r">' + moneyW(e.amount) + '</div></div>'; }).join('');
   else out += '<div class="empty"><div class="empty__i">📉</div><div class="empty__t">No expenses</div><button class="btn btn--primary btn--sm" data-action="new-exp">＋ ADD EXPENSE</button></div>';
   return out;
@@ -1919,11 +1849,7 @@ function view_customers() {
 }
 function after_customers() {
   var s = $('custSearch');
-  if (s) s.addEventListener('input', function() {
-    var q = s.value.toLowerCase();
-    var rows = document.querySelectorAll('[data-cname]');
-    for (var i = 0; i < rows.length; i++) { var n = rows[i].getAttribute('data-cname') || '', p = rows[i].getAttribute('data-cphone') || ''; rows[i].style.display = (n.indexOf(q) !== -1 || p.indexOf(q) !== -1) ? '' : 'none'; }
-  });
+  if (s) s.addEventListener('input', function() { var q = s.value.toLowerCase(); var rows = document.querySelectorAll('[data-cname]'); for (var i = 0; i < rows.length; i++) { var n = rows[i].getAttribute('data-cname') || '', p = rows[i].getAttribute('data-cphone') || ''; rows[i].style.display = (n.indexOf(q) !== -1 || p.indexOf(q) !== -1) ? '' : 'none'; } });
   $('main').onclick = function(e) {
     var a = e.target.closest('[data-action]'); if (!a) return;
     var act = a.getAttribute('data-action'), id = a.getAttribute('data-id');
@@ -2086,7 +2012,7 @@ function openDebtHistory(id) {
 }
 
 /* ============================================================
-   DOCUMENTS — RENDER + PDF + VIEW
+   DOCUMENTS
    ============================================================ */
 function renderDocHTML(d) {
   d = d || {};
@@ -2139,8 +2065,7 @@ function renderDocHTML(d) {
 function exportPDF(d) {
   if (!d) { toast('Document not found.', 'e'); return; }
   if (typeof html2pdf === 'undefined') { toast('PDF engine still loading.', 'w'); return; }
-  var old = document.querySelector('[data-pdf-holder]');
-  if (old && old.parentNode) old.parentNode.removeChild(old);
+  var old = document.querySelector('[data-pdf-holder]'); if (old && old.parentNode) old.parentNode.removeChild(old);
   var wrap = document.createElement('div'); wrap.innerHTML = renderDocHTML(d);
   var node = wrap.firstElementChild;
   if (!node) { toast('Could not build the document.', 'e'); return; }
@@ -2220,11 +2145,8 @@ function openDocForm(type, editId, preset) {
   var html = '<div class="mo__h"><h3 class="mo__t">' + (type === 'invoice' ? '🧾 New Invoice' : '📝 New Quotation') + ' <span class="hint" style="font-weight:500">#' + num + '</span></h3><button class="mo__x">✕</button></div><div class="mo__b">';
   html += '<div class="fw7 mb-8" style="font-size:.9rem">🎨 Choose a template</div><div class="tpl-grid" id="tplGrid">' + tplGridHTML(tpl) + '</div><div class="hint mb-12">🔒 Locked templates unlock with Pro or Business.</div><hr class="divider">';
   html += '<div class="fw7 mb-8" style="font-size:.9rem">🏢 Your Business</div>';
-  if (canBrand) {
-    html += '<div class="fg"><label>Business logo</label><div class="flex gap wrap" style="align-items:center"><div class="logo-box" id="dLogoBox">' + (currentLogo ? '<img src="' + esc(currentLogo) + '" alt="">' : '<span style="font-size:1.3rem;color:var(--tx3)">🏢</span>') + '</div><button type="button" class="btn btn--secondary btn--sm" id="dLogoPick">📁 Upload logo</button><button type="button" class="btn btn--ghost btn--sm" id="dLogoClear">Remove</button></div></div><input type="file" id="dLogoFile" accept="image/*" hidden>';
-  } else {
-    html += '<div class="ub" style="background:linear-gradient(135deg,#e8f5ee,var(--white));color:var(--tx);border:1px solid var(--greenM)"><div class="ub__t" style="color:var(--tx2)"><strong style="color:var(--green)">🔒 Custom branding is a Pro feature</strong>Upload your logo and brand documents.</div><button class="btn btn--primary btn--sm" data-action="go-upgrade">Upgrade</button></div>';
-  }
+  if (canBrand) { html += '<div class="fg"><label>Business logo</label><div class="flex gap wrap" style="align-items:center"><div class="logo-box" id="dLogoBox">' + (currentLogo ? '<img src="' + esc(currentLogo) + '" alt="">' : '<span style="font-size:1.3rem;color:var(--tx3)">🏢</span>') + '</div><button type="button" class="btn btn--secondary btn--sm" id="dLogoPick">📁 Upload logo</button><button type="button" class="btn btn--ghost btn--sm" id="dLogoClear">Remove</button></div></div><input type="file" id="dLogoFile" accept="image/*" hidden>'; }
+  else { html += '<div class="ub" style="background:linear-gradient(135deg,#e8f5ee,var(--white));color:var(--tx);border:1px solid var(--greenM)"><div class="ub__t" style="color:var(--tx2)"><strong style="color:var(--green)">🔒 Custom branding is a Pro feature</strong>Upload your logo and brand documents.</div><button class="btn btn--primary btn--sm" data-action="go-upgrade">Upgrade</button></div>'; }
   html += '<div class="fr fr--2"><div class="fg"><label>Business name</label><input type="text" id="dBizName" value="' + esc(s.businessName || '') + '"></div><div class="fg"><label>Phone</label><input type="text" id="dBizPhone" value="' + esc(s.phone || '') + '"></div></div>';
   html += '<div class="fr fr--2"><div class="fg"><label>Email</label><input type="email" id="dBizEmail" value="' + esc(s.email || '') + '"></div><div class="fg"><label>Address</label><input type="text" id="dBizAddr" value="' + esc(s.address || '') + '"></div></div>';
   html += '<hr class="divider"><div class="fw7 mb-8" style="font-size:.9rem">👤 Receiver</div>';
@@ -2250,11 +2172,7 @@ function openDocForm(type, editId, preset) {
   });
   if (canBrand && $('dLogoPick')) {
     $('dLogoPick').addEventListener('click', function() { $('dLogoFile').click(); });
-    $('dLogoFile').addEventListener('change', function(ev) {
-      var f = ev.target.files && ev.target.files[0];
-      readImageFile(f, 420, function(dataUrl) { currentLogo = dataUrl; $('dLogoBox').innerHTML = '<img src="' + dataUrl + '" alt="">'; DATA.settings.logo = dataUrl; saveData(); toast('Logo added.', 's'); });
-      ev.target.value = '';
-    });
+    $('dLogoFile').addEventListener('change', function(ev) { var f = ev.target.files && ev.target.files[0]; readImageFile(f, 420, function(dataUrl) { currentLogo = dataUrl; $('dLogoBox').innerHTML = '<img src="' + dataUrl + '" alt="">'; DATA.settings.logo = dataUrl; saveData(); toast('Logo added.', 's'); }); ev.target.value = ''; });
     $('dLogoClear').addEventListener('click', function() { currentLogo = ''; $('dLogoBox').innerHTML = '<span style="font-size:1.3rem;color:var(--tx3)">🏢</span>'; });
   }
   var itemsEl = $('dItems');
@@ -2312,7 +2230,6 @@ function openDocForm(type, editId, preset) {
     docTab = type;
     if (currentView !== 'documents') { navigate('documents'); } else { renderView('documents'); }
     setTimeout(function() { openDocViewer(doc.id); }, 350);
-    // Gift trigger — 5th invoice
     if (type === 'invoice' && (USAGE.invoices || 0) >= 5 && isGiftEligible()) setTimeout(function() { offerGift('invoice_limit'); }, 1400);
   });
 }
@@ -2624,11 +2541,7 @@ function view_insights() {
   m.sales.forEach(function(s) { var k = s.customerId || s.customerName; custRev[k] = custRev[k] || { name: s.customerName, rev: 0, count: 0 }; custRev[k].rev += Number(s.total) || 0; custRev[k].count += 1; });
   var topCust = Object.keys(custRev).map(function(k) { return custRev[k]; }).sort(function(a, b) { return b.rev - a.rev; }).slice(0, 5);
   if (topCust.length) out += '<div class="card mb-16"><div class="fw7 mb-8">👑 Top customers this month</div>' + topCust.map(function(c, i) { return '<div style="padding:8px 0;border-bottom:1px solid var(--bd);font-size:.85rem"><div class="flex between"><span><strong>' + (i + 1) + '.</strong> ' + esc(c.name) + ' <span class="hint">' + c.count + ' purchase' + (c.count === 1 ? '' : 's') + '</span></span><strong class="text-green">' + moneyW(c.rev) + '</strong></div></div>'; }).join('') + '</div>';
-  var slow = DATA.inventory.filter(function(p) {
-    var lastSale = DATA.sales.filter(function(s) { return (s.items || []).some(function(i) { return i.productId === p.id; }); }).sort(function(a, b) { return a.date < b.date ? 1 : -1; })[0];
-    if (!lastSale) return Number(p.currentStock) > 0;
-    return dayDiff(today(), lastSale.date) > 30 && Number(p.currentStock) > 0;
-  });
+  var slow = DATA.inventory.filter(function(p) { var lastSale = DATA.sales.filter(function(s) { return (s.items || []).some(function(i) { return i.productId === p.id; }); }).sort(function(a, b) { return a.date < b.date ? 1 : -1; })[0]; if (!lastSale) return Number(p.currentStock) > 0; return dayDiff(today(), lastSale.date) > 30 && Number(p.currentStock) > 0; });
   if (slow.length) out += '<div class="card mb-16" style="border-left:4px solid var(--warn)"><div class="fw7 mb-8">🐢 Slow-moving stock (' + slow.length + ')</div><div class="hint mb-8">No sales in 30+ days. Consider discounting or bundling.</div>' + slow.slice(0, 6).map(function(p) { return '<div class="stat-row"><span>' + esc(p.name) + ' <span class="hint">' + p.currentStock + ' in stock</span></span><strong>' + moneyW((Number(p.costPrice) || 0) * (Number(p.currentStock) || 0)) + '</strong></div>'; }).join('') + '</div>';
   var expenseCats = {};
   m.expenses.forEach(function(e) { expenseCats[e.category] = (expenseCats[e.category] || 0) + (Number(e.amount) || 0); });
@@ -2746,7 +2659,7 @@ function view_plans() {
     return '<div class="plan' + (hot && !biz ? ' plan--hot' : '') + (biz ? ' plan--biz' : '') + (isCurrent && !isGiftActive() && !isTrialActive() ? ' plan--current' : '') + '" style="padding:22px">' + badge + '<div class="plan__name">' + name + '</div><div class="plan__price">' + price.monthly + '<small>' + (key === 'free' ? '/forever' : '/month') + '</small></div><div class="plan__sub">' + priceSub + '</div><ul class="plan__feat">' + features.map(function(f) { return '<li' + (f[0] === '!' ? ' class="no"' : '') + '>' + esc(f[0] === '!' ? f.substring(1) : f) + '</li>'; }).join('') + '</ul>' + cta + '</div>';
   }
   var html = '<div class="ph"><div><div class="ph__t">Plans &amp; Pricing</div><div class="ph__s">Pro manages your business. Business runs your business, people, money, stock and growth — connected.</div></div></div>';
-  if (isPostGift()) html += '<div class="card mb-16" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8"><div class="fw7" style="color:#8a6a1e">🎁 Early adopter rate — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>';
+  if (isPostGift() || isLapsedPayer()) html += '<div class="card mb-16" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8"><div class="fw7" style="color:#8a6a1e">🎁 Early adopter rate — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>';
   html += '<div class="plan-grid">';
   html += planCard('free', 'Free', { monthly: '₦0', yearly: '₦0' }, 'Perfect for getting started', ['30 sales / month', '30 expenses / month', '15 customers', '10 products', '5 invoices / month', '5 receipts / month', '2 PDF templates', '!No reports', '!No quotations', '!No orders'], false, false);
   html += planCard('pro', 'Pro', { monthly: '₦2,000', yearly: '₦20,000' }, 'Save ₦4,000 · Manage your business', ['Unlimited sales, expenses, customers, products', 'Unlimited invoices, receipts, movements', 'Orders + Quotations + Catalogue', 'Basic reports + CSV export', 'Custom branding + logo on documents', 'Advanced WhatsApp tools', 'Basic low-stock alerts', '6 designer PDF templates', 'Cloud sync'], true, false);
@@ -2773,7 +2686,8 @@ function view_subscription() {
   if (isPaidActive()) out += '<div class="stat-row"><span>Status</span><strong class="text-green">Active</strong></div><div class="stat-row"><span>Expires</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>';
   else if (isGiftActive()) out += '<div class="stat-row"><span>Gift ends</span><strong class="text-amber">' + giftDaysLeft() + ' day' + (giftDaysLeft() === 1 ? '' : 's') + ' left</strong></div><div class="stat-row"><span>Date</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>';
   else if (isTrialActive()) out += '<div class="stat-row"><span>Status</span><strong class="text-amber">Trial (' + trialDaysLeft() + ' days left)</strong></div>';
-  else if (isPostGift()) out += '<div class="stat-row"><span>Status</span><strong>Post-gift soft landing</strong></div><div class="hint mt-8">Your data is safe. Only ongoing premium features are paused. Upgrade anytime to resume them.</div>';
+  else if (isPostGift()) out += '<div class="stat-row"><span>Status</span><strong>Post-gift soft landing</strong></div><div class="hint mt-8">Your data is safe. Only ongoing premium features are paused.</div>';
+  else if (isLapsedPayer()) out += '<div class="stat-row"><span>Status</span><strong>Lapsed ' + (userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro') + ' subscriber</strong></div><div class="hint mt-8">Welcome back — reactivate anytime and pick up right where you left off.</div>';
   else out += '<div class="hint">Free plan — no subscription active</div>';
   out += '</div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">🎨 Templates unlocked</div><div style="display:flex;flex-wrap:wrap;gap:6px">' + TEMPLATES.map(function(t) { var locked = tplLocked(t.id); return '<span class="bdg ' + (locked ? 'bdg--x' : 'bdg--g') + '">' + (locked ? '🔒 ' : '✓ ') + esc(t.name) + '</span>'; }).join('') + '</div></div>';
@@ -2781,13 +2695,19 @@ function view_subscription() {
   var feats = [['Orders','orders'],['Quotations','quotations'],['Catalogue','catalogue'],['Reports','reports'],['Custom branding','customBranding'],['Advanced WhatsApp','whatsappAdvanced'],['Low-stock alerts','lowStockAlerts'],['Smart cash flow','cashflow'],['Budget planner','budget'],['Advanced inventory','advancedInventory'],['Suppliers','suppliers'],['Purchases','purchases'],['Customer CRM','crm'],['Staff management','staff'],['Staff permissions','permissions'],['Staff performance','performance'],['Business insights','insights'],['Smart alerts','smartAlerts'],['Advanced profit analysis','profitAnalysis'],['Backup & restore','backup'],['Multiple businesses','multiBusiness']];
   out += feats.map(function(f) { var v = featureLevel(f[1]); var label = v === false || !v ? '🔒 Locked' : (typeof v === 'string' ? '✓ ' + v.charAt(0).toUpperCase() + v.slice(1) : '✓ Unlocked'); var cls = (v === false || !v) ? 'bdg--x' : 'bdg--g'; return '<div class="stat-row"><span>' + f[0] + '</span><span class="bdg ' + cls + '" style="font-size:.6rem">' + label + '</span></div>'; }).join('');
   out += '</div>';
+  if (isLapsedPayer()) out += '<button class="btn btn--purple btn--full mb-12" data-action="reactivate-now">⚡ Reactivate ' + (userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro') + '</button>';
   if (tier !== 'business') out += '<button class="btn btn--primary btn--full mb-12" data-view="plans" ' + (isPro() ? 'style="background:var(--purple);border-color:var(--purple)"' : '') + '>' + (isPro() ? 'GO BUSINESS' : 'VIEW ALL PLANS') + '</button>';
   out += '<div class="card"><div class="fw7 mb-8">☁️ Cloud Sync</div><div class="hint">Your data is stored in the cloud. Sign in on any device and everything appears automatically.</div></div>';
   return out;
 }
+function after_subscription() {
+  $('main').onclick = function(e) {
+    if (e.target.closest('[data-action="reactivate-now"]')) { var t = (userProfile && userProfile.lastPaidTier) || 'pro'; openUpgrade('Welcome back', 'Reactivate your ' + (t === 'business' ? 'Business' : 'Pro') + ' plan.', t); }
+  };
+}
 
 /* ============================================================
-   BUSINESSES (multi)
+   BUSINESSES
    ============================================================ */
 function view_businesses() {
   var list = DATA.businesses || [];
@@ -2847,11 +2767,8 @@ function view_settings() {
   var canBackup = hasFeature('backup');
   var out = '<div class="ph"><div><div class="ph__t">Settings</div><div class="ph__s">Business profile</div></div></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">🏢 Business Profile</div><div class="hint mb-12">These details appear on all your documents.</div>';
-  if (canBrand) {
-    out += '<div class="fg"><label>Business logo</label><div class="flex gap wrap" style="align-items:center"><div class="logo-box" id="stLogoBox">' + (s.logo ? '<img src="' + esc(s.logo) + '" alt="">' : '<span style="font-size:1.3rem;color:var(--tx3)">🏢</span>') + '</div><button type="button" class="btn btn--secondary btn--sm" data-action="st-logo-pick">📁 Upload logo</button><button type="button" class="btn btn--ghost btn--sm" data-action="st-logo-remove">Remove</button></div></div><input type="file" id="stLogoFile" accept="image/*" hidden>';
-  } else {
-    out += '<div class="ub" style="background:linear-gradient(135deg,#e8f5ee,var(--white));color:var(--tx);border:1px solid var(--greenM)"><div class="ub__t" style="color:var(--tx2)"><strong style="color:var(--green)">🔒 Custom branding is a Pro feature</strong>Upload your logo and brand documents with your identity.</div><button class="btn btn--primary btn--sm" data-action="go-upgrade">Upgrade to Pro</button></div>';
-  }
+  if (canBrand) { out += '<div class="fg"><label>Business logo</label><div class="flex gap wrap" style="align-items:center"><div class="logo-box" id="stLogoBox">' + (s.logo ? '<img src="' + esc(s.logo) + '" alt="">' : '<span style="font-size:1.3rem;color:var(--tx3)">🏢</span>') + '</div><button type="button" class="btn btn--secondary btn--sm" data-action="st-logo-pick">📁 Upload logo</button><button type="button" class="btn btn--ghost btn--sm" data-action="st-logo-remove">Remove</button></div></div><input type="file" id="stLogoFile" accept="image/*" hidden>'; }
+  else { out += '<div class="ub" style="background:linear-gradient(135deg,#e8f5ee,var(--white));color:var(--tx);border:1px solid var(--greenM)"><div class="ub__t" style="color:var(--tx2)"><strong style="color:var(--green)">🔒 Custom branding is a Pro feature</strong>Upload your logo and brand documents.</div><button class="btn btn--primary btn--sm" data-action="go-upgrade">Upgrade to Pro</button></div>'; }
   out += '<div class="fr fr--2"><div class="fg"><label>Business name</label><input type="text" id="stBiz" value="' + esc(s.businessName || '') + '"></div><div class="fg"><label>Owner name</label><input type="text" id="stOwner" value="' + esc(s.ownerName || '') + '"></div></div>';
   out += '<div class="fr fr--2"><div class="fg"><label>Phone</label><input type="tel" id="stPhone" value="' + esc(s.phone || '') + '"></div><div class="fg"><label>WhatsApp</label><input type="tel" id="stWA" value="' + esc(s.whatsapp || '') + '"></div></div>';
   out += '<div class="fr fr--2"><div class="fg"><label>Email</label><input type="email" id="stEmail" value="' + esc(s.email || '') + '"></div><div class="fg"><label>Category</label><input type="text" id="stCat" value="' + esc(s.category || '') + '"></div></div>';
@@ -2898,19 +2815,11 @@ function after_settings() {
     else if (act === 'st-import') {
       if (!hasFeature('backup')) { openUpgrade('Backup & Restore is a Business feature', 'Import JSON backups with Business.', 'business'); return; }
       var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json';
-      inp.onchange = function(ev) {
-        var f = ev.target.files[0]; if (!f) return;
-        var r = new FileReader();
-        r.onload = function() { try { var d = JSON.parse(r.result); if (d && typeof d === 'object') { DATA = Object.assign(defaultData(), d); saveData(); toast('Data imported.', 's'); renderView('settings'); } } catch (err) { toast('Invalid file.', 'e'); } };
-        r.readAsText(f);
-      };
+      inp.onchange = function(ev) { var f = ev.target.files[0]; if (!f) return; var r = new FileReader(); r.onload = function() { try { var d = JSON.parse(r.result); if (d && typeof d === 'object') { DATA = Object.assign(defaultData(), d); saveData(); toast('Data imported.', 's'); renderView('settings'); } } catch (err) { toast('Invalid file.', 'e'); } }; r.readAsText(f); };
       inp.click();
     }
     else if (act === 'st-signout') { confirmBox({ title: 'Sign out?', message: 'Your data stays safe in the cloud.', yes: 'SIGN OUT' }, function() { auth.signOut().catch(function() {}); }); }
-    else if (act === 'st-reset') {
-      if (DATA.settings.managerPin) { openPinPrompt('Reset requires your manager PIN.', function() { confirmReset(); }); return; }
-      confirmReset();
-    }
+    else if (act === 'st-reset') { if (DATA.settings.managerPin) { openPinPrompt('Reset requires your manager PIN.', function() { confirmReset(); }); return; } confirmReset(); }
     else if (act === 'go-upgrade') openUpgrade('Upgrade to Pro', 'Unlock custom branding and more.', 'pro');
     else if (act === 'go-biz') openUpgrade('Upgrade to Business', 'Backup & Restore, plus everything in Business.', 'business');
   };
@@ -2918,9 +2827,7 @@ function after_settings() {
     confirmBox({ title: 'Reset all data?', message: 'This deletes ALL your data from the cloud. Cannot be undone.', danger: true, yes: 'DELETE EVERYTHING' }, function() {
       DATA = defaultData(); USAGE = defaultUsage();
       try { localStorage.removeItem(LOCAL_KEY); } catch (e) {}
-      if (currentUser) {
-        db.collection('users').doc(currentUser.uid).collection('data').doc('main').set(DATA).then(function() { toast('All data reset.', 'w'); renderView('settings'); renderShell(); }).catch(function() { toast('Reset failed. Try again.', 'e'); });
-      }
+      if (currentUser) { db.collection('users').doc(currentUser.uid).collection('data').doc('main').set(DATA).then(function() { toast('All data reset.', 'w'); renderView('settings'); renderShell(); }).catch(function() { toast('Reset failed. Try again.', 'e'); }); }
     });
   }
 }
@@ -2931,7 +2838,7 @@ function openPinPrompt(message, onOk) {
 $('setBtn').addEventListener('click', function() { navigate('settings'); });
 $('acctBtn').addEventListener('click', openAccountMenu);
 function openAccountMenu() {
-  openModal('<div class="mo__h"><h3 class="mo__t">👤 Account</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="mb-12"><div class="fw8">' + esc((userProfile && userProfile.displayName) || 'User') + '</div><div class="hint">' + esc((currentUser && currentUser.email) || '') + '</div></div><div class="stat-row"><span>Plan</span><strong>' + planLabel() + '</strong></div>' + (subscription.expiresAt ? '<div class="stat-row"><span>' + (isGiftActive() ? 'Gift ends' : 'Expires') + '</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>' : '') + '<div class="stat-row"><span>Cloud Sync</span><strong class="text-green">Active</strong></div></div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button><button class="btn btn--secondary" data-action="acct-plans">See plans</button><button class="btn btn--primary" data-action="acct-up">Upgrade</button><button class="btn btn--danger" data-action="acct-out">Sign Out</button></div>', 'mo__c--sm');
+  openModal('<div class="mo__h"><h3 class="mo__t">👤 Account</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="mb-12"><div class="fw8">' + esc((userProfile && userProfile.displayName) || 'User') + '</div><div class="hint">' + esc((currentUser && currentUser.email) || '') + '</div></div><div class="stat-row"><span>Plan</span><strong>' + planLabel() + '</strong></div>' + (subscription.expiresAt ? '<div class="stat-row"><span>' + (isGiftActive() ? 'Gift ends' : 'Expires') + '</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>' : '') + (isLapsedPayer() ? '<div class="stat-row"><span>Was on</span><strong>' + (userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro') + '</strong></div>' : '') + '<div class="stat-row"><span>Cloud Sync</span><strong class="text-green">Active</strong></div></div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button><button class="btn btn--secondary" data-action="acct-plans">See plans</button><button class="btn btn--primary" data-action="acct-up">Upgrade</button><button class="btn btn--danger" data-action="acct-out">Sign Out</button></div>', 'mo__c--sm');
   $('moC').onclick = function(e) {
     var b = e.target.closest('[data-action]'); if (!b) return;
     var a = b.getAttribute('data-action');
@@ -2959,6 +2866,51 @@ function setupWizard() {
 }
 
 /* ============================================================
+   ADMIN — MAINTENANCE SWEEP
+   ============================================================ */
+function runExpirySweep() {
+  var now = nowIso();
+  return db.collection('subscriptions')
+    .where('status', '==', 'active')
+    .where('expiresAt', '<', now)
+    .get()
+    .then(function(snap) {
+      if (snap.empty) return 0;
+      var batch = db.batch();
+      var count = 0;
+      snap.forEach(function(doc) {
+        var sub = doc.data();
+        var wasPaid = sub.tier === 'pro' || sub.tier === 'business';
+        var wasGift = sub.tier === 'gift';
+        var wasTrial = sub.tier === 'trial';
+
+        batch.update(doc.ref, {
+          status: 'expired',
+          tier: 'free',
+          expiredAt: now,
+          lastTier: sub.tier
+        });
+
+        var userPatch = {
+          plan: wasGift ? 'post-gift' : 'free',
+          subscriptionStatus: 'expired',
+          updatedAt: now
+        };
+        if (wasGift) userPatch.postGiftSince = now;
+        if (wasTrial) userPatch.trialExpiredAt = now;
+        if (wasPaid) {
+          userPatch.lastPaidTier = sub.tier;
+          userPatch.paidExpiredAt = now;
+        }
+
+        batch.update(db.collection('users').doc(doc.id), userPatch);
+        count++;
+      });
+      return batch.commit().then(function() { return count; });
+    });
+}
+
+/* ============================================================
    ADMIN
    ============================================================ */
 var ADMIN_VIEWS = { overview: { label: 'Overview', icon: '📊' }, users: { label: 'Users', icon: '👥' }, payments: { label: 'Payments', icon: '💳' }, announcements: { label: 'Announcements', icon: '📢' }, events: { label: 'Event log', icon: '📈' } };
@@ -2977,6 +2929,25 @@ function renderAdminView(v) {
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); }).catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin error</div><div class="hint mt-8">' + esc(err.message) + '</div></div>'; console.error(err); });
 }
 function bindAdminActions() {
+  /* ---------- MAINTENANCE SWEEP BUTTON ---------- */
+  var sweepBtn = $('sweepBtn');
+  if (sweepBtn) sweepBtn.addEventListener('click', function() {
+    sweepBtn.disabled = true; sweepBtn.textContent = 'Running…';
+    var msgEl = $('sweepMsg');
+    if (msgEl) msgEl.textContent = '';
+    runExpirySweep().then(function(n) {
+      if (msgEl) msgEl.textContent = n === 0 ? 'No expired subscriptions found.' : '✓ Expired ' + n + ' subscription(s). Data is now clean.';
+      sweepBtn.disabled = false; sweepBtn.textContent = '🧹 Run expiry sweep';
+      toast(n === 0 ? 'Nothing to expire.' : 'Expired ' + n + ' subscription(s).', 's');
+      setTimeout(function() { renderAdminView('overview'); }, 1500);
+    }).catch(function(e) {
+      console.error(e);
+      if (msgEl) msgEl.textContent = 'Error: ' + e.message;
+      sweepBtn.disabled = false; sweepBtn.textContent = '🧹 Run expiry sweep';
+      toast('Sweep failed: ' + e.message, 'e');
+    });
+  });
+
   $('admMain').onclick = function(e) {
     var ext = e.target.closest('[data-usr-ext]');
     if (ext) { ext.disabled = true; ext.textContent = '…'; fetch(API_BASE + '/admin/extend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: ext.getAttribute('data-usr-ext'), days: 30, adminEmail: ADMIN_EMAIL }) }).then(function(r) { return r.json(); }).then(function(d) { if (d.ok) { toast('Extended 30 days.', 's'); renderAdminView('users'); } else toast('Failed.', 'e'); }).catch(function() { toast('Error.', 'e'); }); return; }
@@ -2988,19 +2959,11 @@ function bindAdminActions() {
       var msg = $('anMsg').value.trim();
       if (!msg) { toast('Write a message.', 'w'); return; }
       bsend.disabled = true; bsend.textContent = 'Publishing…';
-      db.collection('announcements').add({ title: title || '', message: msg, createdAt: nowIso(), author: ADMIN_EMAIL, type: $('anType') ? $('anType').value : 'general' }).then(function() {
-        toast('Published — all users will see it.', 's');
-        renderAdminView('announcements');
-      }).catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); bsend.disabled = false; bsend.textContent = 'Publish'; });
+      db.collection('announcements').add({ title: title || '', message: msg, createdAt: nowIso(), author: ADMIN_EMAIL, type: $('anType') ? $('anType').value : 'general' }).then(function() { toast('Published — all users will see it.', 's'); renderAdminView('announcements'); }).catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); bsend.disabled = false; bsend.textContent = 'Publish'; });
       return;
     }
     var anDel = e.target.closest('[data-an-del]');
-    if (anDel) {
-      confirmBox({ title: 'Delete announcement?', message: '', danger: true, yes: 'DELETE' }, function() {
-        db.collection('announcements').doc(anDel.getAttribute('data-an-del')).delete().then(function() { toast('Deleted.', 'i'); renderAdminView('announcements'); }).catch(function() { toast('Error.', 'e'); });
-      });
-      return;
-    }
+    if (anDel) { confirmBox({ title: 'Delete announcement?', message: '', danger: true, yes: 'DELETE' }, function() { db.collection('announcements').doc(anDel.getAttribute('data-an-del')).delete().then(function() { toast('Deleted.', 'i'); renderAdminView('announcements'); }).catch(function() { toast('Error.', 'e'); }); }); return; }
   };
   var s = $('admUserSearch');
   if (s) s.addEventListener('input', function() { var q = s.value.toLowerCase(); var rows = document.querySelectorAll('[data-uemail]'); for (var i = 0; i < rows.length; i++) { var em = rows[i].getAttribute('data-uemail') || '', nm = rows[i].getAttribute('data-uname') || ''; rows[i].style.display = (em.indexOf(q) !== -1 || nm.indexOf(q) !== -1) ? '' : 'none'; } });
@@ -3010,17 +2973,33 @@ function adm_overview() {
     return db.collection('subscriptions').get().then(function(sSnap) {
       var users = uSnap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
       var subs = sSnap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
-      var paid = subs.filter(function(s) { return s.status === 'active' && s.expiresAt && new Date(s.expiresAt) > new Date() && s.tier !== 'free' && s.tier !== 'trial' && s.tier !== 'gift'; });
-      var trials = subs.filter(function(s) { return s.tier === 'trial' && s.expiresAt && new Date(s.expiresAt) > new Date(); });
-      var gifts = subs.filter(function(s) { return s.tier === 'gift' && s.expiresAt && new Date(s.expiresAt) > new Date(); });
+      var now = new Date();
+      var paid = subs.filter(function(s) { return s.status === 'active' && s.expiresAt && new Date(s.expiresAt) > now && s.tier !== 'free' && s.tier !== 'trial' && s.tier !== 'gift'; });
+      var trials = subs.filter(function(s) { return s.tier === 'trial' && s.expiresAt && new Date(s.expiresAt) > now; });
+      var gifts = subs.filter(function(s) { return s.tier === 'gift' && s.expiresAt && new Date(s.expiresAt) > now; });
       var postGift = users.filter(function(u) { return u.plan === 'post-gift'; });
+      var lapsed = users.filter(function(u) { return u.lastPaidTier && u.plan === 'free'; });
+      var stale = subs.filter(function(s) { return s.status === 'active' && s.expiresAt && new Date(s.expiresAt) < now; });
       var proCount = paid.filter(function(s) { return s.tier === 'pro'; }).length;
       var bizCount = paid.filter(function(s) { return s.tier === 'business'; }).length;
       var todayCount = users.filter(function(u) { try { return u.createdAt && u.createdAt.toDate && u.createdAt.toDate().toDateString() === new Date().toDateString(); } catch (e) { return false; } }).length;
       var html = '<div class="ph"><div><div class="ph__t">Overview</div><div class="ph__s">Live stats</div></div></div>';
-      html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
+      html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Lapsed Payers</div><div class="stat__v text-purple">' + lapsed.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
+
+      /* ---------- MAINTENANCE CARD ---------- */
+      html += '<div class="maintenance-card"><div class="fw7 mb-8">🧹 Maintenance · Expiry Sweep</div>';
+      if (stale.length > 0) {
+        html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. Run the sweep to clean them up. Users are already correctly on free mode — this only tidies the database and enables the welcome-back banner.</div>';
+      } else {
+        html += '<div class="hint mb-12">✓ Everything is clean. No stale subscriptions found. Run the sweep weekly if you are not using Cloud Functions.</div>';
+      }
+      html += '<button class="btn btn--primary btn--sm" id="sweepBtn">🧹 Run expiry sweep</button>';
+      html += '<div class="hint mt-8" id="sweepMsg"></div>';
+      html += '</div>';
+
       html += '<div class="card mb-16"><div class="fw7 mb-8">🎁 Gift funnel snapshot</div><div class="stat-row"><span>Users who received a gift</span><strong>' + subs.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div><div class="stat-row"><span>Currently in gift</span><strong>' + gifts.length + '</strong></div><div class="stat-row"><span>Post-gift users</span><strong>' + postGift.length + '</strong></div><div class="stat-row"><span>Converted to paid after gift</span><strong>' + paid.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div></div>';
-      html += '<div class="card"><div class="fw7 mb-8">Recent Users</div>' + (users.slice(0, 10).map(function(u) { return '<div class="stat-row"><span>' + esc(u.email || '—') + '</span><strong>' + esc(u.plan || 'free') + '</strong></div>'; }).join('') || '<div class="hint">No users yet.</div>') + '</div>';
+      html += '<div class="card mb-16"><div class="fw7 mb-8">🔁 Reactivation pipeline</div><div class="stat-row"><span>Lapsed payers (win-back targets)</span><strong class="text-purple">' + lapsed.length + '</strong></div><div class="stat-row"><span>Post-gift users (never paid)</span><strong>' + postGift.length + '</strong></div></div>';
+      html += '<div class="card"><div class="fw7 mb-8">Recent Users</div>' + (users.slice(0, 10).map(function(u) { return '<div class="stat-row"><span>' + esc(u.email || '—') + '</span><strong>' + esc(u.plan || 'free') + (u.lastPaidTier ? ' <span class="hint">(was ' + u.lastPaidTier + ')</span>' : '') + '</strong></div>'; }).join('') || '<div class="hint">No users yet.</div>') + '</div>';
       return html;
     });
   });
@@ -3030,7 +3009,7 @@ function adm_users() {
   return db.collection('users').get().then(function(uSnap) {
     var users = uSnap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
     var html = '<div class="ph"><div><div class="ph__t">Users</div><div class="ph__s">' + users.length + ' total</div></div></div>';
-    html += '<div class="fg"><input type="search" id="admUserSearch" placeholder="Search by email…"></div><div>' + users.map(function(u) { return '<div class="rec" data-uemail="' + esc((u.email || '').toLowerCase()) + '" data-uname="' + esc((u.displayName || '').toLowerCase()) + '"><div class="rec__b"><div class="rec__t">' + esc(u.displayName || '—') + '</div><div class="rec__m"><span>' + esc(u.email || '') + '</span><span>Plan: ' + esc(u.plan || 'free') + '</span>' + (u.giftUsedAt ? '<span>🎁 Gift used</span>' : '') + (u.isAdmin ? '<span class="bdg bdg--r">ADMIN</span>' : '') + '</div><div class="rec__a"><button class="btn btn--xs btn--secondary" data-usr-ext="' + u.id + '">+30 days</button><button class="btn btn--xs btn--danger" data-usr-cancel="' + u.id + '">Cancel</button></div></div></div>'; }).join('') + '</div>';
+    html += '<div class="fg"><input type="search" id="admUserSearch" placeholder="Search by email…"></div><div>' + users.map(function(u) { return '<div class="rec" data-uemail="' + esc((u.email || '').toLowerCase()) + '" data-uname="' + esc((u.displayName || '').toLowerCase()) + '"><div class="rec__b"><div class="rec__t">' + esc(u.displayName || '—') + '</div><div class="rec__m"><span>' + esc(u.email || '') + '</span><span>Plan: ' + esc(u.plan || 'free') + '</span>' + (u.giftUsedAt ? '<span>🎁 Gift used</span>' : '') + (u.lastPaidTier ? '<span>Was: ' + esc(u.lastPaidTier) + '</span>' : '') + (u.isAdmin ? '<span class="bdg bdg--r">ADMIN</span>' : '') + '</div><div class="rec__a"><button class="btn btn--xs btn--secondary" data-usr-ext="' + u.id + '">+30 days</button><button class="btn btn--xs btn--danger" data-usr-cancel="' + u.id + '">Cancel</button></div></div></div>'; }).join('') + '</div>';
     return html;
   });
 }

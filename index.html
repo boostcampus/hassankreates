@@ -487,6 +487,7 @@ a:hover{color:var(--green)}
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 
 <script>
 'use strict';
@@ -511,7 +512,7 @@ if (typeof firebase === 'undefined') {
   throw new Error('Firebase not loaded');
 }
 
-var FB, auth, db;
+var FB, auth, db, fns;
 try {
   FB = firebase.initializeApp({
     apiKey: "AIzaSyCAMvydweLnxa4rLJ3x5zH7_vIhtNv2uqA",
@@ -523,6 +524,7 @@ try {
   });
   auth = firebase.auth();
   db = firebase.firestore();
+  fns = firebase.functions();
 } catch (e) {
   document.getElementById('feMsg').textContent = 'Firebase init failed: ' + e.message;
   document.getElementById('fatalError').style.display = 'flex';
@@ -536,11 +538,12 @@ var ADMIN_UID = "Q53Gx0W46FSR3ZZICM3rxYDuJa53";
 var ADMIN_EMAIL = "hassankreates@gmail.com";
 var WHATSAPP_SUPPORT = "2348086556841";
 
-/* Plan metadata — no payment gateway. Admin assigns plans manually. */
+/* Plan labels — actual durations are set server-side in Cloud Functions. */
 var PLANS = {
   pro:      { name: 'Pro',      monthlyLabel: '₦2,000', yearlyLabel: '₦20,000' },
   business: { name: 'Business', monthlyLabel: '₦4,000', yearlyLabel: '₦40,000' }
 };
+/* UI-only labels — real durations come from the Cloud Functions. */
 var TRIAL_DAYS = 14;
 var GIFT_DAYS = 7;
 
@@ -769,7 +772,7 @@ var announcements = [];
 var announcementsLoaded = false;
 
 /* ============================================================
-   PERSISTENCE
+   PERSISTENCE — unchanged. Data still writes to Firestore.
    ============================================================ */
 function saveData() {
   if (!DATA) return;
@@ -920,25 +923,22 @@ function bumpUsage(k, by) {
 }
 
 /* ============================================================
-   SUBSCRIPTION WRITES (client-side: trial & gift only)
+   SUBSCRIPTION — via Cloud Functions (Level C)
+   Trial + gift are granted server-side. Users cannot fake them.
    ============================================================ */
 function activateTrial() {
   if (!currentUser) return Promise.reject(new Error('No user'));
-  var end = new Date(); end.setDate(end.getDate() + TRIAL_DAYS);
-  var sub = { userId: currentUser.uid, tier: 'trial', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), updatedAt: nowIso() };
-  return db.collection('subscriptions').doc(currentUser.uid).set(sub).then(function() {
-    subscription = sub;
-    return db.collection('users').doc(currentUser.uid).update({ plan: 'trial', subscriptionStatus: 'active', trialStartedAt: nowIso(), trialEndsAt: end.toISOString() });
+  return fns.httpsCallable('activateTrial')().then(function(res) {
+    subscription = res.data.subscription;
+    return subscription;
   });
 }
 function activateGift(trigger) {
   if (!currentUser) return Promise.reject(new Error('No user'));
-  var end = new Date(); end.setDate(end.getDate() + GIFT_DAYS);
-  var sub = { userId: currentUser.uid, tier: 'gift', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), giftStartedAt: nowIso(), giftTrigger: trigger || 'manual', updatedAt: nowIso() };
-  return db.collection('subscriptions').doc(currentUser.uid).set(sub).then(function() {
-    subscription = sub;
-    return db.collection('users').doc(currentUser.uid).update({ plan: 'gift', subscriptionStatus: 'active', giftUsedAt: nowIso(), giftEndsAt: end.toISOString(), giftTrigger: trigger || 'manual' });
-  }).then(function() { logEvent('gift_unlocked', { trigger: trigger || 'manual', expiresAt: end.toISOString() }); });
+  return fns.httpsCallable('activateGift')({ trigger: trigger || 'manual' }).then(function(res) {
+    subscription = res.data.subscription;
+    return subscription;
+  });
 }
 
 /* ============================================================
@@ -979,6 +979,8 @@ $('lgBtn').addEventListener('click', function() {
   $('lgBtn').disabled = true;
   auth.signInWithEmailAndPassword(e, p).catch(function(err) { showErr($('lgErr'), friendlyAuthError(err)); $('lgBtn').disabled = false; });
 });
+
+/* ---------- SIGNUP — Level C: no direct plan writes ---------- */
 $('rgBtn').addEventListener('click', function() {
   hideErr($('rgErr'));
   var n = $('rgN').value.trim(), e = $('rgE').value.trim(), p = $('rgP').value;
@@ -987,13 +989,26 @@ $('rgBtn').addEventListener('click', function() {
   if (p.length < 6) { showErr($('rgErr'), 'Password must be at least 6 characters.'); return; }
   $('rgBtn').disabled = true;
   auth.createUserWithEmailAndPassword(e, p).then(function(cred) {
-    var end = new Date(); end.setDate(end.getDate() + TRIAL_DAYS);
     return cred.user.updateProfile({ displayName: n }).then(function() {
-      return db.collection('users').doc(cred.user.uid).set({ email: e, displayName: n, isAdmin: false, plan: 'trial', subscriptionStatus: 'active', trialStartedAt: nowIso(), trialEndsAt: end.toISOString(), createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      /* Only profile fields — plan & trial fields are managed by Cloud Function. */
+      return db.collection('users').doc(cred.user.uid).set({
+        email: e,
+        displayName: n
+      }, { merge: true }).catch(function(err) {
+        console.warn('Profile write failed (will retry on next load):', err);
+      });
     }).then(function() {
-      return db.collection('subscriptions').doc(cred.user.uid).set({ userId: cred.user.uid, tier: 'trial', status: 'active', startedAt: nowIso(), expiresAt: end.toISOString(), updatedAt: nowIso() });
-    }).then(function() { return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'signup_completed', at: nowIso() }).catch(function() {}); })
-      .then(function() { return db.collection('users').doc(cred.user.uid).collection('events').add({ type: 'trial_started', at: nowIso(), expiresAt: end.toISOString() }).catch(function() {}); });
+      /* Ask Cloud Function to grant the 14-day Pro trial */
+      return fns.httpsCallable('activateTrial')().then(function(res) {
+        console.log('Trial activated:', res.data);
+      }).catch(function(err) {
+        console.warn('Trial activation failed:', err && err.message);
+      });
+    }).then(function() {
+      return db.collection('users').doc(cred.user.uid).collection('events').add({
+        type: 'signup_completed', at: nowIso()
+      }).catch(function() {});
+    });
   }).catch(function(err) { showErr($('rgErr'), friendlyAuthError(err)); $('rgBtn').disabled = false; });
 });
 $('fgtBtn').addEventListener('click', function() {
@@ -1070,49 +1085,43 @@ var KBNav = {
 window.KBNav = KBNav;
 
 /* ============================================================
-   AUTH STATE — LIFECYCLE HANDLING
+   AUTH STATE — Level C: local-only expiry (CF does the cleanup)
    ============================================================ */
 auth.onAuthStateChanged(function(user) {
   if (user) {
     currentUser = user;
     show('loading');
     var userDocP = db.collection('users').doc(user.uid).get().then(function(s) {
-      userProfile = s.exists ? s.data() : { email: user.email, displayName: user.displayName || '', isAdmin: false, plan: 'free' };
-    }).catch(function() { userProfile = { email: user.email, displayName: user.displayName || '', isAdmin: false, plan: 'free' }; });
+      userProfile = s.exists ? s.data() : { email: user.email, displayName: user.displayName || '', plan: 'free' };
+    }).catch(function() { userProfile = { email: user.email, displayName: user.displayName || '', plan: 'free' }; });
     var subDocP = db.collection('subscriptions').doc(user.uid).get().then(function(s) {
       subscription = s.exists ? s.data() : { tier: 'free', status: 'inactive', expiresAt: null };
     }).catch(function() { subscription = { tier: 'free', status: 'inactive', expiresAt: null }; });
 
     Promise.all([userDocP, subDocP]).then(function() {
+      /* ---------- LOCAL-ONLY EXPIRY ----------
+         Firestore cleanup runs server-side (dailyExpirySweep Cloud Function).
+         Here we only adjust in-memory state so the UI reflects truth. */
       var now = new Date();
       if (subscription.expiresAt && subscription.status === 'active' && new Date(subscription.expiresAt) < now) {
         var wasGift = subscription.tier === 'gift';
         var wasTrial = subscription.tier === 'trial';
         var wasPaid = subscription.tier === 'pro' || subscription.tier === 'business';
-        var userPatch = { subscriptionStatus: 'expired', updatedAt: nowIso() };
 
         if (wasGift) {
-          userPatch.plan = 'post-gift';
-          userPatch.postGiftSince = nowIso();
           subscription.tier = 'free'; subscription.status = 'expired';
-          db.collection('subscriptions').doc(user.uid).update({ status: 'expired', tier: 'free', updatedAt: nowIso() }).catch(function() {});
+          if (userProfile) { userProfile.plan = 'post-gift'; userProfile.postGiftSince = nowIso(); }
           logEvent('gift_expired');
         } else if (wasTrial) {
-          userPatch.plan = 'free';
-          userPatch.trialExpiredAt = nowIso();
           subscription.tier = 'free'; subscription.status = 'expired';
-          db.collection('subscriptions').doc(user.uid).update({ status: 'expired', tier: 'free', updatedAt: nowIso() }).catch(function() {});
+          if (userProfile) { userProfile.plan = 'free'; userProfile.trialExpiredAt = nowIso(); }
           logEvent('trial_expired');
         } else if (wasPaid) {
-          userPatch.plan = 'free';
-          userPatch.lastPaidTier = subscription.tier;
-          userPatch.paidExpiredAt = nowIso();
+          var lastTier = subscription.tier;
           subscription.tier = 'free'; subscription.status = 'expired';
-          logEvent('paid_subscription_expired', { tier: userPatch.lastPaidTier });
+          if (userProfile) { userProfile.plan = 'free'; userProfile.lastPaidTier = lastTier; userProfile.paidExpiredAt = nowIso(); }
+          logEvent('paid_subscription_expired', { tier: lastTier });
         }
-
-        db.collection('users').doc(user.uid).update(userPatch).catch(function() {});
-        if (userProfile) Object.assign(userProfile, userPatch);
       }
       return loadUserData(user.uid);
     }).then(function() {
@@ -1387,7 +1396,20 @@ function offerGift(trigger) {
   logEvent('gift_offered', { trigger: trigger });
   $('giftActivate').onclick = function() {
     var b = this; b.disabled = true; b.textContent = 'Activating…';
-    activateGift(trigger).then(function() { closeModal(); updatePlanBadge(); renderShell(); renderView(currentView); toast('🎁 Business gift active — enjoy 7 days!', 's'); }).catch(function(e) { console.error(e); toast('Could not activate gift. Try again.', 'e'); b.disabled = false; b.textContent = '🎁 Activate my gift'; });
+    activateGift(trigger).then(function() {
+      closeModal(); updatePlanBadge(); renderShell(); renderView(currentView);
+      toast('🎁 Business gift active — enjoy 7 days!', 's');
+    }).catch(function(e) {
+      console.error(e);
+      var msg = (e && e.message) ? e.message : 'Could not activate gift. Try again.';
+      if (msg.indexOf('already used') !== -1 || msg.indexOf('already have') !== -1) {
+        closeModal();
+        toast('Gift no longer available.', 'w');
+        return;
+      }
+      toast('Could not activate gift. Try again.', 'e');
+      b.disabled = false; b.textContent = '🎁 Activate my gift';
+    });
   };
   $('giftLater').onclick = function() { try { sessionStorage.setItem(GIFT_OFFER_KEY, 'dismissed'); } catch (e) {} logEvent('gift_dismissed', { trigger: trigger }); closeModal(); };
   return true;
@@ -1402,7 +1424,7 @@ function openUpgradeOrGift(title, message, highlight) {
 }
 
 /* ============================================================
-   UPGRADE MODAL (WhatsApp contact — no payment gateway)
+   UPGRADE MODAL (WhatsApp contact)
    ============================================================ */
 function requestUpgradeWA(key) {
   var parts = String(key).split('-');
@@ -2765,7 +2787,7 @@ function view_settings() {
   out += '<div class="card mb-16"><div class="fw7 mb-8">☁️ Cloud Sync' + (canBackup ? ' & Backup' : '') + '</div><div class="hint mb-12">' + (canBackup ? 'JSON backup and restore unlocked.' : 'Your data syncs automatically. Upgrade to Business for JSON backup and restore.') + '</div><div class="flex gap wrap">' + (canBackup ? '<button class="btn btn--primary btn--sm" data-action="st-export">📥 Export Full Backup</button><button class="btn btn--secondary btn--sm" data-action="st-import">📤 Import Backup</button>' : '<button class="btn btn--secondary btn--sm" data-action="st-export">📥 Export CSV</button><button class="btn btn--primary btn--sm" data-action="go-biz">🔒 Unlock Backup (Business)</button>') + '</div></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">👤 Account</div><div class="hint mb-12">' + esc((currentUser && currentUser.email) || '') + '</div><button class="btn btn--secondary btn--sm" data-action="st-signout">Sign Out</button></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">⚠️ Danger Zone</div><div class="hint mb-12">Reset deletes all your data from the cloud. Cannot be undone.</div><button class="btn btn--danger btn--sm" data-action="st-reset">🗑️ Reset All Data</button></div>';
-  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About</div><div class="hint">KreateBiz v9 · Powered by HassanKreates</div><div class="hint mt-8">📞 <a href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">0808 655 6841</a></div><div class="hint">✉️ hassankreates@gmail.com</div></div>';
+  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About</div><div class="hint">KreateBiz v10 · Powered by HassanKreates</div><div class="hint mt-8">📞 <a href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">0808 655 6841</a></div><div class="hint">✉️ hassankreates@gmail.com</div></div>';
   return out;
 }
 function after_settings() {
@@ -2850,7 +2872,7 @@ function setupWizard() {
 }
 
 /* ============================================================
-   ADMIN — EXPIRY SWEEP
+   ADMIN — EXPIRY SWEEP (manual fallback; daily CF runs it too)
    ============================================================ */
 function runExpirySweep() {
   var now = nowIso();
@@ -2876,18 +2898,14 @@ function runExpirySweep() {
         });
 
         var userPatch = {
-          plan: wasGift ? 'post-gift' : 'free',
           subscriptionStatus: 'expired',
           updatedAt: now
         };
-        if (wasGift) userPatch.postGiftSince = now;
-        if (wasTrial) userPatch.trialExpiredAt = now;
-        if (wasPaid) {
-          userPatch.lastPaidTier = sub.tier;
-          userPatch.paidExpiredAt = now;
-        }
+        if (wasGift) { userPatch.plan = 'post-gift'; userPatch.postGiftSince = now; }
+        else if (wasTrial) { userPatch.plan = 'free'; userPatch.trialExpiredAt = now; }
+        else if (wasPaid) { userPatch.plan = 'free'; userPatch.lastPaidTier = sub.tier; userPatch.paidExpiredAt = now; }
 
-        batch.update(db.collection('users').doc(doc.id), userPatch);
+        batch.set(db.collection('users').doc(doc.id), userPatch, { merge: true });
         count++;
       });
       return batch.commit().then(function() { return count; });
@@ -2895,7 +2913,7 @@ function runExpirySweep() {
 }
 
 /* ============================================================
-   ADMIN — DIRECT PLAN MANAGEMENT (no payment gateway)
+   ADMIN — DIRECT PLAN MANAGEMENT (admin-only via Firestore rules)
    ============================================================ */
 function adminSetUserPlan(userId, tier, months) {
   var now = nowIso();
@@ -2912,17 +2930,15 @@ function adminSetUserPlan(userId, tier, months) {
     assignedAt: now
   };
   return db.collection('subscriptions').doc(userId).set(sub).then(function() {
-    return db.collection('users').doc(userId).update({
+    return db.collection('users').doc(userId).set({
       plan: tier,
       subscriptionStatus: 'active',
       paidStartedAt: now,
       paidEndsAt: end.toISOString(),
       lastPaidTier: tier,
       updatedAt: now
-    });
-  }).then(function() {
-    logEvent('admin_set_plan', { targetUser: userId, tier: tier, months: months });
-  });
+    }, { merge: true });
+  }).then(function() { logEvent('admin_set_plan', { targetUser: userId, tier: tier, months: months }); });
 }
 function adminSetUserFree(userId) {
   var now = nowIso();
@@ -2933,14 +2949,12 @@ function adminSetUserFree(userId) {
     updatedAt: now,
     assignedBy: ADMIN_EMAIL
   }).then(function() {
-    return db.collection('users').doc(userId).update({
+    return db.collection('users').doc(userId).set({
       plan: 'free',
       subscriptionStatus: 'expired',
       updatedAt: now
-    });
-  }).then(function() {
-    logEvent('admin_set_free', { targetUser: userId });
-  });
+    }, { merge: true });
+  }).then(function() { logEvent('admin_set_free', { targetUser: userId }); });
 }
 function adminExtendSubscription(userId, days) {
   var now = new Date();
@@ -2961,16 +2975,14 @@ function adminExtendSubscription(userId, days) {
       updatedAt: nowIsoStr,
       assignedBy: ADMIN_EMAIL
     }).then(function() {
-      return db.collection('users').doc(userId).update({
+      return db.collection('users').doc(userId).set({
         plan: tier,
         subscriptionStatus: 'active',
         paidEndsAt: end.toISOString(),
         lastPaidTier: tier
-      });
+      }, { merge: true });
     });
-  }).then(function() {
-    logEvent('admin_extend', { targetUser: userId, days: days });
-  });
+  }).then(function() { logEvent('admin_extend', { targetUser: userId, days: days }); });
 }
 
 /* ============================================================
@@ -2992,7 +3004,6 @@ function renderAdminView(v) {
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); }).catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin error</div><div class="hint mt-8">' + esc(err.message) + '</div></div>'; console.error(err); });
 }
 function bindAdminActions() {
-  /* ---------- MAINTENANCE SWEEP BUTTON ---------- */
   var sweepBtn = $('sweepBtn');
   if (sweepBtn) sweepBtn.addEventListener('click', function() {
     sweepBtn.disabled = true; sweepBtn.textContent = 'Running…';
@@ -3012,7 +3023,6 @@ function bindAdminActions() {
   });
 
   $('admMain').onclick = function(e) {
-    /* ---- SET PLAN ---- */
     var planBtn = e.target.closest('[data-usr-plan]');
     if (planBtn) {
       var uidTarget = planBtn.getAttribute('data-usr-id');
@@ -3024,22 +3034,20 @@ function bindAdminActions() {
         planBtn.disabled = true; planBtn.textContent = '…';
         var p = tier === 'free' ? adminSetUserFree(uidTarget) : adminSetUserPlan(uidTarget, tier, months);
         p.then(function() { toast('Plan updated to ' + label + dur + '.', 's'); renderAdminView('users'); })
-          .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); planBtn.disabled = false; planBtn.textContent = label + dur; });
+         .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); planBtn.disabled = false; planBtn.textContent = label + dur; });
       });
       return;
     }
-    /* ---- EXTEND +30d ---- */
     var ext = e.target.closest('[data-usr-ext]');
     if (ext) {
       var uidExt = ext.getAttribute('data-usr-ext');
       confirmBox({ title: 'Extend subscription 30 days?', message: 'Adds 30 days on top of the current end date (or from now).', yes: 'EXTEND' }, function() {
         ext.disabled = true; ext.textContent = '…';
         adminExtendSubscription(uidExt, 30).then(function() { toast('Extended 30 days.', 's'); renderAdminView('users'); })
-          .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); ext.disabled = false; ext.textContent = '+30d'; });
+         .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); ext.disabled = false; ext.textContent = '+30d'; });
       });
       return;
     }
-    /* ---- PUBLISH ANNOUNCEMENT ---- */
     var bsend = e.target.closest('[data-an-send]');
     if (bsend) {
       var title = $('anTitle') ? $('anTitle').value.trim() : '';
@@ -3075,11 +3083,11 @@ function adm_overview() {
       html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Lapsed Payers</div><div class="stat__v text-purple">' + lapsed.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
       html += '<div class="maintenance-card"><div class="fw7 mb-8">🧹 Maintenance · Expiry Sweep</div>';
       if (stale.length > 0) {
-        html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. Run the sweep to clean them up. Users are already correctly on free mode — this only tidies the database and enables the welcome-back banner.</div>';
+        html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. The daily Cloud Function normally cleans these automatically. Use this manual sweep only if you want to run it now.</div>';
       } else {
-        html += '<div class="hint mb-12">✓ Everything is clean. No stale subscriptions found. Run the sweep weekly if you are not using Cloud Functions.</div>';
+        html += '<div class="hint mb-12">✓ Everything is clean. The daily Cloud Function keeps this tidy automatically.</div>';
       }
-      html += '<button class="btn btn--primary btn--sm" id="sweepBtn">🧹 Run expiry sweep</button>';
+      html += '<button class="btn btn--primary btn--sm" id="sweepBtn">🧹 Run manual sweep now</button>';
       html += '<div class="hint mt-8" id="sweepMsg"></div>';
       html += '</div>';
       html += '<div class="card mb-16"><div class="fw7 mb-8">🎁 Gift funnel snapshot</div><div class="stat-row"><span>Users who received a gift</span><strong>' + subs.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div><div class="stat-row"><span>Currently in gift</span><strong>' + gifts.length + '</strong></div><div class="stat-row"><span>Post-gift users</span><strong>' + postGift.length + '</strong></div><div class="stat-row"><span>Converted to paid after gift</span><strong>' + paid.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div></div>';

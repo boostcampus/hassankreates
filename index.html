@@ -126,6 +126,12 @@ a:hover{color:var(--green)}
 .auth-tab--on{background:var(--white);color:var(--green);box-shadow:var(--sh1)}
 .field-err{font-size:.78rem;color:var(--err);margin-top:5px;font-weight:600;display:none}
 .field-err--on{display:block}
+.pw-wrap{position:relative;display:block}
+.pw-wrap input{padding-right:48px}
+.pw-toggle{position:absolute;right:3px;top:50%;transform:translateY(-50%);width:40px;height:38px;min-height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:1.05rem;line-height:1;color:var(--tx3);background:transparent;border:none;padding:0;cursor:pointer;user-select:none}
+.pw-toggle:hover{background:var(--gray);color:var(--tx)}
+.pw-toggle:focus-visible{outline:2px solid var(--green2);outline-offset:1px}
+.pw-toggle:active{transform:translateY(-50%) scale(.94)}
 #app{min-height:100dvh;display:flex;flex-direction:column;background:var(--off)}
 .topbar{position:sticky;top:0;z-index:800;background:rgba(250,249,247,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
 [data-theme="dark"] .topbar{background:rgba(15,15,15,.92)}
@@ -257,7 +263,7 @@ a:hover{color:var(--green)}
 .gift-banner__value-list strong{font-weight:800}
 .post-gift-banner{background:linear-gradient(135deg,#f0efec,#e0dfdc);color:var(--tx);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid #a4822e}
 .welcome-back-banner{background:linear-gradient(135deg,#f3ecff,#faf8ff);color:var(--tx);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid var(--purple)}
-.announce-banner{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1e3a5f;border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid #2563eb;position:relative}
+.announce-banner{background:linear-gradient(135deg,#dbeafe,#eff6ff);color:#1e3a5f;border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid #2563eb;position:relative;cursor:pointer}
 .announce-banner__head{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:800;font-size:.9rem}
 .announce-banner__msg{font-size:.85rem;line-height:1.5;color:#334155;white-space:pre-wrap}
 .announce-banner__time{font-size:.7rem;color:#64748b;margin-top:6px}
@@ -421,16 +427,16 @@ a:hover{color:var(--green)}
         <button class="auth-tab" data-tab="register">Create</button>
       </div>
       <div id="loginP">
-        <div class="fg"><label>Email</label><input type="email" id="lgE" placeholder="you@example.com"></div>
-        <div class="fg"><label>Password</label><input type="password" id="lgP" placeholder="Your password"></div>
+        <div class="fg"><label>Email</label><input type="email" id="lgE" placeholder="you@example.com" autocomplete="email"></div>
+        <div class="fg"><label>Password</label><div class="pw-wrap"><input type="password" id="lgP" placeholder="Your password" autocomplete="current-password"><button type="button" class="pw-toggle" data-pw="lgP" aria-label="Show password" title="Show password">👁️</button></div></div>
         <div class="field-err" id="lgErr"></div>
         <button class="btn btn--primary btn--full mt-8" id="lgBtn">Sign In</button>
         <button class="btn btn--ghost btn--sm btn--full mt-8" id="fgtBtn">Forgot password?</button>
       </div>
       <div id="regP" hidden>
-        <div class="fg"><label>Name</label><input type="text" id="rgN" placeholder="Full name"></div>
-        <div class="fg"><label>Email</label><input type="email" id="rgE" placeholder="you@example.com"></div>
-        <div class="fg"><label>Password (min 6)</label><input type="password" id="rgP" placeholder="Create a password"></div>
+        <div class="fg"><label>Name</label><input type="text" id="rgN" placeholder="Full name" autocomplete="name"></div>
+        <div class="fg"><label>Email</label><input type="email" id="rgE" placeholder="you@example.com" autocomplete="email"></div>
+        <div class="fg"><label>Password (min 6)</label><div class="pw-wrap"><input type="password" id="rgP" placeholder="Create a password" autocomplete="new-password"><button type="button" class="pw-toggle" data-pw="rgP" aria-label="Show password" title="Show password">👁️</button></div></div>
         <div class="field-err" id="rgErr"></div>
         <button class="btn btn--primary btn--full mt-8" id="rgBtn">Create Free Account</button>
         <div class="hint" style="text-align:center;margin-top:10px">Includes a 14-day Pro trial. No card required.</div>
@@ -528,7 +534,13 @@ try {
    ============================================================ */
 var ADMIN_UID = "Q53Gx0W46FSR3ZZICM3rxYDuJa53";
 var ADMIN_EMAIL = "hassankreates@gmail.com";
-var API_BASE = "/api";
+/* Payment backend.
+   On Cloudflare Pages the function lives at /api/initiate-payment
+   (functions/api/[[path]].js). Override any time with:
+   window.KB_API_BASE = 'https://your-worker.example.com/api';            */
+var API_BASE = (typeof window !== 'undefined' && window.KB_API_BASE) ? window.KB_API_BASE : "/api";
+var PAYMENT_TIMEOUT_MS = 25000;
+
 var PLANS = {
   pro: { monthly: { id: 169489, amt: 2000 }, yearly: { id: 169490, amt: 20000 }, name: "Pro" },
   business: { monthly: { id: 169491, amt: 4000 }, yearly: { id: 169492, amt: 40000 }, name: "Business" }
@@ -1010,6 +1022,24 @@ function friendlyAuthError(e) {
    GLOBAL CLICK DISPATCHER
    ============================================================ */
 document.addEventListener('click', function(e) {
+
+  /* ---------- PASSWORD SHOW / HIDE ---------- */
+  var pwBtn = e.target.closest('.pw-toggle');
+  if (pwBtn) {
+    var pwId = pwBtn.getAttribute('data-pw');
+    var pwInput = pwId ? document.getElementById(pwId) : null;
+    if (pwInput) {
+      var willShow = pwInput.type === 'password';
+      pwInput.type = willShow ? 'text' : 'password';
+      pwBtn.textContent = willShow ? '🙈' : '👁️';
+      pwBtn.setAttribute('aria-label', willShow ? 'Hide password' : 'Show password');
+      pwBtn.setAttribute('title', willShow ? 'Hide password' : 'Show password');
+      try { pwInput.focus({ preventScroll: true }); } catch (err) { pwInput.focus(); }
+      try { var len = pwInput.value.length; pwInput.setSelectionRange(len, len); } catch (err) {}
+    }
+    return;
+  }
+
   var action = e.target.closest('[data-action]');
   if (action) {
     var a = action.getAttribute('data-action');
@@ -1362,11 +1392,11 @@ function offerGift(trigger) {
   var triggerMsg = { invoice_limit: 'You just made your 5th invoice. Nice work.', sales_limit: 'You just logged your 30th sale. Your business is moving.', locked_view: 'You tapped into a Business feature.', manual: 'We wanted you to see what Business can do for you.', post_upgrade: 'Before you upgrade, try Business free.' }[trigger] || 'We wanted you to see what Business can do for you.';
   openModal('<div class="mo__h" style="background:linear-gradient(135deg,#c8a45c,#a4822e);color:#fff;border-bottom:none"><h3 class="mo__t" style="color:#fff">🎁 A gift from KreateBiz</h3><button class="mo__x" style="color:#fff">✕</button></div><div class="mo__b" style="padding:22px"><div style="background:linear-gradient(135deg,#fdf7e8,var(--white));border:1px solid #e8d6a8;border-radius:12px;padding:16px;margin-bottom:16px"><div class="fw8" style="font-size:1.05rem;margin-bottom:4px">' + esc(triggerMsg) + '</div><div class="hint">Here is your reward: full Business access, free, for 7 days. No card. No payment details. No catch.</div></div><div class="fw7 mb-8" style="font-size:.9rem">What you get for the next 7 days</div><div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">📊</div><div><div class="fw7" style="font-size:.85rem">Smart Cash Flow forecast</div><div class="hint">See your projected month-end cash</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🧠</div><div><div class="fw7" style="font-size:.85rem">Insights on your real numbers</div><div class="hint">Top profit-makers, slow-movers, growth trend</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">👔</div><div><div class="fw7" style="font-size:.85rem">Staff, permissions & performance</div><div class="hint">Know who sells what for you</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎯</div><div><div class="fw7" style="font-size:.85rem">Budget planner + alerts</div><div class="hint">Spend smarter by category</div></div></div><div style="display:flex;gap:10px;padding:10px;background:var(--off);border-radius:8px"><div style="font-size:1.2rem">🎨</div><div><div class="fw7" style="font-size:.85rem">All 10 designer templates</div><div class="hint">Premium, Luxury, Elegant and more</div></div></div></div><div class="hint" style="text-align:center;font-size:.74rem">You keep everything you make during the gift. Always.</div></div><div class="mo__f" style="justify-content:space-between"><button class="btn btn--ghost" id="giftLater">Maybe later</button><button class="btn btn--gold" id="giftActivate">🎁 Activate my gift</button></div>', 'mo__c--lg');
   logEvent('gift_offered', { trigger: trigger });
-  $('giftActivate').addEventListener('click', function() {
+  $('giftActivate').onclick = function() {
     var b = this; b.disabled = true; b.textContent = 'Activating…';
     activateGift(trigger).then(function() { closeModal(); updatePlanBadge(); renderShell(); renderView(currentView); toast('🎁 Business gift active — enjoy 7 days!', 's'); }).catch(function(e) { console.error(e); toast('Could not activate gift. Try again.', 'e'); b.disabled = false; b.textContent = '🎁 Activate my gift'; });
-  });
-  $('giftLater').addEventListener('click', function() { try { sessionStorage.setItem(GIFT_OFFER_KEY, 'dismissed'); } catch (e) {} logEvent('gift_dismissed', { trigger: trigger }); closeModal(); });
+  };
+  $('giftLater').onclick = function() { try { sessionStorage.setItem(GIFT_OFFER_KEY, 'dismissed'); } catch (e) {} logEvent('gift_dismissed', { trigger: trigger }); closeModal(); };
   return true;
 }
 function openUpgradeOrGift(title, message, highlight) {
@@ -1388,24 +1418,99 @@ function openUpgrade(title, message, highlight) {
   var bizCard = '<div class="plan plan--biz' + (current === 'business' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'business' ? '<span class="plan__you">YOUR PLAN</span>' : '<span class="plan__badge plan__badge--b">Full power</span>') + '<div class="plan__name">Business · ₦4,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Run your business, people, money, stock and growth — connected.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Everything in Pro</li><li>✓ Staff, permissions & performance</li><li>✓ Suppliers + Purchases + Advanced inventory</li><li>✓ Smart cash flow + Budget planner</li><li>✓ CRM + Smart alerts + Insights</li><li>✓ Advanced profit analysis + Backup</li><li>✓ Multiple businesses + VAT</li><li>✓ All 10 designer templates</li></ul>' + (current === 'business' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-pay="business-monthly" style="background:var(--purple);border-color:var(--purple)">Monthly ₦4,000</button><button class="btn btn--secondary btn--sm" data-pay="business-yearly">Yearly ₦40,000</button></div>') + '</div>';
   openModal('<div class="mo__h"><h3 class="mo__t">💎 ' + esc(title || 'Upgrade KreateBiz') + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.88rem;color:var(--tx2);margin-bottom:14px">' + esc(message || '') + '</p>' + founderMsg + '<div style="display:flex;flex-direction:column;gap:12px">' + proCard + bizCard + '</div><div class="hint mt-12" style="text-align:center">Secure payment via Flutterwave. Cancel anytime.</div></div>', 'mo__c--lg');
   logEvent('upgrade_prompt_shown', { title: title || '', highlight: highlight || 'pro' });
-  $('moC').addEventListener('click', function(ev) { var b = ev.target.closest('[data-pay]'); if (b) startPayment(b.getAttribute('data-pay'), b); });
+  /* use onclick so listeners never stack up */
+  $('moC').onclick = function(ev) { var b = ev.target.closest('[data-pay]'); if (b) startPayment(b.getAttribute('data-pay'), b); };
 }
 
 function showUpgradeAdvice() {
   if (effectiveTier() !== 'free' && !isTrialActive()) return;
   try { if (sessionStorage.getItem(ADVICE_KEY)) return; sessionStorage.setItem(ADVICE_KEY, '1'); } catch (e) {}
   openModal('<div class="mo__h"><h3 class="mo__t">💡 Get more from KreateBiz</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.9rem;color:var(--tx2);margin-bottom:14px">' + (isTrialActive() ? 'You are on your 14-day Pro trial. Here is what Business adds on top:' : 'You are on the Free plan. Here is what Pro and Business unlock:') + '</p><div style="display:flex;flex-direction:column;gap:10px"><div style="display:flex;gap:12px;padding:12px;background:var(--off);border-radius:10px"><div style="font-size:1.4rem">📊</div><div><div class="fw7" style="font-size:.9rem">Pro — manage your business</div><div class="hint">Unlimited everything, orders, quotations, catalogue, basic reports, custom branding, 6 templates.</div></div></div><div style="display:flex;gap:12px;padding:12px;background:#f3ecff;border-radius:10px"><div style="font-size:1.4rem">🏢</div><div><div class="fw7" style="font-size:.9rem;color:var(--purple)">Business — run your business + people + money + stock + growth</div><div class="hint">Staff, suppliers, purchases, smart cash flow, budget, CRM, insights, smart alerts, profit analysis, multiple businesses.</div></div></div></div><div class="hint mt-16" style="text-align:center">Pro is ₦2,000/month. Business is ₦4,000/month.</div></div><div class="mo__f" style="justify-content:space-between"><button class="btn btn--ghost" data-close>Maybe later</button><div class="flex gap"><button class="btn btn--secondary" data-action="view-plans">See all plans</button><button class="btn btn--primary" data-action="upgrade-now">Upgrade</button></div></div>', 'mo__c--lg');
-  $('moC').addEventListener('click', function(e) {
+  $('moC').onclick = function(e) {
     var a = e.target.closest('[data-action]'); if (!a) return;
     var act = a.getAttribute('data-action');
     if (act === 'upgrade-now') { closeModal(); setTimeout(function() { openUpgrade('Upgrade KreateBiz', 'Choose the plan that fits your business.', 'pro'); }, 150); }
     if (act === 'view-plans') { closeModal(); setTimeout(function() { navigate('plans'); }, 150); }
-  });
+  };
 }
 
 /* ============================================================
    PAYMENT
    ============================================================ */
+function apiUrl(path) {
+  var base = String(API_BASE || '/api');
+  if (base.charAt(base.length - 1) === '/') base = base.slice(0, -1);
+  if (path.charAt(0) !== '/') path = '/' + path;
+  return base + path;
+}
+/* Static hosts (GitHub Pages / GitLab Pages) cannot run server code.
+   Detect early so the user gets a clear message instead of "Failed to fetch". */
+function backendLikelyUnavailable() {
+  try {
+    if (location.protocol === 'file:') return true;
+    var h = (location.hostname || '').toLowerCase();
+    if (/\.github\.io$/.test(h)) return true;
+    if (/\.gitlab\.io$/.test(h)) return true;
+    if (/\.bitbucket\.io$/.test(h)) return true;
+    return false;
+  } catch (e) { return false; }
+}
+function fetchWithTimeout(url, opts, ms) {
+  ms = ms || PAYMENT_TIMEOUT_MS;
+  return new Promise(function (resolve, reject) {
+    var settled = false;
+    var ctrl = null;
+    var timer = setTimeout(function () {
+      if (settled) return;
+      settled = true;
+      if (ctrl) { try { ctrl.abort(); } catch (e) {} }
+      reject(new Error('timeout'));
+    }, ms);
+    var o = {};
+    for (var k in opts) { if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k]; }
+    try {
+      if (typeof AbortController !== 'undefined') { ctrl = new AbortController(); o.signal = ctrl.signal; }
+    } catch (e) { ctrl = null; }
+    fetch(url, o).then(function (r) {
+      if (settled) return; settled = true; clearTimeout(timer); resolve(r);
+    }, function (err) {
+      if (settled) return; settled = true; clearTimeout(timer); reject(err);
+    });
+  });
+}
+function humanPaymentError(err) {
+  var m = (err && err.message) ? String(err.message) : '';
+  var n = (err && err.name) ? String(err.name) : '';
+  if (m === 'timeout' || n === 'AbortError') return 'The payment server took too long to respond. Please check your connection and try again.';
+  if (/Failed to fetch|NetworkError|Load failed|Network request failed/i.test(m)) return 'We could not reach the payment server. This usually means the payment function is not deployed at this address.';
+  if (/Unexpected token|JSON/i.test(m)) return 'The payment server returned an unexpected response. Please try again in a moment.';
+  return m || 'Something went wrong while starting the payment.';
+}
+function showPaymentHelp(plan, msg, retryKey, btn) {
+  var waText = 'Hello, I want to upgrade to ' + plan.name + ' on KreateBiz, but the payment page did not open. Can you help me complete the payment?';
+  openModal(
+    '<div class="mo__h"><h3 class="mo__t">⚠️ Payment could not start</h3><button class="mo__x">✕</button></div>' +
+    '<div class="mo__b">' +
+      '<p style="font-size:.9rem;margin-bottom:12px">' + esc(msg || 'We could not reach the payment service.') + '</p>' +
+      '<div class="card" style="background:linear-gradient(135deg,#e8f5ee,var(--white));border-color:var(--greenM);padding:14px;margin-bottom:12px">' +
+        '<div class="fw7" style="font-size:.92rem">' + esc(plan.name) + ' — you can still pay manually</div>' +
+        '<div class="hint" style="margin-top:4px">Message us on WhatsApp with the plan you want. We will send payment details and activate your plan within minutes.</div>' +
+      '</div>' +
+      '<div class="hint">If this keeps happening, check your internet connection and try again. Your data is always safe.</div>' +
+    '</div>' +
+    '<div class="mo__f" style="justify-content:space-between">' +
+      '<button class="btn btn--secondary btn--sm" data-close>Close</button>' +
+      '<div class="flex gap wrap">' +
+        '<button class="btn btn--secondary btn--sm" id="payRetry">↻ Try again</button>' +
+        '<a class="btn btn--wa btn--sm" target="_blank" rel="noopener" href="https://wa.me/2348086556841?text=' + encodeURIComponent(waText) + '">💬 Pay via WhatsApp</a>' +
+      '</div>' +
+    '</div>', 'mo__c--sm');
+  var retry = $('payRetry');
+  if (retry) retry.onclick = function () {
+    closeModal();
+    setTimeout(function () { startPayment(retryKey, btn); }, 200);
+  };
+}
 function startPayment(key, btn) {
   var parts = key.split('-');
   var tier = parts[0], interval = parts[1];
@@ -1414,43 +1519,136 @@ function startPayment(key, btn) {
   var cfg = plan[interval];
   if (!cfg) { toast('Plan not available.', 'e'); return; }
   if (!currentUser) { toast('Please sign in first.', 'w'); return; }
+
   var orig = btn ? btn.textContent : '';
   if (btn) { btn.disabled = true; btn.textContent = 'Connecting…'; }
   logEvent('conversion_started', { tier: tier, interval: interval });
-  fetch(API_BASE + '/initiate-payment', {
+
+  function restoreBtn() {
+    if (btn) { btn.disabled = false; btn.textContent = orig || ('Monthly ' + plan.name); }
+  }
+
+  /* Static hosting → no backend. Fail fast with a helpful message. */
+  if (backendLikelyUnavailable()) {
+    restoreBtn();
+    logEvent('conversion_failed', { reason: 'no_backend' });
+    showPaymentHelp(plan, 'The payment function is not available at this web address. If you are opening this page from GitHub Pages, the /api payment function cannot run here.', key, btn);
+    return;
+  }
+
+  fetchWithTimeout(apiUrl('/initiate-payment'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: currentUser.email, planId: cfg.id, amount: cfg.amt, userId: currentUser.uid, planName: plan.name, interval: interval })
-  }).then(function(r) {
-    if (!r.ok) return r.text().then(function(t) { throw new Error('Server responded with ' + r.status + '. ' + (t ? t.substring(0, 120) : '')); });
-    var ct = r.headers.get('content-type') || '';
-    if (ct.indexOf('application/json') === -1) return r.text().then(function() { throw new Error('Payment service returned unexpected data.'); });
-    return r.json();
-  }).then(function(d) {
-    if (d && d.data && d.data.link) window.location.href = d.data.link;
-    else if (d && d.error) throw new Error(d.error);
-    else throw new Error('Payment service did not return a payment link.');
-  }).catch(function(err) {
+  }, PAYMENT_TIMEOUT_MS)
+  .then(function (r) {
+    return r.text().then(function (t) {
+      var ct = (r.headers && r.headers.get('content-type')) || '';
+      if (!r.ok) throw new Error('The payment server responded with status ' + r.status + (t ? '. ' + t.substring(0, 140) : '.'));
+      if (ct.indexOf('application/json') === -1) throw new Error('The payment server returned an unexpected response.');
+      try { return JSON.parse(t); } catch (e) { throw new Error('The payment server returned invalid data.'); }
+    });
+  })
+  .then(function (d) {
+    var link = (d && d.data && d.data.link) ? d.data.link : ((d && d.link) ? d.link : '');
+    if (link) { window.location.href = link; return; }
+    if (d && d.error) throw new Error(d.error);
+    throw new Error('The payment server did not return a payment link.');
+  })
+  .catch(function (err) {
     console.error('Payment error:', err);
-    var msg = err.message || 'Connection error.';
-    openModal('<div class="mo__h"><h3 class="mo__t">⚠️ Payment could not start</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.9rem;margin-bottom:10px"><strong>Error:</strong> ' + esc(msg) + '</p></div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button><a class="btn btn--wa" target="_blank" rel="noopener" href="https://wa.me/2348086556841?text=' + encodeURIComponent('Hi, I want to upgrade to ' + plan.name + ' but the payment failed. Can you help?') + '">💬 Message us</a></div>', 'mo__c--sm');
-    if (btn) { btn.disabled = false; btn.textContent = orig; }
+    restoreBtn();
+    logEvent('conversion_failed', { reason: humanPaymentError(err) });
+    showPaymentHelp(plan, humanPaymentError(err), key, btn);
   });
 }
-try {
-  if (new URLSearchParams(location.search).get('payment') === 'callback') {
-    setTimeout(function() {
-      if (currentUser) {
-        db.collection('subscriptions').doc(currentUser.uid).get().then(function(s) {
-          if (s.exists) { subscription = s.data(); updatePlanBadge(); renderShell(); renderView(currentView); }
-          toast('Payment successful! 🎉', 's');
-          logEvent('conversion_completed');
-        }).catch(function() {});
-      }
-      history.replaceState({}, '', location.pathname);
-    }, 1500);
+
+/* ============================================================
+   PAYMENT CALLBACK (after Flutterwave redirects back)
+   ------------------------------------------------------------
+   Order of operations:
+   1. Immediately call /api/verify-payment so the subscription
+      activates even if the webhook is delayed.
+   2. Re-read the subscription doc and refresh the UI.
+   3. Clean the URL.
+   ============================================================ */
+function handlePaymentCallback() {
+  var qs = new URLSearchParams(location.search);
+  var status = (qs.get('status') || '').toLowerCase();
+  var txId = qs.get('transaction_id') || qs.get('transactionId');
+  var txRef = qs.get('tx_ref') || qs.get('txref');
+  var uidFromUrl = qs.get('uid') || '';
+  var cancelled = (status === 'cancelled' || status === 'failed');
+
+  function cleanUrl() {
+    try { history.replaceState({}, '', location.pathname); } catch (e) { }
   }
-} catch (e) {}
+
+  function refreshSub() {
+    if (!currentUser) return Promise.resolve();
+    return db.collection('subscriptions').doc(currentUser.uid).get().then(function(s) {
+      if (s.exists) {
+        subscription = s.data();
+        updatePlanBadge();
+        renderShell();
+        renderView(currentView);
+      }
+    }).catch(function(e) { console.warn('Refresh sub failed:', e); });
+  }
+
+  function finish(successMsg) {
+    refreshSub().then(function() {
+      if (successMsg) toast(successMsg, 's');
+      logEvent(successMsg ? 'conversion_completed' : 'conversion_cancelled');
+      cleanUrl();
+      // Ensure we are on the dashboard-ish view
+      if (currentView === 'dashboard') renderView('dashboard');
+    });
+  }
+
+  if (cancelled) {
+    setTimeout(function() {
+      toast('Payment cancelled.', 'w');
+      logEvent('conversion_cancelled', { reason: status });
+      cleanUrl();
+      refreshSub();
+    }, 800);
+    return;
+  }
+
+  if (!txId && !txRef) {
+    // No identifiers — just refresh and let the webhook catch up.
+    setTimeout(function() { finish('Payment received. Checking status…'); }, 1200);
+    return;
+  }
+
+  // 1) Verify with backend → activates immediately
+  setTimeout(function () {
+    fetchWithTimeout(apiUrl('/verify-payment'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        transactionId: txId || undefined,
+        txRef: txRef || undefined
+      })
+    }, 15000)
+    .then(function (r) { return r.json().catch(function () { return null; }); })
+    .then(function (res) {
+      if (res && res.ok) {
+        finish('Payment successful! 🎉 Your plan is active.');
+      } else {
+        // Verification didn't confirm — webhook may still be on its way.
+        finish('Payment received. Your plan will activate in a moment.');
+      }
+    })
+    .catch(function (err) {
+      console.warn('Verify payment failed, webhook will catch up:', err);
+      finish('Payment received. Your plan will activate in a moment.');
+    });
+  }, 1200);
+}
+
+try { handlePaymentCallback(); } catch (e) { console.error('Payment callback error:', e); }
 
 /* ============================================================
    VIEW ROUTER
@@ -2929,7 +3127,6 @@ function renderAdminView(v) {
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); }).catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin error</div><div class="hint mt-8">' + esc(err.message) + '</div></div>'; console.error(err); });
 }
 function bindAdminActions() {
-  /* ---------- MAINTENANCE SWEEP BUTTON ---------- */
   var sweepBtn = $('sweepBtn');
   if (sweepBtn) sweepBtn.addEventListener('click', function() {
     sweepBtn.disabled = true; sweepBtn.textContent = 'Running…';
@@ -2950,9 +3147,9 @@ function bindAdminActions() {
 
   $('admMain').onclick = function(e) {
     var ext = e.target.closest('[data-usr-ext]');
-    if (ext) { ext.disabled = true; ext.textContent = '…'; fetch(API_BASE + '/admin/extend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: ext.getAttribute('data-usr-ext'), days: 30, adminEmail: ADMIN_EMAIL }) }).then(function(r) { return r.json(); }).then(function(d) { if (d.ok) { toast('Extended 30 days.', 's'); renderAdminView('users'); } else toast('Failed.', 'e'); }).catch(function() { toast('Error.', 'e'); }); return; }
+    if (ext) { ext.disabled = true; ext.textContent = '…'; fetch(apiUrl('/admin/extend'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: ext.getAttribute('data-usr-ext'), days: 30, adminEmail: ADMIN_EMAIL }) }).then(function(r) { return r.json(); }).then(function(d) { if (d.ok) { toast('Extended 30 days.', 's'); renderAdminView('users'); } else toast('Failed.', 'e'); }).catch(function() { toast('Error.', 'e'); }); return; }
     var cn = e.target.closest('[data-usr-cancel]');
-    if (cn) { confirmBox({ title: 'Cancel subscription?', message: 'User loses premium access.', danger: true, yes: 'CANCEL' }, function() { fetch(API_BASE + '/admin/cancel', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: cn.getAttribute('data-usr-cancel'), adminEmail: ADMIN_EMAIL }) }).then(function() { toast('Cancelled.', 's'); renderAdminView('users'); }).catch(function() { toast('Error.', 'e'); }); }); return; }
+    if (cn) { confirmBox({ title: 'Cancel subscription?', message: 'User loses premium access.', danger: true, yes: 'CANCEL' }, function() { fetch(apiUrl('/admin/cancel'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: cn.getAttribute('data-usr-cancel'), adminEmail: ADMIN_EMAIL }) }).then(function() { toast('Cancelled.', 's'); renderAdminView('users'); }).catch(function() { toast('Error.', 'e'); }); }); return; }
     var bsend = e.target.closest('[data-an-send]');
     if (bsend) {
       var title = $('anTitle') ? $('anTitle').value.trim() : '';
@@ -2986,7 +3183,6 @@ function adm_overview() {
       var html = '<div class="ph"><div><div class="ph__t">Overview</div><div class="ph__s">Live stats</div></div></div>';
       html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Lapsed Payers</div><div class="stat__v text-purple">' + lapsed.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
 
-      /* ---------- MAINTENANCE CARD ---------- */
       html += '<div class="maintenance-card"><div class="fw7 mb-8">🧹 Maintenance · Expiry Sweep</div>';
       if (stale.length > 0) {
         html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. Run the sweep to clean them up. Users are already correctly on free mode — this only tidies the database and enables the welcome-back banner.</div>';

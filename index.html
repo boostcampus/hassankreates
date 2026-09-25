@@ -403,7 +403,7 @@ a:hover{color:var(--green)}
     <div class="container" style="max-width:760px">
       <div class="card mb-8"><div class="fw7">Is KreateBiz free?</div><div class="hint mt-8">Yes. Free forever plan with generous limits. Plus a 14-day Pro trial on signup and an invitation to try Business free for 7 days once you start using the app seriously.</div></div>
       <div class="card mb-8"><div class="fw7">What's the difference between Pro and Business?</div><div class="hint mt-8">Pro gives you unlimited tools to <strong>manage your business</strong>. Business is a different level — it lets you <strong>run your business and your people and your money and your stock and your growth</strong>, all connected.</div></div>
-      <div class="card mb-8"><div class="fw7">Do I need a card for the trial or gift?</div><div class="hint mt-8">No. No card, no payment details, no catch. It's a real gift.</div></div>
+      <div class="card mb-8"><div class="fw7">How do I upgrade?</div><div class="hint mt-8">Tap any upgrade button — it opens WhatsApp so we can activate your plan within minutes.</div></div>
       <div class="card mb-8"><div class="fw7">What happens when my subscription ends?</div><div class="hint mt-8">Your data stays. Everything you created during the trial, gift or paid plan stays accessible forever. Only the ongoing premium features lock. You drop back to the Free plan gracefully, and we'll remember you as a past customer.</div></div>
       <div class="card mb-8"><div class="fw7">Contact support</div><div class="hint mt-8">WhatsApp 0808 655 6841 · hassankreates@gmail.com</div></div>
     </div>
@@ -534,20 +534,15 @@ try {
    ============================================================ */
 var ADMIN_UID = "Q53Gx0W46FSR3ZZICM3rxYDuJa53";
 var ADMIN_EMAIL = "hassankreates@gmail.com";
-/* Payment backend.
-   On Cloudflare Pages the function lives at /api/initiate-payment
-   (functions/api/[[path]].js). Override any time with:
-   window.KB_API_BASE = 'https://your-worker.example.com/api';            */
-var API_BASE = (typeof window !== 'undefined' && window.KB_API_BASE) ? window.KB_API_BASE : "/api";
-var PAYMENT_TIMEOUT_MS = 25000;
+var WHATSAPP_SUPPORT = "2348086556841";
 
+/* Plan metadata — no payment gateway. Admin assigns plans manually. */
 var PLANS = {
-  pro: { monthly: { id: 169489, amt: 2000 }, yearly: { id: 169490, amt: 20000 }, name: "Pro" },
-  business: { monthly: { id: 169491, amt: 4000 }, yearly: { id: 169492, amt: 40000 }, name: "Business" }
+  pro:      { name: 'Pro',      monthlyLabel: '₦2,000', yearlyLabel: '₦20,000' },
+  business: { name: 'Business', monthlyLabel: '₦4,000', yearlyLabel: '₦40,000' }
 };
 var TRIAL_DAYS = 14;
 var GIFT_DAYS = 7;
-var FOUNDER_DISCOUNT = { pro: 1000, business: 2000 };
 
 var LIMITS = {
   free: { sales: 30, expenses: 30, customers: 15, products: 10, invoices: 5, receipts: 5, movements: Infinity,
@@ -792,7 +787,6 @@ function flushSave() {
 }
 function saveUsage() { try { localStorage.setItem(USAGE_KEY, JSON.stringify(USAGE)); } catch (e) {} }
 
-/* ---------- MONTHLY USAGE RESET ---------- */
 function checkUsageMonth() {
   var cur = new Date().toISOString().slice(0, 7);
   if (!USAGE || USAGE.month !== cur) {
@@ -1090,7 +1084,6 @@ auth.onAuthStateChanged(function(user) {
     }).catch(function() { subscription = { tier: 'free', status: 'inactive', expiresAt: null }; });
 
     Promise.all([userDocP, subDocP]).then(function() {
-      /* ---------- EXPIRY HANDLING ---------- */
       var now = new Date();
       if (subscription.expiresAt && subscription.status === 'active' && new Date(subscription.expiresAt) < now) {
         var wasGift = subscription.tier === 'gift';
@@ -1369,13 +1362,13 @@ function renderGiftBanner() {
 }
 function renderPostGiftBanner() {
   if (!isPostGift()) return '';
-  return '<div class="post-gift-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">🛬</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Your Business gift ended — but your data stays</div><div class="hint" style="margin-top:2px">Everything you built is safe. Only the ongoing premium features are paused. Ready to keep the insights coming?</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--primary btn--sm" data-action="go-gift-lockin">🎁 Lock in founder rate</button><button class="btn btn--secondary btn--sm" data-view="plans">See plans</button></div></div>';
+  return '<div class="post-gift-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">🛬</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Your Business gift ended — but your data stays</div><div class="hint" style="margin-top:2px">Everything you built is safe. Only the ongoing premium features are paused. Ready to keep the insights coming?</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--primary btn--sm" data-action="go-gift-lockin">🎁 Message us to continue</button><button class="btn btn--secondary btn--sm" data-view="plans">See plans</button></div></div>';
 }
 function renderWelcomeBackBanner() {
   if (!isLapsedPayer()) return '';
   var lastTier = userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro';
   var when = userProfile.paidExpiredAt ? fmtD(userProfile.paidExpiredAt.slice(0, 10)) : '';
-  return '<div class="welcome-back-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">👋</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Welcome back — you were on ' + lastTier + (when ? ' until ' + when : '') + '</div><div class="hint" style="margin-top:2px">All your data is still here. Reactivate anytime and pick up right where you left off. Founder rate still available for the first 500 businesses — 50% off forever.</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--purple btn--sm" data-action="reactivate">⚡ Reactivate ' + lastTier + '</button><button class="btn btn--secondary btn--sm" data-view="plans">See all plans</button></div></div>';
+  return '<div class="welcome-back-banner"><div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap"><div style="font-size:1.3rem">👋</div><div style="flex:1;min-width:200px"><div class="fw7" style="font-size:.92rem">Welcome back — you were on ' + lastTier + (when ? ' until ' + when : '') + '</div><div class="hint" style="margin-top:2px">All your data is still here. Reactivate anytime and pick up right where you left off.</div></div></div><div class="flex gap wrap mt-12"><button class="btn btn--purple btn--sm" data-action="reactivate">⚡ Reactivate ' + lastTier + '</button><button class="btn btn--secondary btn--sm" data-view="plans">See all plans</button></div></div>';
 }
 function renderAnnounceBanner() {
   var unread = unreadAnnouncements();
@@ -1409,17 +1402,27 @@ function openUpgradeOrGift(title, message, highlight) {
 }
 
 /* ============================================================
-   UPGRADE MODAL
+   UPGRADE MODAL (WhatsApp contact — no payment gateway)
    ============================================================ */
+function requestUpgradeWA(key) {
+  var parts = String(key).split('-');
+  var tier = parts[0];
+  var interval = parts[1] || 'monthly';
+  var plan = PLANS[tier];
+  if (!plan) { toast('Plan not available.', 'e'); return; }
+  var priceLabel = interval === 'yearly' ? plan.yearlyLabel : plan.monthlyLabel;
+  var msg = 'Hi! I would like to upgrade to ' + plan.name + ' (' + interval + ') — ' + priceLabel + ' on KreateBiz.\n\nMy account: ' + ((currentUser && currentUser.email) || '') + '\nMy name: ' + ((userProfile && userProfile.displayName) || '');
+  window.open('https://wa.me/' + WHATSAPP_SUPPORT + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  logEvent('upgrade_request_sent', { tier: tier, interval: interval });
+}
+
 function openUpgrade(title, message, highlight) {
   var current = effectiveTier();
-  var founderMsg = (isPostGift() || isLapsedPayer()) ? '<div class="card" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8;padding:11px;margin-bottom:12px"><div class="fw7" style="font-size:.85rem;color:#8a6a1e">🎁 Early adopter — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses only: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>' : '';
-  var proCard = '<div class="plan' + (highlight === 'pro' ? ' plan--hot' : '') + (current === 'pro' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'pro' ? '<span class="plan__you">YOUR PLAN</span>' : (highlight === 'pro' ? '<span class="plan__badge">Recommended</span>' : '')) + '<div class="plan__name">Pro · ₦2,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Manage your business — unlimited everything.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Unlimited sales, expenses, customers, products</li><li>✓ Orders + Quotations + Catalogue</li><li>✓ Basic reports + CSV export</li><li>✓ Custom branding + logo</li><li>✓ Advanced WhatsApp tools</li><li>✓ 6 designer PDF templates</li></ul>' + (current === 'pro' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : (current === 'business' ? '<div class="hint" style="text-align:center">Included in your Business plan</div>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-pay="pro-monthly">Monthly ₦2,000</button><button class="btn btn--secondary btn--sm" data-pay="pro-yearly">Yearly ₦20,000</button></div>')) + '</div>';
-  var bizCard = '<div class="plan plan--biz' + (current === 'business' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'business' ? '<span class="plan__you">YOUR PLAN</span>' : '<span class="plan__badge plan__badge--b">Full power</span>') + '<div class="plan__name">Business · ₦4,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Run your business, people, money, stock and growth — connected.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Everything in Pro</li><li>✓ Staff, permissions & performance</li><li>✓ Suppliers + Purchases + Advanced inventory</li><li>✓ Smart cash flow + Budget planner</li><li>✓ CRM + Smart alerts + Insights</li><li>✓ Advanced profit analysis + Backup</li><li>✓ Multiple businesses + VAT</li><li>✓ All 10 designer templates</li></ul>' + (current === 'business' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-pay="business-monthly" style="background:var(--purple);border-color:var(--purple)">Monthly ₦4,000</button><button class="btn btn--secondary btn--sm" data-pay="business-yearly">Yearly ₦40,000</button></div>') + '</div>';
-  openModal('<div class="mo__h"><h3 class="mo__t">💎 ' + esc(title || 'Upgrade KreateBiz') + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.88rem;color:var(--tx2);margin-bottom:14px">' + esc(message || '') + '</p>' + founderMsg + '<div style="display:flex;flex-direction:column;gap:12px">' + proCard + bizCard + '</div><div class="hint mt-12" style="text-align:center">Secure payment via Flutterwave. Cancel anytime.</div></div>', 'mo__c--lg');
+  var proCard = '<div class="plan' + (highlight === 'pro' ? ' plan--hot' : '') + (current === 'pro' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'pro' ? '<span class="plan__you">YOUR PLAN</span>' : (highlight === 'pro' ? '<span class="plan__badge">Recommended</span>' : '')) + '<div class="plan__name">Pro · ₦2,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Manage your business — unlimited everything.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Unlimited sales, expenses, customers, products</li><li>✓ Orders + Quotations + Catalogue</li><li>✓ Basic reports + CSV export</li><li>✓ Custom branding + logo</li><li>✓ Advanced WhatsApp tools</li><li>✓ 6 designer PDF templates</li></ul>' + (current === 'pro' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : (current === 'business' ? '<div class="hint" style="text-align:center">Included in your Business plan</div>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-req="pro-monthly">Request Pro · ₦2,000/mo</button><button class="btn btn--secondary btn--sm" data-req="pro-yearly">Yearly ₦20,000</button></div>')) + '</div>';
+  var bizCard = '<div class="plan plan--biz' + (current === 'business' ? ' plan--current' : '') + '" style="padding:16px">' + (current === 'business' ? '<span class="plan__you">YOUR PLAN</span>' : '<span class="plan__badge plan__badge--b">Full power</span>') + '<div class="plan__name">Business · ₦4,000/mo</div><div class="plan__sub" style="margin:6px 0 12px">Run your business, people, money, stock and growth — connected.</div><ul style="list-style:none;font-size:.79rem;color:var(--tx2);display:flex;flex-direction:column;gap:4px;margin-bottom:12px"><li>✓ Everything in Pro</li><li>✓ Staff, permissions & performance</li><li>✓ Suppliers + Purchases + Advanced inventory</li><li>✓ Smart cash flow + Budget planner</li><li>✓ CRM + Smart alerts + Insights</li><li>✓ Advanced profit analysis + Backup</li><li>✓ Multiple businesses + VAT</li><li>✓ All 10 designer templates</li></ul>' + (current === 'business' ? '<button class="btn btn--secondary btn--full btn--sm" disabled>Current Plan</button>' : '<div class="flex gap wrap"><button class="btn btn--primary btn--sm" data-req="business-monthly" style="background:var(--purple);border-color:var(--purple)">Request Business · ₦4,000/mo</button><button class="btn btn--secondary btn--sm" data-req="business-yearly">Yearly ₦40,000</button></div>') + '</div>';
+  openModal('<div class="mo__h"><h3 class="mo__t">💎 ' + esc(title || 'Upgrade KreateBiz') + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><p style="font-size:.88rem;color:var(--tx2);margin-bottom:14px">' + esc(message || '') + '</p><div style="display:flex;flex-direction:column;gap:12px">' + proCard + bizCard + '</div><div class="hint mt-12" style="text-align:center">Tap a plan to message us on WhatsApp — we activate within minutes.</div></div>', 'mo__c--lg');
   logEvent('upgrade_prompt_shown', { title: title || '', highlight: highlight || 'pro' });
-  /* use onclick so listeners never stack up */
-  $('moC').onclick = function(ev) { var b = ev.target.closest('[data-pay]'); if (b) startPayment(b.getAttribute('data-pay'), b); };
+  $('moC').onclick = function(ev) { var b = ev.target.closest('[data-req]'); if (b) requestUpgradeWA(b.getAttribute('data-req')); };
 }
 
 function showUpgradeAdvice() {
@@ -1433,222 +1436,6 @@ function showUpgradeAdvice() {
     if (act === 'view-plans') { closeModal(); setTimeout(function() { navigate('plans'); }, 150); }
   };
 }
-
-/* ============================================================
-   PAYMENT
-   ============================================================ */
-function apiUrl(path) {
-  var base = String(API_BASE || '/api');
-  if (base.charAt(base.length - 1) === '/') base = base.slice(0, -1);
-  if (path.charAt(0) !== '/') path = '/' + path;
-  return base + path;
-}
-/* Static hosts (GitHub Pages / GitLab Pages) cannot run server code.
-   Detect early so the user gets a clear message instead of "Failed to fetch". */
-function backendLikelyUnavailable() {
-  try {
-    if (location.protocol === 'file:') return true;
-    var h = (location.hostname || '').toLowerCase();
-    if (/\.github\.io$/.test(h)) return true;
-    if (/\.gitlab\.io$/.test(h)) return true;
-    if (/\.bitbucket\.io$/.test(h)) return true;
-    return false;
-  } catch (e) { return false; }
-}
-function fetchWithTimeout(url, opts, ms) {
-  ms = ms || PAYMENT_TIMEOUT_MS;
-  return new Promise(function (resolve, reject) {
-    var settled = false;
-    var ctrl = null;
-    var timer = setTimeout(function () {
-      if (settled) return;
-      settled = true;
-      if (ctrl) { try { ctrl.abort(); } catch (e) {} }
-      reject(new Error('timeout'));
-    }, ms);
-    var o = {};
-    for (var k in opts) { if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k]; }
-    try {
-      if (typeof AbortController !== 'undefined') { ctrl = new AbortController(); o.signal = ctrl.signal; }
-    } catch (e) { ctrl = null; }
-    fetch(url, o).then(function (r) {
-      if (settled) return; settled = true; clearTimeout(timer); resolve(r);
-    }, function (err) {
-      if (settled) return; settled = true; clearTimeout(timer); reject(err);
-    });
-  });
-}
-function humanPaymentError(err) {
-  var m = (err && err.message) ? String(err.message) : '';
-  var n = (err && err.name) ? String(err.name) : '';
-  if (m === 'timeout' || n === 'AbortError') return 'The payment server took too long to respond. Please check your connection and try again.';
-  if (/Failed to fetch|NetworkError|Load failed|Network request failed/i.test(m)) return 'We could not reach the payment server. This usually means the payment function is not deployed at this address.';
-  if (/Unexpected token|JSON/i.test(m)) return 'The payment server returned an unexpected response. Please try again in a moment.';
-  return m || 'Something went wrong while starting the payment.';
-}
-function showPaymentHelp(plan, msg, retryKey, btn) {
-  var waText = 'Hello, I want to upgrade to ' + plan.name + ' on KreateBiz, but the payment page did not open. Can you help me complete the payment?';
-  openModal(
-    '<div class="mo__h"><h3 class="mo__t">⚠️ Payment could not start</h3><button class="mo__x">✕</button></div>' +
-    '<div class="mo__b">' +
-      '<p style="font-size:.9rem;margin-bottom:12px">' + esc(msg || 'We could not reach the payment service.') + '</p>' +
-      '<div class="card" style="background:linear-gradient(135deg,#e8f5ee,var(--white));border-color:var(--greenM);padding:14px;margin-bottom:12px">' +
-        '<div class="fw7" style="font-size:.92rem">' + esc(plan.name) + ' — you can still pay manually</div>' +
-        '<div class="hint" style="margin-top:4px">Message us on WhatsApp with the plan you want. We will send payment details and activate your plan within minutes.</div>' +
-      '</div>' +
-      '<div class="hint">If this keeps happening, check your internet connection and try again. Your data is always safe.</div>' +
-    '</div>' +
-    '<div class="mo__f" style="justify-content:space-between">' +
-      '<button class="btn btn--secondary btn--sm" data-close>Close</button>' +
-      '<div class="flex gap wrap">' +
-        '<button class="btn btn--secondary btn--sm" id="payRetry">↻ Try again</button>' +
-        '<a class="btn btn--wa btn--sm" target="_blank" rel="noopener" href="https://wa.me/2348086556841?text=' + encodeURIComponent(waText) + '">💬 Pay via WhatsApp</a>' +
-      '</div>' +
-    '</div>', 'mo__c--sm');
-  var retry = $('payRetry');
-  if (retry) retry.onclick = function () {
-    closeModal();
-    setTimeout(function () { startPayment(retryKey, btn); }, 200);
-  };
-}
-function startPayment(key, btn) {
-  var parts = key.split('-');
-  var tier = parts[0], interval = parts[1];
-  var plan = PLANS[tier];
-  if (!plan) { toast('Plan not available.', 'e'); return; }
-  var cfg = plan[interval];
-  if (!cfg) { toast('Plan not available.', 'e'); return; }
-  if (!currentUser) { toast('Please sign in first.', 'w'); return; }
-
-  var orig = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Connecting…'; }
-  logEvent('conversion_started', { tier: tier, interval: interval });
-
-  function restoreBtn() {
-    if (btn) { btn.disabled = false; btn.textContent = orig || ('Monthly ' + plan.name); }
-  }
-
-  /* Static hosting → no backend. Fail fast with a helpful message. */
-  if (backendLikelyUnavailable()) {
-    restoreBtn();
-    logEvent('conversion_failed', { reason: 'no_backend' });
-    showPaymentHelp(plan, 'The payment function is not available at this web address. If you are opening this page from GitHub Pages, the /api payment function cannot run here.', key, btn);
-    return;
-  }
-
-  fetchWithTimeout(apiUrl('/initiate-payment'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: currentUser.email, planId: cfg.id, amount: cfg.amt, userId: currentUser.uid, planName: plan.name, interval: interval })
-  }, PAYMENT_TIMEOUT_MS)
-  .then(function (r) {
-    return r.text().then(function (t) {
-      var ct = (r.headers && r.headers.get('content-type')) || '';
-      if (!r.ok) throw new Error('The payment server responded with status ' + r.status + (t ? '. ' + t.substring(0, 140) : '.'));
-      if (ct.indexOf('application/json') === -1) throw new Error('The payment server returned an unexpected response.');
-      try { return JSON.parse(t); } catch (e) { throw new Error('The payment server returned invalid data.'); }
-    });
-  })
-  .then(function (d) {
-    var link = (d && d.data && d.data.link) ? d.data.link : ((d && d.link) ? d.link : '');
-    if (link) { window.location.href = link; return; }
-    if (d && d.error) throw new Error(d.error);
-    throw new Error('The payment server did not return a payment link.');
-  })
-  .catch(function (err) {
-    console.error('Payment error:', err);
-    restoreBtn();
-    logEvent('conversion_failed', { reason: humanPaymentError(err) });
-    showPaymentHelp(plan, humanPaymentError(err), key, btn);
-  });
-}
-
-/* ============================================================
-   PAYMENT CALLBACK (after Flutterwave redirects back)
-   ------------------------------------------------------------
-   Order of operations:
-   1. Immediately call /api/verify-payment so the subscription
-      activates even if the webhook is delayed.
-   2. Re-read the subscription doc and refresh the UI.
-   3. Clean the URL.
-   ============================================================ */
-function handlePaymentCallback() {
-  var qs = new URLSearchParams(location.search);
-  var status = (qs.get('status') || '').toLowerCase();
-  var txId = qs.get('transaction_id') || qs.get('transactionId');
-  var txRef = qs.get('tx_ref') || qs.get('txref');
-  var uidFromUrl = qs.get('uid') || '';
-  var cancelled = (status === 'cancelled' || status === 'failed');
-
-  function cleanUrl() {
-    try { history.replaceState({}, '', location.pathname); } catch (e) { }
-  }
-
-  function refreshSub() {
-    if (!currentUser) return Promise.resolve();
-    return db.collection('subscriptions').doc(currentUser.uid).get().then(function(s) {
-      if (s.exists) {
-        subscription = s.data();
-        updatePlanBadge();
-        renderShell();
-        renderView(currentView);
-      }
-    }).catch(function(e) { console.warn('Refresh sub failed:', e); });
-  }
-
-  function finish(successMsg) {
-    refreshSub().then(function() {
-      if (successMsg) toast(successMsg, 's');
-      logEvent(successMsg ? 'conversion_completed' : 'conversion_cancelled');
-      cleanUrl();
-      // Ensure we are on the dashboard-ish view
-      if (currentView === 'dashboard') renderView('dashboard');
-    });
-  }
-
-  if (cancelled) {
-    setTimeout(function() {
-      toast('Payment cancelled.', 'w');
-      logEvent('conversion_cancelled', { reason: status });
-      cleanUrl();
-      refreshSub();
-    }, 800);
-    return;
-  }
-
-  if (!txId && !txRef) {
-    // No identifiers — just refresh and let the webhook catch up.
-    setTimeout(function() { finish('Payment received. Checking status…'); }, 1200);
-    return;
-  }
-
-  // 1) Verify with backend → activates immediately
-  setTimeout(function () {
-    fetchWithTimeout(apiUrl('/verify-payment'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        transactionId: txId || undefined,
-        txRef: txRef || undefined
-      })
-    }, 15000)
-    .then(function (r) { return r.json().catch(function () { return null; }); })
-    .then(function (res) {
-      if (res && res.ok) {
-        finish('Payment successful! 🎉 Your plan is active.');
-      } else {
-        // Verification didn't confirm — webhook may still be on its way.
-        finish('Payment received. Your plan will activate in a moment.');
-      }
-    })
-    .catch(function (err) {
-      console.warn('Verify payment failed, webhook will catch up:', err);
-      finish('Payment received. Your plan will activate in a moment.');
-    });
-  }, 1200);
-}
-
-try { handlePaymentCallback(); } catch (e) { console.error('Payment callback error:', e); }
 
 /* ============================================================
    VIEW ROUTER
@@ -1764,7 +1551,7 @@ function after_dashboard() {
     if (e.target.closest('[data-action="quick-sale"]')) { openSaleForm(); return; }
     if (e.target.closest('[data-action="go-upgrade"]')) { openUpgradeOrGift('Upgrade KreateBiz', 'Unlock all tools and remove limits.', 'pro'); return; }
     if (e.target.closest('[data-action="go-biz"]')) { openUpgradeOrGift('Upgrade to Business', 'Run your business, people, money, stock and growth — connected.', 'business'); return; }
-    if (e.target.closest('[data-action="go-gift-lockin"]')) { openUpgrade('Lock in your founder rate', 'First 500 businesses only — 50% off forever.', 'pro'); return; }
+    if (e.target.closest('[data-action="go-gift-lockin"]')) { openUpgrade('Continue with KreateBiz', 'We would love to keep you. Message us on WhatsApp.', 'pro'); return; }
     if (e.target.closest('[data-action="reactivate"]')) { var t = (userProfile && userProfile.lastPaidTier) || 'pro'; openUpgrade('Welcome back', 'Reactivate your ' + (t === 'business' ? 'Business' : 'Pro') + ' plan and pick up right where you left off.', t); return; }
     if (e.target.closest('[data-action="open-announcements"]')) { navigate('announcements'); return; }
   };
@@ -2084,7 +1871,7 @@ function openCustomerProfile(id) {
     events.sort(function(a, b) { return (a.d < b.d ? 1 : -1); });
     if (events.length) timeline = '<div class="fw7 mb-8 mt-16" style="font-size:.88rem">Activity timeline</div><div class="timeline">' + events.slice(0, 12).map(function(e) { return '<div class="tl-item' + (e.warn ? ' tl-item--red' : '') + '"><div style="font-size:.82rem"><strong>' + e.i + ' ' + esc(e.t) + '</strong></div><div class="hint">' + fmtD(e.d) + (e.s ? ' · ' + esc(e.s) : '') + '</div></div>'; }).join('') + '</div>';
   }
-  openModal('<div class="mo__h"><h3 class="mo__t">' + (crm ? '👤 CRM · ' : '👤 ') + esc(c.name) + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="flex gap wrap mb-12"><span class="bdg ' + (st.cat === 'VIP' ? 'bdg--g' : st.cat === 'Debtor' ? 'bdg--r' : 'bdg--a') + '">' + st.cat + '</span>' + (st.last ? '<span class="bdg bdg--x">Last ' + fmtDs(st.last) + '</span>' : '') + (c.tags || []).map(function(t) { return '<span class="bdg bdg--p">' + esc(t) + '</span>'; }).join('') + '</div><div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="stat__l">Lifetime</div><div class="stat__v">' + moneyW(st.total) + '</div></div><div class="stat"><div class="stat__l">Owes</div><div class="stat__v ' + (st.outstanding > 0 ? 'stat__v--r' : '') + '">' + moneyW(st.outstanding) + '</div></div><div class="stat"><div class="stat__l">Purchases</div><div class="stat__v">' + st.salesCount + '</div></div><div class="stat"><div class="stat__l">Orders</div><div class="stat__v">' + st.ordersCount + '</div></div></div>' + (crm && st.salesCount > 0 ? '<div class="card" style="background:var(--off);padding:12px;margin-top:12px"><div style="font-size:.82rem"><strong>Average order:</strong> ' + moneyW(st.total / st.salesCount) + (st.days !== null ? ' · <strong>Last seen:</strong> ' + st.days + ' day' + (st.days === 1 ? '' : 's') + ' ago' : '') + '</div></div>' : '') + (c.phone ? '<div style="font-size:.85rem;margin-top:8px">📞 <a href="tel:' + esc(c.phone) + '">' + esc(c.phone) + '</a></div>' : '') + (sales.length ? '<div class="fw7 mt-16 mb-8" style="font-size:.88rem">Purchase history</div><div class="tw"><table class="tb" style="min-width:auto"><thead><tr><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>' + sales.map(function(s) { var stat = saleStatus(s); return '<tr><td>' + fmtDs(s.date) + '</td><td class="hint">' + esc((s.items || []).map(function(i) { return i.name; }).join(', ')) + '</td><td>' + moneyW(s.total) + '</td><td><span class="bdg ' + (stat === 'PAID' ? 'bdg--g' : stat === 'PARTIAL' ? 'bdg--a' : 'bdg--r') + '">' + stat + '</span></td></tr>'; }).join('') + '</tbody></table></div>' : '') + timeline + '</div><div class="mo__f" style="justify-content:space-between"><div class="flex gap wrap">' + (c.phone ? '<a class="btn btn--wa btn--sm" target="_blank" rel="noopener" href="https://wa.me/' + normPhone(c.phone) + '">💬 WhatsApp</a>' : '') + (c.phone ? '<a class="btn btn--secondary btn--sm" href="tel:' + esc(c.phone) + '">📞 Call</a>' : '') + '</div><div class="flex gap"><button class="btn btn--secondary btn--sm" data-action="edit-cust" data-id="' + id + '">Edit</button><button class="btn btn--secondary btn--sm" data-close>Close</button></div></div>', 'mo__c--lg');
+  openModal('<div class="mo__h"><h3 class="mo__t">' + (crm ? '👤 CRM · ' : '👤 ') + esc(c.name) + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="flex gap wrap mb-12"><span class="bdg ' + (st.cat === 'VIP' ? 'bdg--g' : st.cat === 'Debtor' ? 'bdg--r' : 'bdg--a') + '">' + st.cat + '</span>' + (st.last ? '<span class="bdg bdg--x">Last ' + fmtDs(st.last) + '</span>' : '') + (c.tags || []).map(function(t) { return '<span class="bdg bdg--p">' + esc(t) + '</span>'; }).join('') + '</div><div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="stat__l">Lifetime</div><div class="stat__v">' + moneyW(st.total) + '</div></div><div class="stat"><div class="stat__l">Owes</div><div class="stat__v ' + (st.outstanding > 0 ? 'stat__v--r' : '') + '">' + moneyW(st.outstanding) + '</div></div><div class="stat"><div class="stat__l">Purchases</div><div class="stat__v">' + st.salesCount + '</div></div><div class="stat"><div class="stat__l">Orders</div><div class="stat__v">' + st.ordersCount + '</div></div></div>' + (crm && st.salesCount > 0 ? '<div class="card" style="background:var(--off);padding:12px;margin-top:12px"><div style="font-size:.82rem"><strong>Average order:</strong> ' + moneyW(st.total / st.salesCount) + (st.days !== null ? ' · <strong>Last seen:</strong> ' + st.days + ' day' + (st.days === 1 ? '' : 's') + ' ago' : '') + '</div></div>' : '') + (c.phone ? '<div style="font-size:.85rem;margin-top:8px">📞 ' + esc(c.phone) + '</div>' : '') + (c.email ? '<div style="font-size:.85rem;margin-top:4px">✉️ ' + esc(c.email) + '</div>' : '') + (sales.length ? '<div class="fw7 mt-16 mb-8" style="font-size:.88rem">Purchase history</div><div class="tw"><table class="tb" style="min-width:auto"><thead><tr><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>' + sales.map(function(s) { var stat = saleStatus(s); return '<tr><td>' + fmtDs(s.date) + '</td><td class="hint">' + esc((s.items || []).map(function(i) { return i.name; }).join(', ')) + '</td><td>' + moneyW(s.total) + '</td><td><span class="bdg ' + (stat === 'PAID' ? 'bdg--g' : stat === 'PARTIAL' ? 'bdg--a' : 'bdg--r') + '">' + stat + '</span></td></tr>'; }).join('') + '</tbody></table></div>' : '') + timeline + '</div><div class="mo__f" style="justify-content:space-between"><div class="flex gap wrap">' + (c.phone ? '<a class="btn btn--wa btn--sm" target="_blank" rel="noopener" href="https://wa.me/' + normPhone(c.phone) + '">💬 WhatsApp</a>' : '') + '</div><div class="flex gap"><button class="btn btn--secondary btn--sm" data-action="edit-cust" data-id="' + id + '">Edit</button><button class="btn btn--secondary btn--sm" data-close>Close</button></div></div>', 'mo__c--lg');
   $('moC').onclick = function(ev) { var b = ev.target.closest('[data-action="edit-cust"]'); if (b) { closeModal(); setTimeout(function() { openCustomerForm(id); }, 150); } };
 }
 
@@ -2247,7 +2034,7 @@ function renderDocHTML(d) {
   var termsBlock = d.terms ? '<div class="d-notes"><strong>Terms &amp; Conditions</strong>' + esc(d.terms) + '</div>' : '';
   var notesBlock = d.notes ? '<div class="d-notes"><strong>Notes</strong>' + esc(d.notes) + '</div>' : '';
   var signBlock = (d.type === 'invoice' || d.type === 'quotation') ? '<div class="d-sign"><div>Customer Signature</div><div>Authorised Signature</div></div>' : '';
-  var footer = '<div class="d-footer"><strong>Generated with KreateBiz</strong> · Powered by HassanKreates · 0808 655 6841</div>';
+  var footer = '<div class="d-footer"><strong>Generated with KreateBiz</strong> · Powered by HassanKreates</div>';
   var body = infoGrid + itemsTable + totals + stamp + accountBlock + termsBlock + notesBlock + signBlock + footer;
   if (tpl === 'modern') return '<div class="doc-tpl tpl-modern"><div class="d-band">' + header + '</div><div class="d-body">' + body + '</div></div>';
   if (tpl === 'bold') return '<div class="doc-tpl tpl-bold"><div class="d-band">' + header + '</div><div class="d-body">' + body + '</div></div>';
@@ -2515,7 +2302,7 @@ function openSupplierProfile(id) {
   var purchases = (DATA.purchases || []).filter(function(p) { return p.supplierId === id; }).sort(function(a, b) { return a.date < b.date ? 1 : -1; });
   var total = purchases.reduce(function(s2, p) { return s2 + (Number(p.total) || 0); }, 0);
   var owed = purchases.reduce(function(s2, p) { return s2 + Math.max(0, (Number(p.total) || 0) - (Number(p.paid) || 0)); }, 0);
-  openModal('<div class="mo__h"><h3 class="mo__t">🏭 ' + esc(s.name) + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="stat__l">Total Purchased</div><div class="stat__v">' + moneyW(total) + '</div></div><div class="stat"><div class="stat__l">Owe Them</div><div class="stat__v ' + (owed > 0 ? 'stat__v--r' : 'stat__v--g') + '">' + moneyW(owed) + '</div></div></div>' + (s.phone ? '<div style="font-size:.85rem;margin-top:8px">📞 <a href="tel:' + esc(s.phone) + '">' + esc(s.phone) + '</a></div>' : '') + (s.products ? '<div class="hint">Supplies: ' + esc(s.products) + '</div>' : '') + (purchases.length ? '<div class="fw7 mt-16 mb-8" style="font-size:.88rem">Purchase history</div><div class="tw"><table class="tb" style="min-width:auto"><thead><tr><th>Date</th><th>Total</th><th>Owed</th></tr></thead><tbody>' + purchases.map(function(p) { var bal = Math.max(0, (Number(p.total) || 0) - (Number(p.paid) || 0)); return '<tr><td>' + fmtDs(p.date) + '</td><td>' + moneyW(p.total) + '</td><td class="' + (bal > 0 ? 'text-red fw7' : 'hint') + '">' + moneyW(bal) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') + '</div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button></div>', 'mo__c--lg');
+  openModal('<div class="mo__h"><h3 class="mo__t">🏭 ' + esc(s.name) + '</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="stat__l">Total Purchased</div><div class="stat__v">' + moneyW(total) + '</div></div><div class="stat"><div class="stat__l">Owe Them</div><div class="stat__v ' + (owed > 0 ? 'stat__v--r' : 'stat__v--g') + '">' + moneyW(owed) + '</div></div></div>' + (s.phone ? '<div style="font-size:.85rem;margin-top:8px">📞 ' + esc(s.phone) + '</div>' : '') + (s.email ? '<div style="font-size:.85rem;margin-top:4px">✉️ ' + esc(s.email) + '</div>' : '') + (s.products ? '<div class="hint">Supplies: ' + esc(s.products) + '</div>' : '') + (purchases.length ? '<div class="fw7 mt-16 mb-8" style="font-size:.88rem">Purchase history</div><div class="tw"><table class="tb" style="min-width:auto"><thead><tr><th>Date</th><th>Total</th><th>Owed</th></tr></thead><tbody>' + purchases.map(function(p) { var bal = Math.max(0, (Number(p.total) || 0) - (Number(p.paid) || 0)); return '<tr><td>' + fmtDs(p.date) + '</td><td>' + moneyW(p.total) + '</td><td class="' + (bal > 0 ? 'text-red fw7' : 'hint') + '">' + moneyW(bal) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '') + '</div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button></div>', 'mo__c--lg');
 }
 
 /* ============================================================
@@ -2848,7 +2635,7 @@ function view_plans() {
     var cta;
     if (isCurrent) cta = '<button class="btn btn--secondary btn--full" disabled>CURRENT PLAN</button>';
     else if (key === 'free') cta = '<button class="btn btn--secondary btn--full" disabled>FREE FOREVER</button>';
-    else cta = '<div style="display:flex;flex-direction:column;gap:8px"><button class="btn btn--primary btn--full btn--sm" data-upgrade-monthly="' + key + '" ' + (biz ? 'style="background:var(--purple);border-color:var(--purple)"' : '') + '>Monthly ' + price.monthly + '</button><button class="btn btn--secondary btn--full btn--sm" data-upgrade-yearly="' + key + '">Yearly ' + price.yearly + '</button></div>';
+    else cta = '<div style="display:flex;flex-direction:column;gap:8px"><button class="btn btn--primary btn--full btn--sm" data-req="' + key + '-monthly" ' + (biz ? 'style="background:var(--purple);border-color:var(--purple)"' : '') + '>Request Monthly ' + price.monthly + '</button><button class="btn btn--secondary btn--full btn--sm" data-req="' + key + '-yearly">Request Yearly ' + price.yearly + '</button></div>';
     var badge = '';
     if (isGiftActive() && key === 'business') badge = '<span class="plan__you plan__you--gift">🎁 GIFT ACTIVE</span>';
     else if (isTrialActive() && key === 'pro') badge = '<span class="plan__you">TRIAL ACTIVE</span>';
@@ -2857,7 +2644,7 @@ function view_plans() {
     return '<div class="plan' + (hot && !biz ? ' plan--hot' : '') + (biz ? ' plan--biz' : '') + (isCurrent && !isGiftActive() && !isTrialActive() ? ' plan--current' : '') + '" style="padding:22px">' + badge + '<div class="plan__name">' + name + '</div><div class="plan__price">' + price.monthly + '<small>' + (key === 'free' ? '/forever' : '/month') + '</small></div><div class="plan__sub">' + priceSub + '</div><ul class="plan__feat">' + features.map(function(f) { return '<li' + (f[0] === '!' ? ' class="no"' : '') + '>' + esc(f[0] === '!' ? f.substring(1) : f) + '</li>'; }).join('') + '</ul>' + cta + '</div>';
   }
   var html = '<div class="ph"><div><div class="ph__t">Plans &amp; Pricing</div><div class="ph__s">Pro manages your business. Business runs your business, people, money, stock and growth — connected.</div></div></div>';
-  if (isPostGift() || isLapsedPayer()) html += '<div class="card mb-16" style="background:linear-gradient(135deg,#fdf7e8,#fff);border-color:#e8d6a8"><div class="fw7" style="color:#8a6a1e">🎁 Early adopter rate — 50% off forever</div><div class="hint" style="color:#8a6a1e">First 500 businesses: Pro ₦1,000/mo · Business ₦2,000/mo. Locked forever.</div></div>';
+  html += '<div class="card mb-16" style="background:linear-gradient(135deg,#e8f5ee,var(--white));border-color:var(--greenM)"><div class="fw7">💬 How to upgrade</div><div class="hint mt-8">Tap any upgrade button — it opens WhatsApp with your account info pre-filled. We activate your plan within minutes.</div></div>';
   html += '<div class="plan-grid">';
   html += planCard('free', 'Free', { monthly: '₦0', yearly: '₦0' }, 'Perfect for getting started', ['30 sales / month', '30 expenses / month', '15 customers', '10 products', '5 invoices / month', '5 receipts / month', '2 PDF templates', '!No reports', '!No quotations', '!No orders'], false, false);
   html += planCard('pro', 'Pro', { monthly: '₦2,000', yearly: '₦20,000' }, 'Save ₦4,000 · Manage your business', ['Unlimited sales, expenses, customers, products', 'Unlimited invoices, receipts, movements', 'Orders + Quotations + Catalogue', 'Basic reports + CSV export', 'Custom branding + logo on documents', 'Advanced WhatsApp tools', 'Basic low-stock alerts', '6 designer PDF templates', 'Cloud sync'], true, false);
@@ -2869,8 +2656,7 @@ function view_plans() {
 }
 function after_plans() {
   $('main').onclick = function(e) {
-    var bm = e.target.closest('[data-upgrade-monthly]'); if (bm) { startPayment(bm.getAttribute('data-upgrade-monthly') + '-monthly', bm); return; }
-    var by = e.target.closest('[data-upgrade-yearly]'); if (by) { startPayment(by.getAttribute('data-upgrade-yearly') + '-yearly', by); return; }
+    var r = e.target.closest('[data-req]'); if (r) { requestUpgradeWA(r.getAttribute('data-req')); return; }
   };
 }
 
@@ -2979,7 +2765,7 @@ function view_settings() {
   out += '<div class="card mb-16"><div class="fw7 mb-8">☁️ Cloud Sync' + (canBackup ? ' & Backup' : '') + '</div><div class="hint mb-12">' + (canBackup ? 'JSON backup and restore unlocked.' : 'Your data syncs automatically. Upgrade to Business for JSON backup and restore.') + '</div><div class="flex gap wrap">' + (canBackup ? '<button class="btn btn--primary btn--sm" data-action="st-export">📥 Export Full Backup</button><button class="btn btn--secondary btn--sm" data-action="st-import">📤 Import Backup</button>' : '<button class="btn btn--secondary btn--sm" data-action="st-export">📥 Export CSV</button><button class="btn btn--primary btn--sm" data-action="go-biz">🔒 Unlock Backup (Business)</button>') + '</div></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">👤 Account</div><div class="hint mb-12">' + esc((currentUser && currentUser.email) || '') + '</div><button class="btn btn--secondary btn--sm" data-action="st-signout">Sign Out</button></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">⚠️ Danger Zone</div><div class="hint mb-12">Reset deletes all your data from the cloud. Cannot be undone.</div><button class="btn btn--danger btn--sm" data-action="st-reset">🗑️ Reset All Data</button></div>';
-  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About</div><div class="hint">KreateBiz v9 · Powered by HassanKreates</div><div class="hint mt-8">📞 <a href="https://wa.me/2348086556841" target="_blank" rel="noopener">0808 655 6841</a></div><div class="hint">✉️ <a href="mailto:hassankreates@gmail.com">hassankreates@gmail.com</a></div></div>';
+  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About</div><div class="hint">KreateBiz v9 · Powered by HassanKreates</div><div class="hint mt-8">📞 <a href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">0808 655 6841</a></div><div class="hint">✉️ hassankreates@gmail.com</div></div>';
   return out;
 }
 function after_settings() {
@@ -3064,7 +2850,7 @@ function setupWizard() {
 }
 
 /* ============================================================
-   ADMIN — MAINTENANCE SWEEP
+   ADMIN — EXPIRY SWEEP
    ============================================================ */
 function runExpirySweep() {
   var now = nowIso();
@@ -3109,14 +2895,93 @@ function runExpirySweep() {
 }
 
 /* ============================================================
-   ADMIN
+   ADMIN — DIRECT PLAN MANAGEMENT (no payment gateway)
    ============================================================ */
-var ADMIN_VIEWS = { overview: { label: 'Overview', icon: '📊' }, users: { label: 'Users', icon: '👥' }, payments: { label: 'Payments', icon: '💳' }, announcements: { label: 'Announcements', icon: '📢' }, events: { label: 'Event log', icon: '📈' } };
+function adminSetUserPlan(userId, tier, months) {
+  var now = nowIso();
+  var end = new Date();
+  end.setMonth(end.getMonth() + months);
+  var sub = {
+    userId: userId,
+    tier: tier,
+    status: 'active',
+    startedAt: now,
+    expiresAt: end.toISOString(),
+    updatedAt: now,
+    assignedBy: ADMIN_EMAIL,
+    assignedAt: now
+  };
+  return db.collection('subscriptions').doc(userId).set(sub).then(function() {
+    return db.collection('users').doc(userId).update({
+      plan: tier,
+      subscriptionStatus: 'active',
+      paidStartedAt: now,
+      paidEndsAt: end.toISOString(),
+      lastPaidTier: tier,
+      updatedAt: now
+    });
+  }).then(function() {
+    logEvent('admin_set_plan', { targetUser: userId, tier: tier, months: months });
+  });
+}
+function adminSetUserFree(userId) {
+  var now = nowIso();
+  return db.collection('subscriptions').doc(userId).set({
+    userId: userId,
+    tier: 'free',
+    status: 'expired',
+    updatedAt: now,
+    assignedBy: ADMIN_EMAIL
+  }).then(function() {
+    return db.collection('users').doc(userId).update({
+      plan: 'free',
+      subscriptionStatus: 'expired',
+      updatedAt: now
+    });
+  }).then(function() {
+    logEvent('admin_set_free', { targetUser: userId });
+  });
+}
+function adminExtendSubscription(userId, days) {
+  var now = new Date();
+  var nowIsoStr = nowIso();
+  return db.collection('subscriptions').doc(userId).get().then(function(s) {
+    var data = s.exists ? s.data() : {};
+    var base = now;
+    if (data.expiresAt && new Date(data.expiresAt) > now) base = new Date(data.expiresAt);
+    var end = new Date(base);
+    end.setDate(end.getDate() + days);
+    var tier = (data.tier && data.tier !== 'free' && data.tier !== 'trial' && data.tier !== 'gift') ? data.tier : 'pro';
+    return db.collection('subscriptions').doc(userId).set({
+      userId: userId,
+      tier: tier,
+      status: 'active',
+      startedAt: data.startedAt || nowIsoStr,
+      expiresAt: end.toISOString(),
+      updatedAt: nowIsoStr,
+      assignedBy: ADMIN_EMAIL
+    }).then(function() {
+      return db.collection('users').doc(userId).update({
+        plan: tier,
+        subscriptionStatus: 'active',
+        paidEndsAt: end.toISOString(),
+        lastPaidTier: tier
+      });
+    });
+  }).then(function() {
+    logEvent('admin_extend', { targetUser: userId, days: days });
+  });
+}
+
+/* ============================================================
+   ADMIN VIEWS
+   ============================================================ */
+var ADMIN_VIEWS = { overview: { label: 'Overview', icon: '📊' }, users: { label: 'Users', icon: '👥' }, announcements: { label: 'Announcements', icon: '📢' }, events: { label: 'Event log', icon: '📈' } };
 function renderAdminShell() {
   var h = '';
   Object.keys(ADMIN_VIEWS).forEach(function(k) { var v = ADMIN_VIEWS[k]; h += '<button class="nav-item' + (currentAdminView === k ? ' nav-item--on' : '') + '" data-av="' + k + '" style="' + (currentAdminView === k ? 'background:#0d0d0d;color:#fff' : '') + '"><span class="nav-item__i">' + v.icon + '</span><span>' + v.label + '</span></button>'; });
   $('admSide').innerHTML = h;
-  var bn = [['overview', '📊', 'Overview'], ['users', '👥', 'Users'], ['payments', '💳', 'Pay'], ['announcements', '📢', 'News'], ['events', '📈', 'Events']];
+  var bn = [['overview', '📊', 'Overview'], ['users', '👥', 'Users'], ['announcements', '📢', 'News'], ['events', '📈', 'Events']];
   $('admBnav').innerHTML = bn.map(function(item) { return '<button class="adm-bnav__i' + (currentAdminView === item[0] ? ' adm-bnav__i--on' : '') + '" data-av="' + item[0] + '"><span>' + item[1] + '</span><span>' + item[2] + '</span></button>'; }).join('');
 }
 function renderAdminView(v) {
@@ -3127,6 +2992,7 @@ function renderAdminView(v) {
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); }).catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin error</div><div class="hint mt-8">' + esc(err.message) + '</div></div>'; console.error(err); });
 }
 function bindAdminActions() {
+  /* ---------- MAINTENANCE SWEEP BUTTON ---------- */
   var sweepBtn = $('sweepBtn');
   if (sweepBtn) sweepBtn.addEventListener('click', function() {
     sweepBtn.disabled = true; sweepBtn.textContent = 'Running…';
@@ -3146,10 +3012,34 @@ function bindAdminActions() {
   });
 
   $('admMain').onclick = function(e) {
+    /* ---- SET PLAN ---- */
+    var planBtn = e.target.closest('[data-usr-plan]');
+    if (planBtn) {
+      var uidTarget = planBtn.getAttribute('data-usr-id');
+      var tier = planBtn.getAttribute('data-usr-plan');
+      var months = parseInt(planBtn.getAttribute('data-usr-months'), 10) || 0;
+      var label = tier === 'free' ? 'Free' : (tier === 'pro' ? 'Pro' : 'Business');
+      var dur = months > 0 ? ' (' + months + ' month' + (months === 1 ? '' : 's') + ')' : '';
+      confirmBox({ title: 'Set plan to ' + label + dur + '?', message: 'User gets access immediately.', yes: 'SET PLAN' }, function() {
+        planBtn.disabled = true; planBtn.textContent = '…';
+        var p = tier === 'free' ? adminSetUserFree(uidTarget) : adminSetUserPlan(uidTarget, tier, months);
+        p.then(function() { toast('Plan updated to ' + label + dur + '.', 's'); renderAdminView('users'); })
+          .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); planBtn.disabled = false; planBtn.textContent = label + dur; });
+      });
+      return;
+    }
+    /* ---- EXTEND +30d ---- */
     var ext = e.target.closest('[data-usr-ext]');
-    if (ext) { ext.disabled = true; ext.textContent = '…'; fetch(apiUrl('/admin/extend'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: ext.getAttribute('data-usr-ext'), days: 30, adminEmail: ADMIN_EMAIL }) }).then(function(r) { return r.json(); }).then(function(d) { if (d.ok) { toast('Extended 30 days.', 's'); renderAdminView('users'); } else toast('Failed.', 'e'); }).catch(function() { toast('Error.', 'e'); }); return; }
-    var cn = e.target.closest('[data-usr-cancel]');
-    if (cn) { confirmBox({ title: 'Cancel subscription?', message: 'User loses premium access.', danger: true, yes: 'CANCEL' }, function() { fetch(apiUrl('/admin/cancel'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: cn.getAttribute('data-usr-cancel'), adminEmail: ADMIN_EMAIL }) }).then(function() { toast('Cancelled.', 's'); renderAdminView('users'); }).catch(function() { toast('Error.', 'e'); }); }); return; }
+    if (ext) {
+      var uidExt = ext.getAttribute('data-usr-ext');
+      confirmBox({ title: 'Extend subscription 30 days?', message: 'Adds 30 days on top of the current end date (or from now).', yes: 'EXTEND' }, function() {
+        ext.disabled = true; ext.textContent = '…';
+        adminExtendSubscription(uidExt, 30).then(function() { toast('Extended 30 days.', 's'); renderAdminView('users'); })
+          .catch(function(err) { console.error(err); toast('Failed: ' + err.message, 'e'); ext.disabled = false; ext.textContent = '+30d'; });
+      });
+      return;
+    }
+    /* ---- PUBLISH ANNOUNCEMENT ---- */
     var bsend = e.target.closest('[data-an-send]');
     if (bsend) {
       var title = $('anTitle') ? $('anTitle').value.trim() : '';
@@ -3165,6 +3055,7 @@ function bindAdminActions() {
   var s = $('admUserSearch');
   if (s) s.addEventListener('input', function() { var q = s.value.toLowerCase(); var rows = document.querySelectorAll('[data-uemail]'); for (var i = 0; i < rows.length; i++) { var em = rows[i].getAttribute('data-uemail') || '', nm = rows[i].getAttribute('data-uname') || ''; rows[i].style.display = (em.indexOf(q) !== -1 || nm.indexOf(q) !== -1) ? '' : 'none'; } });
 }
+
 function adm_overview() {
   return db.collection('users').get().then(function(uSnap) {
     return db.collection('subscriptions').get().then(function(sSnap) {
@@ -3182,7 +3073,6 @@ function adm_overview() {
       var todayCount = users.filter(function(u) { try { return u.createdAt && u.createdAt.toDate && u.createdAt.toDate().toDateString() === new Date().toDateString(); } catch (e) { return false; } }).length;
       var html = '<div class="ph"><div><div class="ph__t">Overview</div><div class="ph__s">Live stats</div></div></div>';
       html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Lapsed Payers</div><div class="stat__v text-purple">' + lapsed.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
-
       html += '<div class="maintenance-card"><div class="fw7 mb-8">🧹 Maintenance · Expiry Sweep</div>';
       if (stale.length > 0) {
         html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. Run the sweep to clean them up. Users are already correctly on free mode — this only tidies the database and enables the welcome-back banner.</div>';
@@ -3192,7 +3082,6 @@ function adm_overview() {
       html += '<button class="btn btn--primary btn--sm" id="sweepBtn">🧹 Run expiry sweep</button>';
       html += '<div class="hint mt-8" id="sweepMsg"></div>';
       html += '</div>';
-
       html += '<div class="card mb-16"><div class="fw7 mb-8">🎁 Gift funnel snapshot</div><div class="stat-row"><span>Users who received a gift</span><strong>' + subs.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div><div class="stat-row"><span>Currently in gift</span><strong>' + gifts.length + '</strong></div><div class="stat-row"><span>Post-gift users</span><strong>' + postGift.length + '</strong></div><div class="stat-row"><span>Converted to paid after gift</span><strong>' + paid.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div></div>';
       html += '<div class="card mb-16"><div class="fw7 mb-8">🔁 Reactivation pipeline</div><div class="stat-row"><span>Lapsed payers (win-back targets)</span><strong class="text-purple">' + lapsed.length + '</strong></div><div class="stat-row"><span>Post-gift users (never paid)</span><strong>' + postGift.length + '</strong></div></div>';
       html += '<div class="card"><div class="fw7 mb-8">Recent Users</div>' + (users.slice(0, 10).map(function(u) { return '<div class="stat-row"><span>' + esc(u.email || '—') + '</span><strong>' + esc(u.plan || 'free') + (u.lastPaidTier ? ' <span class="hint">(was ' + u.lastPaidTier + ')</span>' : '') + '</strong></div>'; }).join('') || '<div class="hint">No users yet.</div>') + '</div>';
@@ -3201,28 +3090,51 @@ function adm_overview() {
   });
 }
 window.adm_overview = adm_overview;
+
 function adm_users() {
-  return db.collection('users').get().then(function(uSnap) {
-    var users = uSnap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
-    var html = '<div class="ph"><div><div class="ph__t">Users</div><div class="ph__s">' + users.length + ' total</div></div></div>';
-    html += '<div class="fg"><input type="search" id="admUserSearch" placeholder="Search by email…"></div><div>' + users.map(function(u) { return '<div class="rec" data-uemail="' + esc((u.email || '').toLowerCase()) + '" data-uname="' + esc((u.displayName || '').toLowerCase()) + '"><div class="rec__b"><div class="rec__t">' + esc(u.displayName || '—') + '</div><div class="rec__m"><span>' + esc(u.email || '') + '</span><span>Plan: ' + esc(u.plan || 'free') + '</span>' + (u.giftUsedAt ? '<span>🎁 Gift used</span>' : '') + (u.lastPaidTier ? '<span>Was: ' + esc(u.lastPaidTier) + '</span>' : '') + (u.isAdmin ? '<span class="bdg bdg--r">ADMIN</span>' : '') + '</div><div class="rec__a"><button class="btn btn--xs btn--secondary" data-usr-ext="' + u.id + '">+30 days</button><button class="btn btn--xs btn--danger" data-usr-cancel="' + u.id + '">Cancel</button></div></div></div>'; }).join('') + '</div>';
+  return Promise.all([
+    db.collection('users').get(),
+    db.collection('subscriptions').get()
+  ]).then(function(snaps) {
+    var users = snaps[0].docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
+    var subs = {};
+    snaps[1].docs.forEach(function(d) { subs[d.id] = d.data(); });
+    users.sort(function(a, b) { return (b.createdAt && a.createdAt) ? (b.createdAt < a.createdAt ? -1 : 1) : (a.email || '').localeCompare(b.email || ''); });
+    var html = '<div class="ph"><div><div class="ph__t">Users</div><div class="ph__s">' + users.length + ' total · tap a plan to upgrade instantly</div></div></div>';
+    html += '<div class="fg"><input type="search" id="admUserSearch" placeholder="Search by name or email…"></div>';
+    html += '<div>' + users.map(function(u) {
+      var sub = subs[u.id] || {};
+      var active = sub.status === 'active' && sub.expiresAt && new Date(sub.expiresAt) > new Date();
+      var plan = active ? sub.tier : (u.plan || 'free');
+      var isPostGift = u.plan === 'post-gift';
+      var bdgClass = active && plan === 'business' ? 'bdg--p' : active && plan === 'pro' ? 'bdg--g' : active ? 'bdg--a' : (isPostGift ? 'bdg--gold' : 'bdg--x');
+      var statusLabel = active ? String(plan).toUpperCase() : (isPostGift ? 'POST-GIFT' : 'FREE');
+      var expiry = (sub.expiresAt && active) ? ' · until ' + fmtD(sub.expiresAt.slice(0, 10)) : '';
+      return '<div class="rec" data-uemail="' + esc((u.email || '').toLowerCase()) + '" data-uname="' + esc((u.displayName || '').toLowerCase()) + '" data-uid="' + u.id + '">' +
+        '<div class="rec__b">' +
+          '<div class="rec__t">' + esc(u.displayName || '—') + ' <span class="bdg ' + bdgClass + '" style="font-size:.55rem">' + statusLabel + '</span>' + (u.isAdmin ? ' <span class="bdg bdg--r" style="font-size:.55rem">ADMIN</span>' : '') + '</div>' +
+          '<div class="rec__m">' +
+            '<span>' + esc(u.email || '') + '</span>' +
+            (expiry ? '<span>' + expiry + '</span>' : '') +
+            (u.giftUsedAt ? '<span>🎁 Used gift</span>' : '') +
+            (u.lastPaidTier ? '<span>Was: ' + esc(u.lastPaidTier) + '</span>' : '') +
+          '</div>' +
+          '<div class="rec__a">' +
+            '<button class="btn btn--xs btn--primary" data-usr-plan="pro" data-usr-months="1" data-usr-id="' + u.id + '">Pro 1mo</button>' +
+            '<button class="btn btn--xs btn--primary" data-usr-plan="pro" data-usr-months="12" data-usr-id="' + u.id + '">Pro 1yr</button>' +
+            '<button class="btn btn--xs btn--purple" data-usr-plan="business" data-usr-months="1" data-usr-id="' + u.id + '">Biz 1mo</button>' +
+            '<button class="btn btn--xs btn--purple" data-usr-plan="business" data-usr-months="12" data-usr-id="' + u.id + '">Biz 1yr</button>' +
+            '<button class="btn btn--xs btn--secondary" data-usr-plan="free" data-usr-months="0" data-usr-id="' + u.id + '">Set Free</button>' +
+            '<button class="btn btn--xs btn--secondary" data-usr-ext="' + u.id + '">+30d</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('') + '</div>';
     return html;
   });
 }
 window.adm_users = adm_users;
-function adm_payments() {
-  return db.collection('payments').get().then(function(snap) {
-    var pays = snap.docs.map(function(d) { return d.data(); });
-    pays.sort(function(a, b) { return (a.createdAt < b.createdAt ? 1 : -1); });
-    var total = pays.filter(function(p) { return p.status === 'successful'; }).reduce(function(s, p) { return s + (Number(p.amount) || 0); }, 0);
-    var html = '<div class="ph"><div><div class="ph__t">Payments</div><div class="ph__s">' + pays.length + ' transaction' + (pays.length === 1 ? '' : 's') + '</div></div></div>';
-    html += '<div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><div class="stat__l">Total Revenue</div><div class="stat__v stat__v--g">' + moneyW(total) + '</div></div><div class="stat"><div class="stat__l">Successful</div><div class="stat__v">' + pays.filter(function(p) { return p.status === 'successful'; }).length + '</div></div></div>';
-    if (pays.length) html += '<div class="tw"><table class="tb"><thead><tr><th>Date</th><th>User</th><th>Plan</th><th>Amount</th></tr></thead><tbody>' + pays.slice(0, 100).map(function(p) { return '<tr><td>' + fmtD(p.createdAt ? p.createdAt.slice(0, 10) : '') + '</td><td class="hint">' + esc(p.email || '—') + '</td><td>' + esc(p.planName || '') + '</td><td class="fw7">' + moneyW(p.amount) + '</td></tr>'; }).join('') + '</tbody></table></div>';
-    else html += '<div class="empty"><div class="empty__i">💳</div><div class="empty__t">No payments yet</div></div>';
-    return html;
-  });
-}
-window.adm_payments = adm_payments;
+
 function adm_announcements() {
   return db.collection('announcements').orderBy('createdAt', 'desc').limit(50).get().then(function(snap) {
     var anns = snap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });
@@ -3234,6 +3146,7 @@ function adm_announcements() {
   });
 }
 window.adm_announcements = adm_announcements;
+
 function adm_events() {
   return db.collection('users').limit(30).get().then(function(uSnap) {
     var users = uSnap.docs.map(function(d) { return Object.assign({ id: d.id }, d.data()); });

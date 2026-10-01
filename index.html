@@ -330,9 +330,63 @@ a:hover{color:var(--green)}
 .tl-item--warn::before{background:var(--warn)}
 .tl-item--purple::before{background:var(--purple)}
 .tl-item--red::before{background:var(--err)}
-.maintenance-card{background:linear-gradient(135deg,#fffbeb,#fff);border:1px solid #fcd34d;border-radius:var(--r2);padding:14px;margin-bottom:16px}
-.maintenance-card .fw7{color:#92400e}
-.maintenance-card .hint{color:#a16207}
+
+/* ---------- CHAT / HELP CENTER ---------- */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100dvh - 230px);min-height:440px;background:var(--white);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+@media(min-width:960px){.chat-wrap{height:calc(100dvh - 190px)}}
+.chat-wrap--modal{height:min(78dvh,660px);border:none;border-radius:0}
+.chat-head{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;padding:11px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-head__av{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.chat-head__n{font-weight:700;font-size:.92rem;line-height:1.2}
+.chat-head__s{font-size:.68rem;opacity:.9;display:flex;align-items:center;gap:5px;margin-top:2px}
+.chat-dot{width:7px;height:7px;border-radius:50%;background:#25d366;display:inline-block;box-shadow:0 0 0 0 rgba(37,211,102,.7);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}70%{box-shadow:0 0 0 7px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.chat-body{flex:1;overflow-y:auto;padding:14px;background:#ece5dd;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+[data-theme="dark"] .chat-body{background:#0b141a}
+.msg{max-width:84%;padding:8px 11px;border-radius:10px;font-size:.86rem;line-height:1.45;position:relative;word-wrap:break-word;white-space:pre-wrap;box-shadow:0 1px 1px rgba(0,0,0,.08);animation:msgIn .22s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg--bot{background:#fff;color:#111;align-self:flex-start;border-top-left-radius:2px}
+[data-theme="dark"] .msg--bot{background:#202c33;color:#e9edef}
+.msg--me{background:#dcf8c6;color:#111;align-self:flex-end;border-top-right-radius:2px}
+[data-theme="dark"] .msg--me{background:#005c4b;color:#e9edef}
+.msg__t{font-size:.58rem;color:#667781;text-align:right;margin-top:4px;letter-spacing:.02em}
+[data-theme="dark"] .msg__t{color:#8696a0}
+.msg--typing{display:flex;gap:4px;align-items:center;padding:12px 15px}
+.msg--typing i{width:6px;height:6px;border-radius:50%;background:#8a8a8a;display:inline-block;animation:blink 1.25s infinite}
+.msg--typing i:nth-child(2){animation-delay:.18s}
+.msg--typing i:nth-child(3){animation-delay:.36s}
+@keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--white);border-top:1px solid var(--bd);scrollbar-width:none;flex-shrink:0;min-height:0}
+.chat-quick:empty{display:none}
+.chat-quick::-webkit-scrollbar{display:none}
+.chat-quick button{flex-shrink:0;padding:6px 12px;border-radius:50px;border:1.5px solid var(--greenM);background:var(--greenL);color:var(--green);font-size:.75rem;font-weight:600;white-space:nowrap;transition:all .15s}
+.chat-quick button:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.chat-in{display:flex;gap:8px;padding:9px 10px;background:var(--white);border-top:1px solid var(--bd);flex-shrink:0;align-items:center}
+.chat-in input{flex:1;border-radius:50px;min-height:42px;padding:8px 15px;font-size:.88rem}
+.chat-in button{width:44px;height:44px;min-height:44px;border-radius:50%;background:#25d366;color:#fff;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+.chat-in button:hover{transform:scale(1.06)}
+.chat-in button:active{transform:scale(.94)}
+
+/* ---------- LEGAL / INFO PAGES ---------- */
+.legal-body{font-size:.88rem;color:var(--tx2);line-height:1.72}
+.legal-body h3{font-size:.98rem;color:var(--tx);margin:20px 0 8px;font-weight:800;letter-spacing:-.01em}
+.legal-body h3:first-child{margin-top:0}
+.legal-body p{margin-bottom:10px}
+.legal-body ul{margin:0 0 12px 18px}
+.legal-body li{margin-bottom:6px}
+.legal-body strong{color:var(--tx)}
+.legal-body a{word-break:break-word;font-weight:600}
+.legal-meta{font-size:.74rem;color:var(--tx3);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
+.social-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.social-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-weight:700;font-size:.85rem;border:1.5px solid var(--bd);background:var(--white);color:var(--tx);transition:all .18s;min-height:44px}
+.social-btn:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.social-btn--wa{background:#25d366;border-color:#25d366;color:#fff}
+.social-btn--wa:hover{background:#1ebe5d;border-color:#1ebe5d;color:#fff}
+.social-btn--x{background:#0d0d0d;border-color:#0d0d0d;color:#fff}
+.social-btn--x:hover{background:#000;border-color:#000;color:#fff}
+.foot-links{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:16px}
+.foot-links button{font-size:.78rem;color:#9a9a9a;font-weight:600;padding:4px 0;transition:color .15s}
+.foot-links button:hover{color:var(--greenM)}
 </style>
 </head>
 <body>
@@ -348,6 +402,7 @@ a:hover{color:var(--green)}
         <a href="#pricing">Pricing</a>
         <a href="#features">Features</a>
         <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
       </nav>
       <button class="btn btn--ghost btn--sm nav__cta" data-action="show-login">Sign In</button>
       <button class="btn btn--primary btn--sm nav__cta" data-action="show-signup" style="margin-left:6px">Start Free</button>
@@ -405,14 +460,38 @@ a:hover{color:var(--green)}
       <div class="card mb-8"><div class="fw7">What's the difference between Pro and Business?</div><div class="hint mt-8">Pro gives you unlimited tools to <strong>manage your business</strong>. Business is a different level — it lets you <strong>run your business and your people and your money and your stock and your growth</strong>, all connected.</div></div>
       <div class="card mb-8"><div class="fw7">How do I upgrade?</div><div class="hint mt-8">Tap any upgrade button — it opens WhatsApp so we can activate your plan within minutes.</div></div>
       <div class="card mb-8"><div class="fw7">What happens when my subscription ends?</div><div class="hint mt-8">Your data stays. Everything you created during the trial, gift or paid plan stays accessible forever. Only the ongoing premium features lock. You drop back to the Free plan gracefully, and we'll remember you as a past customer.</div></div>
-      <div class="card mb-8"><div class="fw7">Contact support</div><div class="hint mt-8">WhatsApp 0808 655 6841 · hassankreates@gmail.com</div></div>
+      <div class="card mb-8"><div class="fw7">Contact support</div><div class="hint mt-8">WhatsApp 0808 655 6841 · kreatebizz@gmail.com</div></div>
     </div>
   </section>
-  <footer style="background:#0d0d0d;color:#fff;padding:36px 0 20px">
+  <section class="section" id="support">
+    <div class="container text-center"><span class="sec-label">Support</span><h2 class="sec-title">Need a hand? We're right here.</h2><p class="sec-sub">Chat with Kizzy, our instant support assistant — or reach us directly on WhatsApp. Real humans, real answers.</p></div>
+    <div class="container">
+      <div class="grid grid--3 mt-24">
+        <div class="card" style="text-align:center;cursor:pointer" data-legal="help"><div class="card__icon" style="margin:0 auto 10px">💬</div><div class="card__title">Help Center</div><div class="card__text">Instant answers 24/7 from our assistant bot.</div></div>
+        <a class="card" style="text-align:center" href="https://wa.me/2348086556841" target="_blank" rel="noopener"><div class="card__icon" style="margin:0 auto 10px">📱</div><div class="card__title">WhatsApp</div><div class="card__text">0808 655 6841 — fastest way to reach us.</div></a>
+        <div class="card" style="text-align:center;cursor:pointer" data-legal="contact"><div class="card__icon" style="margin:0 auto 10px">✉️</div><div class="card__title">Contact Us</div><div class="card__text">Email, social media and business details.</div></div>
+      </div>
+    </div>
+  </section>
+  <footer style="background:#0d0d0d;color:#fff;padding:36px 0 22px">
     <div class="container">
       <div style="font-size:1.2rem;font-weight:900;color:var(--greenM)">KREATEBIZ</div>
-      <p style="font-size:.82rem;color:#999;margin-top:8px">Powered by HassanKreates</p>
-      <div style="border-top:1px solid #222;padding-top:14px;margin-top:20px;font-size:.74rem;color:#666">© <span id="yr"></span> KreateBiz</div>
+      <p style="font-size:.82rem;color:#999;margin-top:8px">Business tools for Nigerian businesses. Sales, stock, customers, cash flow and growth — connected.</p>
+      <div class="foot-links">
+        <button data-legal="about">About Us</button>
+        <button data-legal="help">Help Center</button>
+        <button data-legal="contact">Contact Us</button>
+        <button data-legal="privacy">Privacy Policy</button>
+        <button data-legal="terms">Terms &amp; Conditions</button>
+        <button data-legal="cookies">Cookies Policy</button>
+        <button data-legal="disclaimer">Disclaimer</button>
+        <button data-legal="copyright">Copyright</button>
+      </div>
+      <div class="social-row">
+        <a class="social-btn social-btn--wa" href="https://wa.me/2348086556841" target="_blank" rel="noopener">💬 WhatsApp · 0808 655 6841</a>
+        <a class="social-btn social-btn--x" href="https://x.com/kreatebizz" target="_blank" rel="noopener">𝕏 @kreatebizz</a>
+      </div>
+      <div style="border-top:1px solid #222;padding-top:14px;margin-top:22px;font-size:.74rem;color:#666">© <span id="yr"></span> KreateBiz. All rights reserved.</div>
     </div>
   </footer>
 </div>
@@ -442,6 +521,9 @@ a:hover{color:var(--green)}
         <div class="hint" style="text-align:center;margin-top:10px">Includes a 14-day Pro trial. No card required.</div>
       </div>
       <div style="text-align:center;margin-top:18px"><button class="btn btn--ghost btn--sm" data-action="back-landing">← Back</button></div>
+      <div style="text-align:center;margin-top:14px;font-size:.7rem;color:var(--tx3);line-height:1.7">
+        By continuing you agree to our <a href="#" data-legal="terms">Terms</a> and <a href="#" data-legal="privacy">Privacy Policy</a>.
+      </div>
     </div>
   </div>
 </div>
@@ -535,8 +617,12 @@ try {
    CONSTANTS
    ============================================================ */
 var ADMIN_UID = "Q53Gx0W46FSR3ZZICM3rxYDuJa53";
-var ADMIN_EMAIL = "hassankreates@gmail.com";
+var ADMIN_EMAIL = "kreatebizz@gmail.com";
 var WHATSAPP_SUPPORT = "2348086556841";
+var WHATSAPP_DISPLAY = "0808 655 6841";
+var X_HANDLE = "kreatebizz";
+var X_URL = "https://x.com/kreatebizz";
+var SUPPORT_EMAIL = "kreatebizz@gmail.com";
 
 /* Plan labels — actual durations are set server-side in Cloud Functions. */
 var PLANS = {
@@ -637,6 +723,7 @@ function $(id) { return document.getElementById(id); }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 function today() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 function nowIso() { return new Date().toISOString(); }
+function nowTime() { return new Date().toLocaleTimeString('en-NG', { hour: '2-digit', minute: '2-digit' }); }
 function parseD(s) { if (!s) return null; if (/^\d{4}-\d{2}-\d{2}$/.test(s)) { var p = s.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); } var d = new Date(s); return isNaN(d.getTime()) ? null : d; }
 function addDays(s, n) { var d = parseD(s) || new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 function esc(s) { return s == null ? '' : String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -772,7 +859,7 @@ var announcements = [];
 var announcementsLoaded = false;
 
 /* ============================================================
-   PERSISTENCE — unchanged. Data still writes to Firestore.
+   PERSISTENCE
    ============================================================ */
 function saveData() {
   if (!DATA) return;
@@ -923,8 +1010,7 @@ function bumpUsage(k, by) {
 }
 
 /* ============================================================
-   SUBSCRIPTION — via Cloud Functions (Level C)
-   Trial + gift are granted server-side. Users cannot fake them.
+   SUBSCRIPTION — via Cloud Functions
    ============================================================ */
 function activateTrial() {
   if (!currentUser) return Promise.reject(new Error('No user'));
@@ -980,7 +1066,6 @@ $('lgBtn').addEventListener('click', function() {
   auth.signInWithEmailAndPassword(e, p).catch(function(err) { showErr($('lgErr'), friendlyAuthError(err)); $('lgBtn').disabled = false; });
 });
 
-/* ---------- SIGNUP — Level C: no direct plan writes ---------- */
 $('rgBtn').addEventListener('click', function() {
   hideErr($('rgErr'));
   var n = $('rgN').value.trim(), e = $('rgE').value.trim(), p = $('rgP').value;
@@ -990,7 +1075,6 @@ $('rgBtn').addEventListener('click', function() {
   $('rgBtn').disabled = true;
   auth.createUserWithEmailAndPassword(e, p).then(function(cred) {
     return cred.user.updateProfile({ displayName: n }).then(function() {
-      /* Only profile fields — plan & trial fields are managed by Cloud Function. */
       return db.collection('users').doc(cred.user.uid).set({
         email: e,
         displayName: n
@@ -998,7 +1082,6 @@ $('rgBtn').addEventListener('click', function() {
         console.warn('Profile write failed (will retry on next load):', err);
       });
     }).then(function() {
-      /* Ask Cloud Function to grant the 14-day Pro trial */
       return fns.httpsCallable('activateTrial')().then(function(res) {
         console.log('Trial activated:', res.data);
       }).catch(function(err) {
@@ -1028,9 +1111,608 @@ function friendlyAuthError(e) {
 }
 
 /* ============================================================
+   HELP CENTER BOT — knowledge base
+   ============================================================ */
+var DEF_QUICK = ['Record a sale', 'Create an invoice', 'Upgrade my plan', 'Contact support'];
+var CHAT_GREET = "Hi 👋 I'm Kizzy, your KreateBiz assistant.\n\nI can help with sales, stock, invoices, customers, debtors, staff, reports, plans and anything else on the platform.\n\nWhat would you like help with today?";
+var CHAT_FALLBACK = "Hmm, I'm not 100% sure I got that one. 🤔\n\nTry asking me things like:\n• How do I record a sale?\n• My stock is wrong\n• How do I create an invoice?\n• How do I upgrade?\n• I can't log in\n\nOr type \"human\" and I'll pass you to our WhatsApp support line right away.";
+
+var HELP_KB = [
+  { k: ['hello','hi','hey','good morning','good afternoon','good evening','yo','start','hi there'], a: "Hello! 👋 Great to see you.\n\nI'm Kizzy from KreateBiz support. Tell me what you're trying to do and I'll walk you through it step by step.", q: DEF_QUICK },
+
+  { k: ['thank','thanks','thank you','appreciate','cheers','well done'], a: "You're very welcome! 😊\n\nIf anything else comes up, I'm right here. Happy selling!", q: DEF_QUICK },
+
+  { k: ['bye','goodbye','see you','later','good night'], a: "Bye for now! 👋\n\nCome back anytime you need help. Wishing your business a great day.", q: DEF_QUICK },
+
+  { k: ['what is kreatebiz','what does kreatebiz do','about kreatebiz','what can it do','features','overview','tell me about'], a: "KreateBiz is a complete business management platform built for Nigerian businesses 🇳🇬\n\nHere's what it covers:\n💰 Sales — record sales, stock drops automatically\n📉 Expenses — categories, budgets and cash flow\n📦 Inventory — stock levels, low-stock alerts\n👥 Customers — profiles, history, WhatsApp tools\n⏳ Debtors — track who owes you and send reminders\n🧾 Documents — invoices, quotations, receipts as PDF\n👔 Staff — roles and performance (Business)\n🧠 Insights — profit analysis and cash flow forecast (Business)\n\nEverything is connected — record one sale and stock, cash flow and profit all update together.", q: ['Record a sale','Create an invoice','Show me pricing','How do I start?'] },
+
+  { k: ['record a sale','add a sale','new sale','make a sale','log a sale','enter a sale','how do i sell'], a: "Recording a sale is quick:\n\n1️⃣ Open Sales from the menu\n2️⃣ Tap ＋ New Sale\n3️⃣ Pick the customer (or leave it as Walk-in)\n4️⃣ Add items — tap ＋ Add item, choose a product and enter quantity\n5️⃣ Enter amount paid (leave blank if unpaid)\n6️⃣ Tap Save Sale\n\n✅ Stock reduces automatically\n✅ Cash flow and profit update\n✅ If unpaid, a debtor record is created for you", q: ['My stock is wrong','How do I print a receipt?','How do I add a customer?'] },
+
+  { k: ['edit a sale','change a sale','wrong sale','correct a sale','mistake in sale','fix sale'], a: "No problem, sales can be edited:\n\n1️⃣ Open Sales\n2️⃣ Find the sale and tap Edit\n3️⃣ Change anything you need\n4️⃣ Tap Update Sale\n\nWhen you save, KreateBiz reverses the old stock movement and applies the new one — so your inventory stays accurate. ✅", q: ['Delete a sale','My stock is wrong'] },
+
+  { k: ['delete a sale','remove a sale','cancel a sale'], a: "At the moment sales can be edited but not deleted — this is intentional so your records stay complete and trustworthy.\n\nIf a sale was a mistake, open it, tap Edit, set the quantity to reflect what actually happened, and save. That keeps your books clean.\n\nNeed it fully removed? Message our team on WhatsApp and we'll help.", q: ['Contact support'] },
+
+  { k: ['sales limit','free limit','only 30 sales','limit reached','how many sales'], a: "On the Free plan you get 30 sales per month. That resets on the 1st of each month.\n\nIf you hit the limit, you have options:\n• Pro — unlimited sales, ₦2,000/month\n• Business — everything in Pro plus staff, suppliers, cash flow, insights, ₦4,000/month\n\nAnd if you're active on Free, we'll usually offer you Business free for 7 days before you pay anything. 🎁", q: ['How do I upgrade?','Show me pricing'] },
+
+  { k: ['add a product','new product','create product','add item','add stock item'], a: "To add a product:\n\n1️⃣ Open Inventory\n2️⃣ Tap ＋ Product\n3️⃣ Enter name, selling price and cost price\n4️⃣ Set a low-stock alert level\n5️⃣ Enter opening stock if you already have some\n6️⃣ Tap Save\n\n💡 Always fill the cost price — it's what powers your real profit calculations later.", q: ['Do a stock in or out','Low stock alerts','My stock is wrong'] },
+
+  { k: ['stock in','stock out','stock movement','move stock','adjust stock','add stock','remove stock'], a: "Use Stock Movement for any manual change:\n\n1️⃣ Open Inventory\n2️⃣ Tap 🔄 In/Out\n3️⃣ Choose the product\n4️⃣ Choose Stock In (received) or Stock Out (removed)\n5️⃣ Enter quantity and reason\n6️⃣ Tap Record\n\nEvery movement is logged, so you can always see the history per product. 📦", q: ['Product history','Low stock alerts'] },
+
+  { k: ['my stock is wrong','stock incorrect','stock not correct','wrong quantity','inventory wrong','stock doesn\'t match'], a: "Let's fix that. Stock normally changes in three ways:\n\n• A sale reduces it\n• A purchase increases it\n• A manual movement changes it\n\nHere's how to find the cause:\n1️⃣ Open Inventory\n2️⃣ Tap History on that product\n3️⃣ Look through the movements — you'll usually spot a duplicate or a missing entry\n\nTo correct it: tap 🔄 In/Out and record an adjustment with a clear reason like \"Stock count correction\". 👍", q: ['Do a stock in or out','Contact support'] },
+
+  { k: ['low stock','low stock alert','running low','restock alert','reorder'], a: "Low-stock alerts are built in 🔔\n\nEvery product has a threshold. When stock falls to or below it, the product shows a LOW badge and appears in your dashboard alerts.\n\nFree plan doesn't include alerts. Pro gives you basic alerts. Business gives advanced alerts including out-of-stock tracking and slow-mover detection.", q: ['How do I upgrade?','Add a product'] },
+
+  { k: ['create an invoice','make an invoice','new invoice','send an invoice','generate invoice'], a: "Creating an invoice takes about a minute:\n\n1️⃣ Open Documents\n2️⃣ Tap ＋ Invoice\n3️⃣ Choose a template (tap to preview it)\n4️⃣ Fill in your business details — save these once and they're remembered\n5️⃣ Enter the customer and items\n6️⃣ Tap Generate Invoice\n\nThen tap 📄 Download PDF and it's ready to send. 🧾\n\n💡 Free plan gets 5 invoices per month. Pro is unlimited.", q: ['Download the pdf','Choose a template','Change an invoice template'] },
+
+  { k: ['quotation','quote','make a quote'], a: "Quotations are a Pro feature. Here's how:\n\n1️⃣ Open Documents\n2️⃣ Tap 📝 Quotation\n3️⃣ Fill in customer and items\n4️⃣ Set a validity date\n5️⃣ Tap Generate Quotation\n\n✅ You can then tap → Invoice on any quotation to convert it into a real invoice instantly. That's the bit people love most.", q: ['How do I upgrade?','Create an invoice'] },
+
+  { k: ['receipt','print a receipt','make a receipt','receipt from sale'], a: "The fastest way to make a receipt is from the sale itself:\n\n1️⃣ Open Sales\n2️⃣ Find the sale\n3️⃣ Tap the 🧾 button on that row\n4️⃣ Pick a template\n5️⃣ It generates and opens automatically\n\nYou can also go to Documents → 🧾 Receipt and choose any past sale from the list.", q: ['Download the pdf','Choose a template'] },
+
+  { k: ['template','templates','change template','design','look of document','choose a design'], a: "There are 10 designer templates 🎨\n\nFree — Classic, Modern\nPro — plus Minimal, Bold, Elegant, Corporate\nBusiness — plus Premium, Creative, Compact, Luxury\n\nTo change one:\n1️⃣ Open the document\n2️⃣ Tap 🎨 Template\n3️⃣ Pick a new one\n\nTo set your default: Settings → Default document template.", q: ['Create an invoice','How do I upgrade?'] },
+
+  { k: ['download the pdf','pdf not working','pdf not downloading','export pdf','save as pdf','pdf failed'], a: "A few things to check if the PDF isn't coming through:\n\n1️⃣ Wait a second after tapping — it renders in the background\n2️⃣ On iPhone, check Safari's Downloads (the ⬇ icon in the address bar)\n3️⃣ On Android, check the Downloads folder in Files\n4️⃣ Make sure you're not in private/incognito mode\n5️⃣ Try a different browser — Chrome works best\n\nStill stuck? Tap the 📄 button again, and if it fails twice, message us on WhatsApp. 📱", q: ['Contact support','Create an invoice'] },
+
+  { k: ['add a customer','new customer','create customer','save customer'], a: "Adding customers is easy:\n\n1️⃣ Open Customers\n2️⃣ Tap ＋ Add\n3️⃣ Enter name and phone\n4️⃣ Add a tag if you like — e.g. VIP, Wholesale, Ikeja\n5️⃣ Tap Save\n\n💡 Customers are also created automatically when you enter a new name during a sale or invoice. No double work.", q: ['Record a sale','WhatsApp a customer'] },
+
+  { k: ['whatsapp a customer','message customer','send whatsapp','remind customer'], a: "KreateBiz has WhatsApp built in 💬\n\nWherever you see the green 💬 button, it opens WhatsApp with the right message already typed:\n\n• On a customer row — a friendly greeting\n• On a debtor — a polite payment reminder with the exact amount\n• On a document — the invoice or receipt summary\n\nYou just hit send. No retyping.", q: ['Send a debt reminder','How do I upgrade?'] },
+
+  { k: ['debt','debtor','owes me','customer owes','unpaid balance','track debt','who owes me'], a: "Debtors are handled automatically, but you can also add them manually.\n\nAutomatic:\nAny sale with a balance creates a debtor record for you.\n\nManual:\n1️⃣ Open Debtors\n2️⃣ Tap ＋ Add\n3️⃣ Choose the customer, amount and due date\n4️⃣ Tap Save\n\nWhen they pay, tap ＋ Payment and enter the amount. The balance updates and the status changes to Partial or Paid. ✅", q: ['Send a debt reminder','Record a payment'] },
+
+  { k: ['send a debt reminder','remind debtor','chase payment','follow up payment'], a: "Sending a reminder takes two taps 💬\n\n1️⃣ Open Debtors\n2️⃣ Find the customer\n3️⃣ Tap the green 💬 button\n\nWhatsApp opens with a polite message already written — it includes their name, the exact outstanding balance and the due date. You just hit send.", q: ['Track a debt','Record a payment'] },
+
+  { k: ['record a payment','customer paid','received payment','part payment','debt payment'], a: "To record a payment against a debt:\n\n1️⃣ Open Debtors\n2️⃣ Find the customer\n3️⃣ Tap ＋ Payment\n4️⃣ Enter the amount they paid\n5️⃣ Tap Save\n\nIf they paid part, the status becomes Partial. When the balance hits zero, it becomes Paid automatically. ✅\n\nFor invoices, open the invoice and tap ＋ Payment instead.", q: ['Track a debt','Create an invoice'] },
+
+  { k: ['expense','add expense','record expense','spending','log expense'], a: "Recording expenses is quick:\n\n1️⃣ Open Expenses\n2️⃣ Tap ＋ Add\n3️⃣ Enter the name and amount\n4️⃣ Pick a category\n5️⃣ Tap Save\n\n💡 Categories matter — they power your reports and your budget alerts. Choose carefully and your insights get much sharper. 📉", q: ['Set a budget','See reports'] },
+
+  { k: ['order','orders','customer order','track order'], a: "Orders are great for pre-orders and made-to-order work 📋\n\n1️⃣ Open Orders\n2️⃣ Tap ＋ New\n3️⃣ Choose or type the customer\n4️⃣ Enter details, total and amount paid\n5️⃣ Set the status — New, Confirmed, Processing, Ready, Delivered or Completed\n\n✅ Orders appear on the customer's CRM timeline.\n💡 Orders are a Pro feature.", q: ['How do I upgrade?','Add a customer'] },
+
+  { k: ['catalogue','catalog','product list','share products','show products'], a: "The Catalogue gives you a clean product showcase 🛍️\n\n1️⃣ Open Catalogue\n2️⃣ Tap 💬 Share — it opens WhatsApp with your full product list and prices already formatted\n3️⃣ Or tap 🖨️ Print for a paper version\n\nGreat for sending to customers who ask \"what do you have?\"\n\n💡 Catalogue is a Pro feature.", q: ['How do I upgrade?','Add a product'] },
+
+  { k: ['report','reports','analytics','export csv','download data','sales report'], a: "Reports give you the numbers that matter 📈\n\nSwitch between Today, Week, Month, Last Month and Year. You'll see gross sales, collected, outstanding, expenses, profit and transactions, plus your top products and top customers.\n\nExport options:\n• Sales CSV\n• Expenses CSV\n• Inventory CSV\n\n💡 Reports are a Pro feature. Advanced reporting with staff performance is Business.", q: ['How do I upgrade?','See insights'] },
+
+  { k: ['cash flow','cashflow','projected cash','run out of money','month end cash'], a: "Smart Cash Flow projects your month-end position 💸\n\nIt looks at:\n• Cash collected from sales this month\n• Expenses and purchases paid out\n• Your average daily spend\n• Days remaining in the month\n• Money expected from debtors\n\nSo you can see trouble before it arrives — and act early.\n\n💡 This is a Business feature.", q: ['How do I upgrade?','Set a budget'] },
+
+  { k: ['budget','budget planner','spending limit','limit my spending'], a: "The Budget Planner keeps spending in check 🎯\n\n1️⃣ Open Budget\n2️⃣ Tap ＋ Set Budget\n3️⃣ Pick a category — Transport, Marketing, Staff, etc.\n4️⃣ Enter a monthly limit\n5️⃣ Tap Save\n\nYou'll see a progress bar per category. When you pass 85% you get a warning alert. Past 100% it turns red. \n\n💡 This is a Business feature.", q: ['How do I upgrade?','Record an expense'] },
+
+  { k: ['insight','insights','profit analysis','which product makes money','best seller'], a: "Insights shows you what's really working 🧠\n\nYou'll see:\n🏆 Top profit makers — ranked by actual profit, not just revenue\n⚠️ Watch these — products with thin or negative margins\n👑 Top customers this month\n🐢 Slow-moving stock — sitting on your shelf 30+ days\n💸 Where money goes — your biggest expense categories\n\n💡 This is a Business feature.", q: ['How do I upgrade?','See reports'] },
+
+  { k: ['staff','add staff','employee','worker','team','salesperson'], a: "Add your team so you can see who sells what 👔\n\n1️⃣ Open Staff\n2️⃣ Tap ＋ Add Staff\n3️⃣ Enter name, role and monthly salary\n4️⃣ Save\n\nThen when you record a sale, choose the staff member in the \"Sold by\" field. Their performance is tracked automatically.\n\n💡 Staff management is a Business feature.", q: ['Staff performance','How do I upgrade?'] },
+
+  { k: ['staff performance','who sells most','staff sales','team performance'], a: "Staff performance is tracked automatically 👔\n\nOpen Staff → tap Performance on anyone. You'll see total sales value, this month's sales, transaction count and their recent sales list.\n\nMake sure to select the staff member in the \"Sold by\" field when recording a sale — that's what links it to them.\n\n💡 This is a Business feature.", q: ['Add staff','How do I upgrade?'] },
+
+  { k: ['supplier','add supplier','vendor','who i buy from'], a: "Suppliers keep your buying organised 🏭\n\n1️⃣ Open Suppliers\n2️⃣ Tap ＋ Add\n3️⃣ Enter name, phone and what they supply\n4️⃣ Save\n\nThen record purchases against them to track what you owe. Tap any supplier to see their full purchase history.\n\n💡 This is a Business feature.", q: ['Record a purchase','How do I upgrade?'] },
+
+  { k: ['purchase','buy stock','record purchase','stock purchase','restock from supplier'], a: "Recording a purchase does three things at once 📥\n\n1️⃣ Open Purchases\n2️⃣ Tap ＋ New Purchase\n3️⃣ Choose the supplier\n4️⃣ Add the items, quantities and unit costs\n5️⃣ Enter how much you paid\n6️⃣ Tap Save Purchase\n\nWhat happens automatically:\n✅ Stock increases for every item\n✅ Cost price updates on the product\n✅ An expense is logged if you paid from cash\n\n💡 This is a Business feature.", q: ['Add a supplier','How do I upgrade?'] },
+
+  { k: ['backup','export data','save my data','import data','restore'], a: "Your data syncs to the cloud automatically — sign in on any device and it's all there ☁️\n\nFor offline backups:\n• Pro and above can export CSV files from Reports\n• Business can export and import a full JSON backup from Settings\n\nSettings → Cloud Sync & Backup → Export Full Backup", q: ['How do I upgrade?','Is my data safe?'] },
+
+  { k: ['multiple businesses','two businesses','second business','switch business'], a: "You can run more than one business from one account 🏢\n\n1️⃣ Open My Businesses\n2️⃣ Tap ＋ Add Business\n3️⃣ Enter the details and logo\n4️⃣ Tap Switch to this\n\nWhichever is active appears on your invoices, receipts and quotations. Switch back anytime with one tap.\n\n💡 This is a Business feature.", q: ['How do I upgrade?','Create an invoice'] },
+
+  { k: ['upgrade','pricing','how much','cost','price','plan','pro','business plan','subscription'], a: "Here's the simple version 💎\n\nFREE — ₦0 forever\n30 sales, 30 expenses, 15 customers, 10 products, 5 invoices/month, 2 templates\n\nPRO — ₦2,000/month (or ₦20,000/year)\nUnlimited everything, orders, quotations, catalogue, basic reports, CSV export, custom logo, advanced WhatsApp tools, 6 templates\n\nBUSINESS — ₦4,000/month (or ₦40,000/year)\nEverything in Pro plus staff, suppliers, purchases, advanced inventory, cash flow forecast, budget planner, CRM, insights, smart alerts, backup, multiple businesses and all 10 templates\n\nTap any upgrade button and WhatsApp opens with your details ready. We activate within minutes. 🚀", q: ['How do I upgrade?','What is the free trial?'] },
+
+  { k: ['how do i upgrade','upgrade my plan','pay for pro','pay for business','activate pro'], a: "Upgrading takes about a minute 🚀\n\n1️⃣ Open Plans & Pricing\n2️⃣ Tap the plan you want\n3️⃣ WhatsApp opens with your account details already filled in\n4️⃣ Send the message\n5️⃣ We activate your plan — usually within minutes\n\nYou can pay monthly or yearly. Yearly saves you two months. 💰", q: ['Show me pricing','What is the free trial?'] },
+
+  { k: ['free trial','trial','14 day trial','trial expired','trial ending'], a: "Every new account gets a 14-day Pro trial automatically — no card needed 🎁\n\nDuring the trial you get unlimited sales, expenses, customers and products, plus orders, quotations, catalogue, basic reports, custom branding and 6 templates.\n\nWhen it ends, your data stays. You simply drop back to the Free plan and only the premium features pause. You can upgrade anytime.", q: ['How do I upgrade?','What is the Business gift?'] },
+
+  { k: ['gift','business gift','7 day gift','free business','gift expired'], a: "The Business Gift is our way of showing you what Business can do 🎁\n\nWhen you're active on the Free plan, we may offer you full Business access free for 7 days. No card, no payment details, no catch.\n\nYou keep everything you create during the gift — permanently.\n\nWhen it ends, you land softly on the Free plan. Your data is untouched.", q: ['How do I upgrade?','What is the free trial?'] },
+
+  { k: ['subscription ended','plan expired','lost my plan','downgraded','expired'], a: "Don't worry — your data is completely safe ❤️\n\nWhen a plan ends, KreateBiz doesn't delete anything. You simply move back to the Free plan and only the ongoing premium features pause.\n\nAll your sales, customers, products and documents stay exactly where they are. Reactivate anytime and pick up right where you left off.\n\nIf you were on a paid plan, you'll see a welcome-back banner with a one-tap reactivate option.", q: ['How do I upgrade?','Is my data safe?'] },
+
+  { k: ['is my data safe','data safe','data lost','lost my data','missing data','data disappeared'], a: "Your data is stored securely in the cloud and syncs automatically ☁️\n\nNothing is deleted when a plan ends — everything stays accessible.\n\nIf something looks missing:\n1️⃣ Check your internet connection — the app works offline and syncs after\n2️⃣ Pull to refresh or close and reopen the app\n3️⃣ Make sure you're signed in with the right email\n4️⃣ Check you're not on a filter that hides it — e.g. \"Today\" instead of \"All\"\n\nStill missing something? Message us on WhatsApp — we can check your account directly.", q: ['Contact support','Backup my data'] },
+
+  { k: ['login','log in','sign in','cant login','can\'t log in','cannot login','login problem','access my account'], a: "Let's get you back in 🔐\n\nFirst, try these:\n1️⃣ Check the email is spelled exactly right\n2️⃣ Check caps lock is off\n3️⃣ Tap the 👁️ icon on the password field to check what you typed\n4️⃣ Make sure you have internet\n\nIf that doesn't work, tap Forgot password? on the sign-in screen. You'll get a reset link by email within a minute or two.\n\nStill stuck? Message us on WhatsApp and we'll sort it out.", q: ['Reset my password','Contact support'] },
+
+  { k: ['forgot password','reset my password','change my password','password reset','cant remember password'], a: "Resetting is quick 🔑\n\n1️⃣ Go to the Sign In screen\n2️⃣ Type your email address\n3️⃣ Tap Forgot password?\n4️⃣ Check your inbox for the reset link — it arrives within a minute or two\n5️⃣ Tap it and set a new password\n\n💡 Check your spam folder if you don't see it. Still nothing? Message us on WhatsApp.", q: ['I can\'t log in','Contact support'] },
+
+  { k: ['create an account','sign up','new account','register','how do i start','how do i begin'], a: "Welcome aboard! 🎉\n\n1️⃣ Tap START USING KREATEBIZ\n2️⃣ Enter your name, email and a password (6+ characters)\n3️⃣ Tap Create Free Account\n\nThat's it. Your 14-day Pro trial starts instantly — no card required.\n\nWe'll then ask for your business name so it appears on your invoices and receipts.", q: ['What is the free trial?','Record a sale'] },
+
+  { k: ['dark mode','light mode','theme','change colours','change colors'], a: "KreateBiz has a dark mode 🌙\n\n1️⃣ Open Settings\n2️⃣ Scroll to Appearance\n3️⃣ Choose Dark or Light\n4️⃣ Tap Apply\n\nYour choice is saved on this device.", q: DEF_QUICK },
+
+  { k: ['logo','branding','upload logo','my logo'], a: "You can put your logo on every document 🏢\n\n1️⃣ Open Settings\n2️⃣ Find Business logo\n3️⃣ Tap Upload logo\n4️⃣ Choose an image from your phone\n\nIt's saved and appears on all new invoices, quotations and receipts. You can also upload per document when creating one.\n\n💡 Custom branding is a Pro feature.", q: ['How do I upgrade?','Create an invoice'] },
+
+  { k: ['manager pin','pin','security pin','lock app'], a: "The Manager PIN protects sensitive actions 🔒\n\n1️⃣ Open Staff\n2️⃣ Scroll to Manager PIN\n3️⃣ Enter 4–6 digits\n4️⃣ Tap Save PIN\n\nOnce set, actions like resetting all data will ask for the PIN first. Leave it blank to disable.", q: DEF_QUICK },
+
+  { k: ['delete my account','close account','remove account','cancel account'], a: "We'd be sorry to see you go 😢\n\nTo delete your account and all associated data, message us on WhatsApp with the email address you signed up with. We'll confirm and process it for you.\n\nPlease note this is permanent and cannot be undone.", q: ['Contact support'] },
+
+  { k: ['reset all data','clear data','wipe data','start over','delete everything'], a: "Resetting wipes everything permanently ⚠️\n\n1️⃣ Open Settings\n2️⃣ Scroll to Danger Zone\n3️⃣ Tap Reset All Data\n4️⃣ Confirm\n\nIf you have a Manager PIN set, you'll be asked for it first.\n\n💡 Before you reset, export a backup if you have Business — just in case.", q: ['Backup my data','Contact support'] },
+
+  { k: ['offline','no internet','slow','not loading','app not working','stuck','freeze'], a: "KreateBiz works offline and syncs when you reconnect 📶\n\nIf the app feels stuck:\n1️⃣ Check your internet connection\n2️⃣ Close and reopen the app\n3️⃣ Try switching between mobile data and Wi-Fi\n4️⃣ Sign out and back in if it persists\n\nAny changes you made offline are kept locally and pushed to the cloud once you're back online. Nothing is lost.", q: ['Is my data safe?','Contact support'] },
+
+  { k: ['vat','tax','add tax'], a: "VAT handling is part of the Business plan ✅\n\nYou can add it when building your documents and it appears as a separate line on the invoice or quotation.\n\nIf you need VAT configured in a specific way for your business, message us and we'll help you set it up.", q: ['How do I upgrade?','Create an invoice'] },
+
+  { k: ['currency','naira','change currency','other currency'], a: "KreateBiz is built around the Nigerian Naira (₦) 🇳🇬\n\nIt's the default across all amounts, reports and documents.\n\nIf you need a different currency for your business, message us on WhatsApp and we'll look at it with you.", q: ['Contact support'] },
+
+  { k: ['human','agent','real person','talk to someone','support','customer service','help line','call you'], a: "Of course — happy to connect you with the team 🙋\n\nHere's how to reach a real person:\n\n💬 WhatsApp: 0808 655 6841 — fastest, usually replies within minutes\n✉️ Email: " + SUPPORT_EMAIL + "\n𝕏 X: @" + X_HANDLE + "\n\nWe're available Monday to Saturday, 8am to 8pm WAT.", q: DEF_QUICK },
+
+  { k: ['contact','reach you','phone number','email address','your email','how do i contact'], a: "Here's how to reach us 📞\n\n💬 WhatsApp: 0808 655 6841 — fastest option\n✉️ Email: " + SUPPORT_EMAIL + "\n𝕏 X: @" + X_HANDLE + " (" + X_URL + ")\n\nSupport hours: Monday to Saturday, 8am to 8pm WAT.\n\nIf it's urgent, WhatsApp is always the quickest.", q: DEF_QUICK },
+
+  { k: ['privacy','privacy policy','my information','gdpr','data protection'], a: "Our full Privacy Policy is available from the app menu and from the footer on our website 🔒\n\nIn short:\n• We collect only what's needed to run your account\n• Your business data belongs to you, always\n• We never sell your data to anyone\n• You can export or delete your data anytime\n\nFor anything specific, message us on WhatsApp.", q: ['Terms and conditions','Contact support'] },
+
+  { k: ['terms','terms and conditions','terms of service','rules'], a: "Our full Terms & Conditions are available from the app menu and from the footer on our website 📜\n\nKey points:\n• You own your data\n• We provide the platform as a service\n• Fair use applies to all plans\n• Subscriptions are prepaid\n\nFor anything specific, message us on WhatsApp.", q: ['Privacy policy','Contact support'] },
+
+  { k: ['cookie','cookies','cookies policy','tracking'], a: "Our Cookies Policy explains how we use cookies and local storage 🍪\n\nIn short: we use them to keep you signed in, remember your preferences and keep the app running smoothly. We don't use them for third-party advertising.\n\nFull details are in the Cookies Policy from the app menu.", q: ['Privacy policy','Contact support'] },
+
+  { k: ['about you','about us','who made this','who built this','company','your company'], a: "KreateBiz is built in Nigeria, for Nigerian businesses 🇳🇬\n\nWe made it because too many business owners are running serious operations on scattered notebooks and memory. Sales in one place, stock in another, debts in someone's head.\n\nKreateBiz connects it all so you can see your business clearly and grow with confidence.\n\nYou can read the full story in About Us from the app menu.", q: ['What is KreateBiz?','Contact support'] },
+
+  { k: ['whatsapp support','whatsapp number','chat support'], a: "Yes! WhatsApp is our fastest support channel 📱\n\nNumber: 0808 655 6841\n\nTap the green chat button anywhere in the app, or use the 💬 button in the bottom right corner. We usually reply within minutes during support hours.", q: DEF_QUICK },
+
+  { k: ['follow you','social media','twitter','x account','instagram','facebook'], a: "You can find us here 🌐\n\n💬 WhatsApp: 0808 655 6841\n𝕏 X: @" + X_HANDLE + " — " + X_URL + "\n\nWe share product updates, tips and new features on X. Give us a follow!", q: DEF_QUICK },
+
+  { k: ['how do i print','print invoice','print receipt','printing'], a: "Printing is easy 🖨️\n\n1️⃣ Open the document (or Catalogue)\n2️⃣ Tap 📄 Download PDF\n3️⃣ Open the PDF on your phone\n4️⃣ Tap the share or print icon\n\nYou can send it on WhatsApp, email it, or print it directly if you have a printer connected. For Catalogue, there's a direct 🖨️ Print button.", q: ['Download the pdf','Create an invoice'] },
+
+  { k: ['how do i sync','sync data','another device','use on my phone','use on my laptop'], a: "KreateBiz syncs across all your devices ☁️\n\nJust sign in with the same email and password on any phone, tablet or computer — everything appears automatically.\n\nChanges you make sync within a second or two. If you were offline, they push through as soon as you reconnect.", q: ['Is my data safe?','Contact support'] },
+
+  { k: ['how do i start','getting started','first steps','set up','setup'], a: "Welcome! Here's the quickest way to get going 🚀\n\n1️⃣ Set up your business — Settings → Business Profile (name, phone, logo)\n2️⃣ Add your products — Inventory → ＋ Product\n3️⃣ Add your customers — Customers → ＋ Add\n4️⃣ Record your first sale — Sales → ＋ New Sale\n5️⃣ Create an invoice — Documents → ＋ Invoice\n\nThat's the core loop. Everything else builds on it.\n\nNeed a hand with any step? Just ask me.", q: ['Add a product','Record a sale','Create an invoice'] },
+
+  { k: ['tutorial','how to use','guide','learn','training','video'], a: "There's a Learn section built into the app 📚\n\nOpen Learn from the menu and you'll find short practical guides on:\n• Recording sales\n• Managing stock\n• Creating invoices\n• Choosing templates\n• Staff, suppliers and purchases\n• Budgets and cash flow\n• Insights and profit\n\nEach one is a quick read — no long videos.", q: DEF_QUICK },
+
+  { k: ['error','bug','something went wrong','not working right','glitch','broken'], a: "Sorry about that — let's get it sorted 🔧\n\nTry these first:\n1️⃣ Refresh the page or reopen the app\n2️⃣ Check your internet connection\n3️⃣ Sign out and sign back in\n4️⃣ Try a different browser (Chrome works best)\n\nIf it keeps happening, message us on WhatsApp and tell us:\n• What you were doing\n• What you expected\n• What actually happened\n\nA screenshot helps a lot. 📸", q: ['Contact support'] },
+
+  { k: ['slow','lag','taking long','loading forever'], a: "Let's speed things up ⚡\n\n1️⃣ Check your internet connection\n2️⃣ Close other apps or tabs\n3️⃣ Refresh the page\n4️⃣ Clear your browser cache if it persists\n\nIf you have a very large number of records, the app can feel slower on first load — after that it's cached and fast.", q: ['Contact support'] },
+
+  { k: ['delete document','remove invoice','cancel invoice'], a: "To delete a document:\n\n1️⃣ Open Documents\n2️⃣ Find it in the list\n3️⃣ Tap Delete\n4️⃣ Confirm\n\n⚠️ This can't be undone. If you just want to correct something, it's usually better to create a new version and keep the old one for your records.", q: ['Create an invoice'] },
+
+  { k: ['edit customer','change customer','update customer details'], a: "To edit a customer:\n\n1️⃣ Open Customers\n2️⃣ Tap Open on their row\n3️⃣ Tap Edit\n4️⃣ Change what you need\n5️⃣ Tap Update\n\n💡 You can add tags like VIP or Wholesale to help you segment them later.", q: ['Add a customer'] },
+
+  { k: ['tag','customer tag','vip tag','label customer'], a: "Customer tags help you organise 👥\n\nWhen adding or editing a customer, enter tags separated by commas. For example: VIP, Wholesale, Ikeja\n\nTags show as coloured badges on the customer list so you can spot your best customers at a glance.\n\n💡 Tags are part of the CRM feature (Business).", q: ['Add a customer','How do I upgrade?'] },
+
+  { k: ['export invoice','send invoice to customer','share invoice'], a: "To send an invoice to a customer:\n\n1️⃣ Open the invoice\n2️⃣ Tap 📄 Download PDF — then share it however you like\n\nOr if the customer has a phone number saved:\n2️⃣ Tap 💬 Send — WhatsApp opens with a summary already typed\n\nMost people do both: send the message, then attach the PDF. 📎", q: ['Download the pdf','WhatsApp a customer'] }
+];
+
+function kbNormalize(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9\s']/g, ' ').replace(/\s+/g, ' ').trim(); }
+function kbHasPhrase(hay, needle) {
+  if (!needle) return false;
+  var re = new RegExp('(^|\\s)' + needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(\\s|$)');
+  return re.test(hay);
+}
+function botReply(input) {
+  var q = kbNormalize(input);
+  if (!q) return { a: "Sorry, I didn't quite catch that. Could you type your question again?", q: DEF_QUICK };
+
+  var best = null, bestScore = 0;
+  for (var i = 0; i < HELP_KB.length; i++) {
+    var entry = HELP_KB[i];
+    var score = 0;
+    for (var j = 0; j < entry.k.length; j++) {
+      var kw = kbNormalize(entry.k[j]);
+      if (!kw) continue;
+      if (kbHasPhrase(q, kw)) {
+        // longer phrases weigh more
+        score += kw.split(' ').length * 4 + kw.length * 0.08;
+      }
+    }
+    if (score > bestScore) { bestScore = score; best = entry; }
+  }
+
+  if (best && bestScore > 0) return { a: best.a, q: best.q || DEF_QUICK };
+  return { a: CHAT_FALLBACK, q: DEF_QUICK };
+}
+
+/* ---------- chat state ---------- */
+var chatHistory = [];
+var chatLastQuick = DEF_QUICK;
+
+function chatWidgetHTML(modalMode) {
+  return '<div class="chat-wrap' + (modalMode ? ' chat-wrap--modal' : '') + '">' +
+    '<div class="chat-head">' +
+      '<div class="chat-head__av">🤖</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div class="chat-head__n">Kizzy · KreateBiz Support</div>' +
+        '<div class="chat-head__s"><span class="chat-dot"></span> Online — typically replies instantly</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="chat-body" id="chatBody"></div>' +
+    '<div class="chat-quick" id="chatQuick"></div>' +
+    '<div class="chat-in">' +
+      '<input type="text" id="chatInput" placeholder="Type your message…" autocomplete="off" autocorrect="off" spellcheck="false">' +
+      '<button id="chatSend" type="button" aria-label="Send">➤</button>' +
+    '</div>' +
+  '</div>';
+}
+function chatPaint(m) {
+  var body = $('chatBody'); if (!body) return;
+  var el = document.createElement('div');
+  el.className = 'msg msg--' + m.who;
+  el.innerHTML = esc(m.text) + '<div class="msg__t">' + esc(m.time) + '</div>';
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+function chatTyping(on) {
+  var body = $('chatBody'); if (!body) return;
+  var ex = $('chatTyping');
+  if (on) {
+    if (ex) return;
+    var el = document.createElement('div');
+    el.className = 'msg msg--bot msg--typing';
+    el.id = 'chatTyping';
+    el.innerHTML = '<i></i><i></i><i></i>';
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+  } else if (ex) {
+    ex.remove();
+  }
+}
+function chatQuickRender(list) {
+  var el = $('chatQuick'); if (!el) return;
+  if (!list || !list.length) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map(function(q) { return '<button type="button" data-cq="' + esc(q) + '">' + esc(q) + '</button>'; }).join('');
+}
+function chatBotSay(text, quick, delay) {
+  chatTyping(true);
+  var d = delay != null ? delay : Math.min(1500, 380 + String(text).length * 5);
+  setTimeout(function() {
+    chatTyping(false);
+    var m = { who: 'bot', text: text, time: nowTime() };
+    chatHistory.push(m);
+    chatLastQuick = quick || [];
+    chatPaint(m);
+    chatQuickRender(chatLastQuick);
+  }, d);
+}
+function chatUserSay(text) {
+  var m = { who: 'me', text: text, time: nowTime() };
+  chatHistory.push(m);
+  chatPaint(m);
+  chatQuickRender([]);
+}
+function chatSend(text) {
+  text = String(text || '').trim();
+  if (!text) return;
+  var inp = $('chatInput');
+  if (inp) inp.value = '';
+  chatUserSay(text);
+  var r = botReply(text);
+  chatBotSay(r.a, r.q);
+}
+function chatMount() {
+  var body = $('chatBody'); if (!body) return;
+  body.innerHTML = '';
+  for (var i = 0; i < chatHistory.length; i++) chatPaint(chatHistory[i]);
+  if (!chatHistory.length) {
+    chatBotSay(CHAT_GREET, DEF_QUICK, 420);
+  } else {
+    chatQuickRender(chatLastQuick);
+  }
+  var inp = $('chatInput');
+  if (inp) {
+    inp.onkeydown = function(e) { if (e.key === 'Enter') { e.preventDefault(); chatSend(inp.value); } };
+  }
+}
+
+/* ============================================================
+   LEGAL / INFO CONTENT
+   ============================================================ */
+var LEGAL = {
+  about: {
+    title: 'About Us',
+    icon: 'ℹ️',
+    body:
+      '<p><strong>KreateBiz</strong> is a business management platform built in Nigeria, for Nigerian businesses.</p>' +
+      '<h3>Why we built it</h3>' +
+      '<p>Too many good businesses are running on scattered notebooks, phone calculators and memory. Sales written in one book, stock counted in another, debts remembered in someone\'s head. It works — until it doesn\'t.</p>' +
+      '<p>We built KreateBiz so a business owner can open one screen and actually <strong>see</strong> their business: what sold, what\'s left in stock, who owes money, what came in, what went out, and whether they made a profit this month.</p>' +
+      '<h3>What we believe</h3>' +
+      '<ul>' +
+        '<li><strong>Your data belongs to you.</strong> Always. We never sell it, and you can export it anytime.</li>' +
+        '<li><strong>Clarity beats complexity.</strong> Software should make your day easier, not add a second job.</li>' +
+        '<li><strong>Fair pricing for real businesses.</strong> A free plan that\'s genuinely usable, and paid plans that cost less than a carton of stock.</li>' +
+        '<li><strong>Built for here.</strong> Naira first, WhatsApp first, mobile first.</li>' +
+      '</ul>' +
+      '<h3>What KreateBiz does</h3>' +
+      '<p>Sales, expenses, inventory, customers, debtors, documents, staff, budgets, cash flow and profit — all connected. Record one sale and stock drops, cash flow moves and profit updates. One action, every number in sync.</p>' +
+      '<h3>Who it\'s for</h3>' +
+      '<p>Fashion sellers, food vendors, pharmacies, electronics shops, salons, tailors, wholesalers, service providers, small manufacturers — anyone running a real business that needs real numbers.</p>' +
+      '<h3>Talk to us</h3>' +
+      '<p>We read every message. If something is missing or could be better, tell us.</p>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 WhatsApp · ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>'
+  },
+
+  privacy: {
+    title: 'Privacy Policy',
+    icon: '🔒',
+    body:
+      '<p class="legal-meta">Last updated: ' + new Date().getFullYear() + '</p>' +
+      '<p>This Privacy Policy explains how KreateBiz ("we", "us", "our") collects, uses and protects your information when you use our platform.</p>' +
+      '<h3>1. Information we collect</h3>' +
+      '<ul>' +
+        '<li><strong>Account information</strong> — your name, email address and password (stored securely, never in plain text).</li>' +
+        '<li><strong>Business data you enter</strong> — sales, expenses, products, customers, debts, staff, documents and any other records you create in the app.</li>' +
+        '<li><strong>Usage information</strong> — basic technical data such as device type, browser and general activity, used to keep the platform stable and improve it.</li>' +
+      '</ul>' +
+      '<h3>2. How we use your information</h3>' +
+      '<ul>' +
+        '<li>To provide, operate and maintain your account and the platform</li>' +
+        '<li>To sync your data across your devices</li>' +
+        '<li>To respond to your support requests</li>' +
+        '<li>To send you service messages — plan changes, important updates, security notices</li>' +
+        '<li>To improve the product based on how it\'s actually used</li>' +
+      '</ul>' +
+      '<h3>3. Your business data is yours</h3>' +
+      '<p>Everything you enter into KreateBiz — your sales, customers, prices, profits — belongs to you. We do not sell it, rent it, or share it with advertisers. We only access it where necessary to provide support, or where legally required.</p>' +
+      '<h3>4. Data storage and security</h3>' +
+      '<p>Your data is stored on secure cloud infrastructure with encryption in transit. Access is restricted. We use industry-standard authentication and continuously monitor for unusual activity.</p>' +
+      '<p>No system is 100% secure. We recommend keeping your password private and using a strong, unique one.</p>' +
+      '<h3>5. Sharing your information</h3>' +
+      '<p>We do not sell your personal information. We may share limited information only with:</p>' +
+      '<ul>' +
+        '<li>Cloud infrastructure providers who host the platform</li>' +
+        '<li>Law enforcement or regulators, where legally required</li>' +
+      '</ul>' +
+      '<h3>6. Your rights</h3>' +
+      '<ul>' +
+        '<li><strong>Access</strong> — request a copy of the personal data we hold about you</li>' +
+        '<li><strong>Correction</strong> — update inaccurate information</li>' +
+        '<li><strong>Export</strong> — download your business data anytime from within the app</li>' +
+        '<li><strong>Deletion</strong> — request deletion of your account and data</li>' +
+      '</ul>' +
+      '<h3>7. Data retention</h3>' +
+      '<p>We keep your data for as long as your account is active. If you delete your account, we remove your data from active systems, though some records may persist briefly in backups before being cleared.</p>' +
+      '<h3>8. Children</h3>' +
+      '<p>KreateBiz is intended for business use by adults. We do not knowingly collect information from anyone under 18.</p>' +
+      '<h3>9. Changes to this policy</h3>' +
+      '<p>We may update this policy occasionally. Material changes will be communicated in-app. Continued use of KreateBiz after changes means you accept the updated policy.</p>' +
+      '<h3>10. Contact us</h3>' +
+      '<p>Questions about your privacy? Reach us at:</p>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>' +
+      '<p style="margin-top:12px">Email: <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>'
+  },
+
+  terms: {
+    title: 'Terms & Conditions',
+    icon: '📜',
+    body:
+      '<p class="legal-meta">Last updated: ' + new Date().getFullYear() + '</p>' +
+      '<p>By creating an account or using KreateBiz, you agree to these Terms & Conditions. Please read them carefully.</p>' +
+      '<h3>1. Acceptance of terms</h3>' +
+      '<p>By accessing or using KreateBiz, you confirm that you are at least 18 years old and agree to be bound by these terms. If you do not agree, please do not use the platform.</p>' +
+      '<h3>2. Your account</h3>' +
+      '<ul>' +
+        '<li>You are responsible for keeping your password secure</li>' +
+        '<li>You are responsible for all activity that happens under your account</li>' +
+        '<li>You must provide accurate information when registering</li>' +
+        '<li>One account per person or business entity, unless agreed otherwise</li>' +
+      '</ul>' +
+      '<h3>3. Plans and subscriptions</h3>' +
+      '<ul>' +
+        '<li><strong>Free plan</strong> — available indefinitely with the stated limits</li>' +
+        '<li><strong>Pro and Business</strong> — prepaid subscriptions, monthly or yearly</li>' +
+        '<li>Subscriptions do not auto-renew unless explicitly agreed</li>' +
+        '<li>When a subscription ends, you move to the Free plan and your data remains accessible</li>' +
+      '</ul>' +
+      '<h3>4. Fair use</h3>' +
+      '<p>You agree not to:</p>' +
+      '<ul>' +
+        '<li>Use KreateBiz for any unlawful purpose</li>' +
+        '<li>Attempt to reverse engineer, copy or resell the platform</li>' +
+        '<li>Interfere with the platform\'s security or availability</li>' +
+        '<li>Upload malicious code or attempt unauthorised access</li>' +
+        '<li>Use automated systems to scrape or overload the service</li>' +
+      '</ul>' +
+      '<h3>5. Your data</h3>' +
+      '<p>You own all business data you enter into KreateBiz. We provide the platform and store your data on your behalf. You are responsible for the accuracy and legality of the information you enter.</p>' +
+      '<p>We strongly recommend exporting backups regularly, especially if your records are business-critical.</p>' +
+      '<h3>6. Service availability</h3>' +
+      '<p>We aim for high availability but do not guarantee uninterrupted service. We may perform maintenance, and there may be occasional downtime. We are not liable for losses caused by service interruption.</p>' +
+      '<h3>7. Intellectual property</h3>' +
+      '<p>KreateBiz, including its design, code, branding and content, is our intellectual property. You may not copy, modify or distribute it without written permission.</p>' +
+      '<h3>8. Limitation of liability</h3>' +
+      '<p>KreateBiz is a business tool. It does not provide legal, tax or financial advice. We are not liable for business decisions made based on information in the app.</p>' +
+      '<p>To the fullest extent permitted by law, our total liability is limited to the amount you paid us in the 12 months before the claim.</p>' +
+      '<h3>9. Termination</h3>' +
+      '<p>You may stop using KreateBiz at any time. We may suspend or terminate accounts that violate these terms. Where possible, we\'ll give notice and allow you to export your data first.</p>' +
+      '<h3>10. Changes to these terms</h3>' +
+      '<p>We may update these terms occasionally. Continued use of KreateBiz after changes means you accept the updated terms.</p>' +
+      '<h3>11. Governing law</h3>' +
+      '<p>These terms are governed by the laws of the Federal Republic of Nigeria.</p>' +
+      '<h3>12. Contact</h3>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>' +
+      '<p style="margin-top:12px">Email: <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>'
+  },
+
+  cookies: {
+    title: 'Cookies Policy',
+    icon: '🍪',
+    body:
+      '<p class="legal-meta">Last updated: ' + new Date().getFullYear() + '</p>' +
+      '<p>This Cookies Policy explains how KreateBiz uses cookies and similar technologies such as local storage.</p>' +
+      '<h3>1. What are cookies?</h3>' +
+      '<p>Cookies are small text files placed on your device when you visit a website. Similar technologies, like browser local storage, work in comparable ways. They help websites remember things between visits.</p>' +
+      '<h3>2. How we use them</h3>' +
+      '<p>KreateBiz uses cookies and local storage for a small number of essential purposes:</p>' +
+      '<ul>' +
+        '<li><strong>Authentication</strong> — to keep you signed in as you move around the app</li>' +
+        '<li><strong>Preferences</strong> — to remember your theme choice (light or dark)</li>' +
+        '<li><strong>Offline support</strong> — to cache your data locally so the app keeps working when your connection drops</li>' +
+        '<li><strong>Security</strong> — to help protect your session from misuse</li>' +
+      '</ul>' +
+      '<h3>3. What we do NOT use them for</h3>' +
+      '<ul>' +
+        '<li>We do not use advertising cookies</li>' +
+        '<li>We do not sell information gathered from cookies</li>' +
+        '<li>We do not track you across other websites</li>' +
+      '</ul>' +
+      '<h3>4. Third-party services</h3>' +
+      '<p>We use trusted third-party services for authentication, database storage and PDF generation. These may set their own technical cookies needed to function. They are not used for advertising.</p>' +
+      '<h3>5. Managing cookies</h3>' +
+      '<p>You can control or delete cookies through your browser settings. Most browsers let you block cookies entirely. However, because our cookies are essential to running the app, blocking them will prevent you from signing in and using KreateBiz.</p>' +
+      '<h3>6. Local storage</h3>' +
+      '<p>In addition to cookies, KreateBiz uses your browser\'s local storage to cache your business data for offline access and faster loading. This data stays on your device and is cleared when you sign out or clear your browser data.</p>' +
+      '<h3>7. Changes to this policy</h3>' +
+      '<p>We may update this policy occasionally. Any changes will be reflected here and communicated in-app where material.</p>' +
+      '<h3>8. Contact</h3>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>' +
+      '<p style="margin-top:12px">Email: <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>'
+  },
+
+  disclaimer: {
+    title: 'Disclaimer',
+    icon: '⚠️',
+    body:
+      '<p class="legal-meta">Last updated: ' + new Date().getFullYear() + '</p>' +
+      '<h3>1. General information only</h3>' +
+      '<p>The content, tools and reports provided by KreateBiz are for general business management purposes only. They do not constitute professional financial, legal, accounting or tax advice.</p>' +
+      '<h3>2. No professional advice</h3>' +
+      '<p>KreateBiz helps you record and understand your business numbers. It is not a substitute for a qualified accountant, tax adviser or legal professional. Always consult a qualified professional before making significant financial or legal decisions.</p>' +
+      '<h3>3. Accuracy of calculations</h3>' +
+      '<p>All calculations in KreateBiz — profit, cash flow, margins, projections — depend entirely on the data you enter. We do not verify your inputs. If your inputs are inaccurate, your outputs will be too.</p>' +
+      '<p>Please review your records regularly and cross-check important figures before relying on them.</p>' +
+      '<h3>4. Projections are estimates</h3>' +
+      '<p>Features like Smart Cash Flow and Insights produce projections based on historical data and simple averages. They are estimates, not guarantees. Actual results will vary.</p>' +
+      '<h3>5. Data loss</h3>' +
+      '<p>While we take data security seriously and store your records in the cloud, you should not rely on any single system for business-critical data. We strongly recommend exporting regular backups.</p>' +
+      '<h3>6. Third-party links</h3>' +
+      '<p>KreateBiz may contain links to third-party websites or services, including WhatsApp. We are not responsible for the content, privacy practices or reliability of those external services.</p>' +
+      '<h3>7. Limitation of liability</h3>' +
+      '<p>To the fullest extent permitted by law, KreateBiz and its team shall not be liable for any direct, indirect, incidental or consequential losses arising from your use of the platform, including loss of profit, loss of data or business interruption.</p>' +
+      '<h3>8. Contact</h3>' +
+      '<p>If anything here is unclear, we\'re happy to explain.</p>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>' +
+      '<p style="margin-top:12px">Email: <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>'
+  },
+
+  copyright: {
+    title: 'Copyright',
+    icon: '©️',
+    body:
+      '<p class="legal-meta">© ' + new Date().getFullYear() + ' KreateBiz. All rights reserved.</p>' +
+      '<h3>1. Ownership</h3>' +
+      '<p>All content, design, code, graphics, branding, documentation and functionality on the KreateBiz platform are the intellectual property of KreateBiz and are protected by copyright and related laws.</p>' +
+      '<h3>2. What this covers</h3>' +
+      '<ul>' +
+        '<li>The KreateBiz name, logo and brand identity</li>' +
+        '<li>The application design, layout and user interface</li>' +
+        '<li>All source code, scripts and underlying technology</li>' +
+        '<li>Written content, guides and documentation</li>' +
+        '<li>PDF document templates and their visual designs</li>' +
+        '<li>Reports, analytics and data presentation formats</li>' +
+      '</ul>' +
+      '<h3>3. Permitted use</h3>' +
+      '<p>You may use KreateBiz for its intended purpose — managing your own business. Documents you generate (invoices, quotations, receipts) are yours and you may use them freely.</p>' +
+      '<h3>4. Prohibited use</h3>' +
+      '<p>Without written permission, you may not:</p>' +
+      '<ul>' +
+        '<li>Copy, reproduce or redistribute the platform or any part of it</li>' +
+        '<li>Modify, adapt or create derivative works from the code or design</li>' +
+        '<li>Use the KreateBiz name or branding in a way that suggests endorsement or partnership</li>' +
+        '<li>Resell or sublicense access to the platform</li>' +
+        '<li>Remove or alter any copyright notices</li>' +
+      '</ul>' +
+      '<h3>5. Your content</h3>' +
+      '<p>You retain full ownership of all business data and content you create in KreateBiz. We claim no rights over your sales records, customer data, prices or any other information you enter.</p>' +
+      '<h3>6. Reporting infringement</h3>' +
+      '<p>If you believe your intellectual property has been used improperly on or through KreateBiz, please contact us with details. We take such reports seriously and will act promptly.</p>' +
+      '<h3>7. Contact</h3>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>' +
+      '<p style="margin-top:12px">Email: <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>'
+  },
+
+  contact: {
+    title: 'Contact Us',
+    icon: '📞',
+    body:
+      '<p>We\'re a small team and we read every message. However you reach us, you\'ll get a real person.</p>' +
+      '<h3>Support hours</h3>' +
+      '<p>Monday to Saturday · 8:00am – 8:00pm WAT</p>' +
+      '<h3>WhatsApp — fastest</h3>' +
+      '<p>Our quickest channel. Most messages get a reply within minutes during support hours.</p>' +
+      '<p><strong>' + WHATSAPP_DISPLAY + '</strong></p>' +
+      '<h3>Email</h3>' +
+      '<p><a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></p>' +
+      '<p>Best for detailed questions, account issues or anything that needs screenshots or files attached.</p>' +
+      '<h3>X (Twitter)</h3>' +
+      '<p><a href="' + X_URL + '" target="_blank" rel="noopener">@' + X_HANDLE + '</a></p>' +
+      '<p>Product updates, new features and quick questions.</p>' +
+      '<h3>In-app Help Center</h3>' +
+      '<p>For instant answers, our support assistant Kizzy is available 24/7 inside the app. Tap Help Center from the menu.</p>' +
+      '<h3>Before you message us</h3>' +
+      '<p>To help us help you faster, include:</p>' +
+      '<ul>' +
+        '<li>The email address on your account</li>' +
+        '<li>What you were trying to do</li>' +
+        '<li>What actually happened</li>' +
+        '<li>A screenshot if possible</li>' +
+      '</ul>' +
+      '<div class="social-row">' +
+        '<a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 WhatsApp · ' + WHATSAPP_DISPLAY + '</a>' +
+        '<a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a>' +
+      '</div>'
+  }
+};
+
+function legalBodyHTML(key) {
+  var L = LEGAL[key];
+  if (!L) return '<p class="hint">Not found.</p>';
+  return '<div class="legal-body">' + L.body + '</div>';
+}
+function openLegalModal(key) {
+  if (key === 'help') { openHelpModal(); return; }
+  var L = LEGAL[key];
+  if (!L) { toast('Page not found.', 'w'); return; }
+  var showInApp = !$('app').hidden;
+  openModal(
+    '<div class="mo__h"><h3 class="mo__t">' + L.icon + ' ' + esc(L.title) + '</h3><button class="mo__x">✕</button></div>' +
+    '<div class="mo__b">' + legalBodyHTML(key) + '</div>' +
+    '<div class="mo__f">' +
+      '<button class="btn btn--secondary" data-close>Close</button>' +
+      (showInApp ? '<button class="btn btn--primary" data-legal-view="' + key + '">Open full page</button>' : '') +
+    '</div>',
+    'mo__c--lg'
+  );
+}
+function openHelpModal() {
+  openModal(
+    '<div class="mo__h"><h3 class="mo__t">💬 Help Center</h3><button class="mo__x">✕</button></div>' +
+    '<div style="padding:0">' + chatWidgetHTML(true) + '</div>' +
+    '<div class="mo__f" style="justify-content:space-between">' +
+      '<a class="btn btn--wa btn--sm" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 WhatsApp a human</a>' +
+      '<button class="btn btn--secondary btn--sm" data-close>Close</button>' +
+    '</div>'
+  );
+  setTimeout(chatMount, 30);
+}
+
+/* ============================================================
    GLOBAL CLICK DISPATCHER
    ============================================================ */
 document.addEventListener('click', function(e) {
+
+  /* ---------- CHAT: quick replies & send ---------- */
+  var cq = e.target.closest('[data-cq]');
+  if (cq) { chatSend(cq.getAttribute('data-cq')); return; }
+  if (e.target.closest('#chatSend')) {
+    var ci = $('chatInput');
+    chatSend(ci ? ci.value : '');
+    return;
+  }
+
+  /* ---------- LEGAL PAGES ---------- */
+  var legalBtn = e.target.closest('[data-legal]');
+  if (legalBtn) { e.preventDefault(); openLegalModal(legalBtn.getAttribute('data-legal')); return; }
+  var legalView = e.target.closest('[data-legal-view]');
+  if (legalView) {
+    var key = legalView.getAttribute('data-legal-view');
+    closeModal();
+    setTimeout(function() { navigate(key); }, 180);
+    return;
+  }
 
   /* ---------- PASSWORD SHOW / HIDE ---------- */
   var pwBtn = e.target.closest('.pw-toggle');
@@ -1085,7 +1767,7 @@ var KBNav = {
 window.KBNav = KBNav;
 
 /* ============================================================
-   AUTH STATE — Level C: local-only expiry (CF does the cleanup)
+   AUTH STATE
    ============================================================ */
 auth.onAuthStateChanged(function(user) {
   if (user) {
@@ -1099,9 +1781,6 @@ auth.onAuthStateChanged(function(user) {
     }).catch(function() { subscription = { tier: 'free', status: 'inactive', expiresAt: null }; });
 
     Promise.all([userDocP, subDocP]).then(function() {
-      /* ---------- LOCAL-ONLY EXPIRY ----------
-         Firestore cleanup runs server-side (dailyExpirySweep Cloud Function).
-         Here we only adjust in-memory state so the UI reflects truth. */
       var now = new Date();
       if (subscription.expiresAt && subscription.status === 'active' && new Date(subscription.expiresAt) < now) {
         var wasGift = subscription.tier === 'gift';
@@ -1209,7 +1888,15 @@ var VIEWS = {
   businesses: { label: 'My Businesses', icon: '🏢', group: 'Account', feature: 'multiBusiness', biz: true },
   plans: { label: 'Plans & Pricing', icon: '💎', group: 'Account' },
   subscription: { label: 'My Plan', icon: '📝', group: 'Account' },
-  settings: { label: 'Settings', icon: '⚙️', group: 'Account' }
+  settings: { label: 'Settings', icon: '⚙️', group: 'Account' },
+  help: { label: 'Help Center', icon: '💬', group: 'Support' },
+  contact: { label: 'Contact Us', icon: '📞', group: 'Support' },
+  about: { label: 'About Us', icon: 'ℹ️', group: 'Support' },
+  privacy: { label: 'Privacy Policy', icon: '🔒', group: 'Legal' },
+  terms: { label: 'Terms & Conditions', icon: '📜', group: 'Legal' },
+  cookies: { label: 'Cookies Policy', icon: '🍪', group: 'Legal' },
+  disclaimer: { label: 'Disclaimer', icon: '⚠️', group: 'Legal' },
+  copyright: { label: 'Copyright', icon: '©️', group: 'Legal' }
 };
 function isViewLocked(k) { var v = VIEWS[k]; return v && v.feature && !hasFeature(v.feature); }
 
@@ -1232,7 +1919,7 @@ function renderShell() {
   var bn = [['dashboard', '📊', 'Home'], ['sales', '💰', 'Sales'], ['inventory', '📦', 'Stock'], ['customers', '👥', 'People'], ['more', '☰', 'More']];
   $('bnav').innerHTML = bn.map(function(item) {
     var k = item[0], i = item[1], l = item[2];
-    var on = (k === 'more') ? ['orders', 'debts', 'documents', 'catalogue', 'reports', 'learn', 'plans', 'subscription', 'settings', 'expenses', 'suppliers', 'purchases', 'staff', 'cashflow', 'budget', 'insights', 'businesses', 'announcements'].indexOf(currentView) !== -1 : currentView === k;
+    var on = (k === 'more') ? ['orders', 'debts', 'documents', 'catalogue', 'reports', 'learn', 'plans', 'subscription', 'settings', 'expenses', 'suppliers', 'purchases', 'staff', 'cashflow', 'budget', 'insights', 'businesses', 'announcements', 'help', 'contact', 'about', 'privacy', 'terms', 'cookies', 'disclaimer', 'copyright'].indexOf(currentView) !== -1 : currentView === k;
     return '<button class="bnav__i' + (on ? ' bnav__i--on' : '') + '" data-view="' + k + '"><span>' + i + '</span><span>' + l + '</span></button>';
   }).join('');
 }
@@ -1249,14 +1936,22 @@ function navigate(view) {
   renderView(view);
 }
 function openMoreSheet() {
-  var items = ['expenses', 'orders', 'debts', 'documents', 'catalogue', 'suppliers', 'purchases', 'staff', 'reports', 'cashflow', 'budget', 'insights', 'announcements', 'learn', 'businesses', 'plans', 'subscription', 'settings'];
+  var groups = ['Main', 'Business', 'Operations', 'Insights', 'Account', 'Support', 'Legal'];
   var unread = unreadAnnouncements().length;
-  openModal('<div class="mo__h"><h3 class="mo__t">More</h3><button class="mo__x">✕</button></div><div class="mo__b" style="padding:10px">' + items.map(function(k) {
-    var v = VIEWS[k];
-    var locked = isViewLocked(k);
-    var badge = (k === 'announcements' && unread > 0) ? '<span class="nav-item__badge">' + unread + '</span>' : '';
-    return '<button class="nav-item' + (v.biz ? ' nav-item--biz' : '') + '" data-mv="' + k + '" style="width:100%;font-size:.94rem;padding:12px"><span class="nav-item__i">' + v.icon + '</span><span>' + v.label + '</span>' + (locked && !badge ? '<span class="nav-item__lock">🔒</span>' : '') + badge + '</button>';
-  }).join('') + '</div>', 'mo__c--sm');
+  var html = '<div class="mo__h"><h3 class="mo__t">More</h3><button class="mo__x">✕</button></div><div class="mo__b" style="padding:10px">';
+  groups.forEach(function(grp) {
+    var items = Object.keys(VIEWS).filter(function(k) { return VIEWS[k].group === grp; });
+    if (!items.length) return;
+    html += '<div class="sb-label" style="padding:10px 10px 4px">' + esc(grp) + '</div>';
+    items.forEach(function(k) {
+      var v = VIEWS[k];
+      var locked = isViewLocked(k);
+      var badge = (k === 'announcements' && unread > 0) ? '<span class="nav-item__badge">' + unread + '</span>' : '';
+      html += '<button class="nav-item' + (v.biz ? ' nav-item--biz' : '') + '" data-mv="' + k + '" style="width:100%;font-size:.9rem;padding:11px 10px"><span class="nav-item__i">' + v.icon + '</span><span>' + v.label + '</span>' + (locked && !badge ? '<span class="nav-item__lock">🔒</span>' : '') + badge + '</button>';
+    });
+  });
+  html += '</div>';
+  openModal(html, 'mo__c--sm');
 }
 
 /* ============================================================
@@ -1424,7 +2119,7 @@ function openUpgradeOrGift(title, message, highlight) {
 }
 
 /* ============================================================
-   UPGRADE MODAL (WhatsApp contact)
+   UPGRADE MODAL
    ============================================================ */
 function requestUpgradeWA(key) {
   var parts = String(key).split('-');
@@ -2056,7 +2751,7 @@ function renderDocHTML(d) {
   var termsBlock = d.terms ? '<div class="d-notes"><strong>Terms &amp; Conditions</strong>' + esc(d.terms) + '</div>' : '';
   var notesBlock = d.notes ? '<div class="d-notes"><strong>Notes</strong>' + esc(d.notes) + '</div>' : '';
   var signBlock = (d.type === 'invoice' || d.type === 'quotation') ? '<div class="d-sign"><div>Customer Signature</div><div>Authorised Signature</div></div>' : '';
-  var footer = '<div class="d-footer"><strong>Generated with KreateBiz</strong> · Powered by HassanKreates</div>';
+  var footer = '<div class="d-footer"><strong>Generated with KreateBiz</strong></div>';
   var body = infoGrid + itemsTable + totals + stamp + accountBlock + termsBlock + notesBlock + signBlock + footer;
   if (tpl === 'modern') return '<div class="doc-tpl tpl-modern"><div class="d-band">' + header + '</div><div class="d-body">' + body + '</div></div>';
   if (tpl === 'bold') return '<div class="doc-tpl tpl-bold"><div class="d-band">' + header + '</div><div class="d-body">' + body + '</div></div>';
@@ -2635,6 +3330,39 @@ function view_learn() {
 }
 
 /* ============================================================
+   HELP / SUPPORT / LEGAL VIEWS
+   ============================================================ */
+function view_help() {
+  var out = '<div class="ph"><div><div class="ph__t">💬 Help Center</div><div class="ph__s">Chat with Kizzy — instant answers, 24/7</div></div><div class="flex gap wrap"><a class="btn btn--wa btn--sm" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 WhatsApp us</a></div></div>';
+  out += chatWidgetHTML(false);
+  out += '<div class="card mt-16"><div class="fw7 mb-8">Still need a human?</div><div class="hint mb-12">Our team is on WhatsApp Monday to Saturday, 8am–8pm WAT.</div><div class="social-row"><a class="social-btn social-btn--wa" href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">💬 ' + WHATSAPP_DISPLAY + '</a><a class="social-btn social-btn--x" href="' + X_URL + '" target="_blank" rel="noopener">𝕏 @' + X_HANDLE + '</a></div></div>';
+  return out;
+}
+function after_help() { setTimeout(chatMount, 20); }
+
+function view_contact() {
+  return '<div class="ph"><div><div class="ph__t">📞 Contact Us</div><div class="ph__s">We read every message</div></div></div><div class="card">' + legalBodyHTML('contact') + '</div>';
+}
+function view_about() {
+  return '<div class="ph"><div><div class="ph__t">ℹ️ About Us</div><div class="ph__s">Who we are and why we built KreateBiz</div></div></div><div class="card">' + legalBodyHTML('about') + '</div>';
+}
+function view_privacy() {
+  return '<div class="ph"><div><div class="ph__t">🔒 Privacy Policy</div><div class="ph__s">How we handle your data</div></div></div><div class="card">' + legalBodyHTML('privacy') + '</div>';
+}
+function view_terms() {
+  return '<div class="ph"><div><div class="ph__t">📜 Terms &amp; Conditions</div><div class="ph__s">The rules of using KreateBiz</div></div></div><div class="card">' + legalBodyHTML('terms') + '</div>';
+}
+function view_cookies() {
+  return '<div class="ph"><div><div class="ph__t">🍪 Cookies Policy</div><div class="ph__s">How cookies and local storage are used</div></div></div><div class="card">' + legalBodyHTML('cookies') + '</div>';
+}
+function view_disclaimer() {
+  return '<div class="ph"><div><div class="ph__t">⚠️ Disclaimer</div><div class="ph__s">Important limitations</div></div></div><div class="card">' + legalBodyHTML('disclaimer') + '</div>';
+}
+function view_copyright() {
+  return '<div class="ph"><div><div class="ph__t">©️ Copyright</div><div class="ph__s">Ownership and permitted use</div></div></div><div class="card">' + legalBodyHTML('copyright') + '</div>';
+}
+
+/* ============================================================
    PLANS
    ============================================================ */
 function renderPlanMatrix() {
@@ -2786,8 +3514,18 @@ function view_settings() {
   out += '<div class="card mb-16"><div class="fw7 mb-8">🎨 Appearance</div><div class="fg"><label>Theme</label><select id="stTheme"><option value="light"' + (theme === 'light' ? ' selected' : '') + '>Light</option><option value="dark"' + (theme === 'dark' ? ' selected' : '') + '>Dark</option></select></div><button class="btn btn--primary btn--sm" data-action="save-theme">Apply</button></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">☁️ Cloud Sync' + (canBackup ? ' & Backup' : '') + '</div><div class="hint mb-12">' + (canBackup ? 'JSON backup and restore unlocked.' : 'Your data syncs automatically. Upgrade to Business for JSON backup and restore.') + '</div><div class="flex gap wrap">' + (canBackup ? '<button class="btn btn--primary btn--sm" data-action="st-export">📥 Export Full Backup</button><button class="btn btn--secondary btn--sm" data-action="st-import">📤 Import Backup</button>' : '<button class="btn btn--secondary btn--sm" data-action="st-export">📥 Export CSV</button><button class="btn btn--primary btn--sm" data-action="go-biz">🔒 Unlock Backup (Business)</button>') + '</div></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">👤 Account</div><div class="hint mb-12">' + esc((currentUser && currentUser.email) || '') + '</div><button class="btn btn--secondary btn--sm" data-action="st-signout">Sign Out</button></div>';
+  out += '<div class="card mb-16"><div class="fw7 mb-8">💬 Support &amp; Legal</div><div class="hint mb-12">Help, contact details and our policies.</div><div class="flex gap wrap">' +
+    '<button class="btn btn--secondary btn--sm" data-view="help">💬 Help Center</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="contact">📞 Contact</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="about">ℹ️ About</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="privacy">🔒 Privacy</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="terms">📜 Terms</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="cookies">🍪 Cookies</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="disclaimer">⚠️ Disclaimer</button>' +
+    '<button class="btn btn--secondary btn--sm" data-view="copyright">©️ Copyright</button>' +
+    '</div></div>';
   out += '<div class="card mb-16"><div class="fw7 mb-8">⚠️ Danger Zone</div><div class="hint mb-12">Reset deletes all your data from the cloud. Cannot be undone.</div><button class="btn btn--danger btn--sm" data-action="st-reset">🗑️ Reset All Data</button></div>';
-  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About</div><div class="hint">KreateBiz v10 · Powered by HassanKreates</div><div class="hint mt-8">📞 <a href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">0808 655 6841</a></div><div class="hint">✉️ hassankreates@gmail.com</div></div>';
+  out += '<div class="card"><div class="fw7 mb-8">ℹ️ About KreateBiz</div><div class="hint">KreateBiz v10 · Business tools for Nigerian businesses</div><div class="hint mt-8">📞 <a href="https://wa.me/' + WHATSAPP_SUPPORT + '" target="_blank" rel="noopener">' + WHATSAPP_DISPLAY + '</a></div><div class="hint">✉️ <a href="mailto:' + SUPPORT_EMAIL + '">' + SUPPORT_EMAIL + '</a></div><div class="hint">𝕏 <a href="' + X_URL + '" target="_blank" rel="noopener">@' + X_HANDLE + '</a></div></div>';
   return out;
 }
 function after_settings() {
@@ -2844,12 +3582,13 @@ function openPinPrompt(message, onOk) {
 $('setBtn').addEventListener('click', function() { navigate('settings'); });
 $('acctBtn').addEventListener('click', openAccountMenu);
 function openAccountMenu() {
-  openModal('<div class="mo__h"><h3 class="mo__t">👤 Account</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="mb-12"><div class="fw8">' + esc((userProfile && userProfile.displayName) || 'User') + '</div><div class="hint">' + esc((currentUser && currentUser.email) || '') + '</div></div><div class="stat-row"><span>Plan</span><strong>' + planLabel() + '</strong></div>' + (subscription.expiresAt ? '<div class="stat-row"><span>' + (isGiftActive() ? 'Gift ends' : 'Expires') + '</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>' : '') + (isLapsedPayer() ? '<div class="stat-row"><span>Was on</span><strong>' + (userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro') + '</strong></div>' : '') + '<div class="stat-row"><span>Cloud Sync</span><strong class="text-green">Active</strong></div></div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button><button class="btn btn--secondary" data-action="acct-plans">See plans</button><button class="btn btn--primary" data-action="acct-up">Upgrade</button><button class="btn btn--danger" data-action="acct-out">Sign Out</button></div>', 'mo__c--sm');
+  openModal('<div class="mo__h"><h3 class="mo__t">👤 Account</h3><button class="mo__x">✕</button></div><div class="mo__b"><div class="mb-12"><div class="fw8">' + esc((userProfile && userProfile.displayName) || 'User') + '</div><div class="hint">' + esc((currentUser && currentUser.email) || '') + '</div></div><div class="stat-row"><span>Plan</span><strong>' + planLabel() + '</strong></div>' + (subscription.expiresAt ? '<div class="stat-row"><span>' + (isGiftActive() ? 'Gift ends' : 'Expires') + '</span><strong>' + fmtD(subscription.expiresAt.slice(0, 10)) + '</strong></div>' : '') + (isLapsedPayer() ? '<div class="stat-row"><span>Was on</span><strong>' + (userProfile.lastPaidTier === 'business' ? 'Business' : 'Pro') + '</strong></div>' : '') + '<div class="stat-row"><span>Cloud Sync</span><strong class="text-green">Active</strong></div></div><div class="mo__f"><button class="btn btn--secondary" data-close>Close</button><button class="btn btn--secondary" data-action="acct-help">Help</button><button class="btn btn--secondary" data-action="acct-plans">See plans</button><button class="btn btn--primary" data-action="acct-up">Upgrade</button><button class="btn btn--danger" data-action="acct-out">Sign Out</button></div>', 'mo__c--sm');
   $('moC').onclick = function(e) {
     var b = e.target.closest('[data-action]'); if (!b) return;
     var a = b.getAttribute('data-action');
     if (a === 'acct-up') { closeModal(); setTimeout(function() { openUpgradeOrGift('Upgrade', 'Choose a plan.', 'pro'); }, 150); }
     if (a === 'acct-plans') { closeModal(); setTimeout(function() { navigate('plans'); }, 150); }
+    if (a === 'acct-help') { closeModal(); setTimeout(function() { navigate('help'); }, 150); }
     if (a === 'acct-out') { closeModal(); setTimeout(function() { auth.signOut().catch(function() {}); }, 150); }
   };
 }
@@ -2869,47 +3608,6 @@ function setupWizard() {
     saveData(); $('tBiz').textContent = n; closeModal(); toast('Setup complete! 🎉', 's');
     setTimeout(showUpgradeAdvice, 2500);
   });
-}
-
-/* ============================================================
-   ADMIN — EXPIRY SWEEP (manual fallback; daily CF runs it too)
-   ============================================================ */
-function runExpirySweep() {
-  var now = nowIso();
-  return db.collection('subscriptions')
-    .where('status', '==', 'active')
-    .where('expiresAt', '<', now)
-    .get()
-    .then(function(snap) {
-      if (snap.empty) return 0;
-      var batch = db.batch();
-      var count = 0;
-      snap.forEach(function(doc) {
-        var sub = doc.data();
-        var wasPaid = sub.tier === 'pro' || sub.tier === 'business';
-        var wasGift = sub.tier === 'gift';
-        var wasTrial = sub.tier === 'trial';
-
-        batch.update(doc.ref, {
-          status: 'expired',
-          tier: 'free',
-          expiredAt: now,
-          lastTier: sub.tier
-        });
-
-        var userPatch = {
-          subscriptionStatus: 'expired',
-          updatedAt: now
-        };
-        if (wasGift) { userPatch.plan = 'post-gift'; userPatch.postGiftSince = now; }
-        else if (wasTrial) { userPatch.plan = 'free'; userPatch.trialExpiredAt = now; }
-        else if (wasPaid) { userPatch.plan = 'free'; userPatch.lastPaidTier = sub.tier; userPatch.paidExpiredAt = now; }
-
-        batch.set(db.collection('users').doc(doc.id), userPatch, { merge: true });
-        count++;
-      });
-      return batch.commit().then(function() { return count; });
-    });
 }
 
 /* ============================================================
@@ -3004,24 +3702,6 @@ function renderAdminView(v) {
   Promise.resolve(fn()).then(function(html) { if (html != null) $('admMain').innerHTML = html; bindAdminActions(); }).catch(function(err) { $('admMain').innerHTML = '<div class="card"><div class="fw7" style="color:var(--err)">Admin error</div><div class="hint mt-8">' + esc(err.message) + '</div></div>'; console.error(err); });
 }
 function bindAdminActions() {
-  var sweepBtn = $('sweepBtn');
-  if (sweepBtn) sweepBtn.addEventListener('click', function() {
-    sweepBtn.disabled = true; sweepBtn.textContent = 'Running…';
-    var msgEl = $('sweepMsg');
-    if (msgEl) msgEl.textContent = '';
-    runExpirySweep().then(function(n) {
-      if (msgEl) msgEl.textContent = n === 0 ? 'No expired subscriptions found.' : '✓ Expired ' + n + ' subscription(s). Data is now clean.';
-      sweepBtn.disabled = false; sweepBtn.textContent = '🧹 Run expiry sweep';
-      toast(n === 0 ? 'Nothing to expire.' : 'Expired ' + n + ' subscription(s).', 's');
-      setTimeout(function() { renderAdminView('overview'); }, 1500);
-    }).catch(function(e) {
-      console.error(e);
-      if (msgEl) msgEl.textContent = 'Error: ' + e.message;
-      sweepBtn.disabled = false; sweepBtn.textContent = '🧹 Run expiry sweep';
-      toast('Sweep failed: ' + e.message, 'e');
-    });
-  });
-
   $('admMain').onclick = function(e) {
     var planBtn = e.target.closest('[data-usr-plan]');
     if (planBtn) {
@@ -3075,21 +3755,11 @@ function adm_overview() {
       var gifts = subs.filter(function(s) { return s.tier === 'gift' && s.expiresAt && new Date(s.expiresAt) > now; });
       var postGift = users.filter(function(u) { return u.plan === 'post-gift'; });
       var lapsed = users.filter(function(u) { return u.lastPaidTier && u.plan === 'free'; });
-      var stale = subs.filter(function(s) { return s.status === 'active' && s.expiresAt && new Date(s.expiresAt) < now; });
       var proCount = paid.filter(function(s) { return s.tier === 'pro'; }).length;
       var bizCount = paid.filter(function(s) { return s.tier === 'business'; }).length;
       var todayCount = users.filter(function(u) { try { return u.createdAt && u.createdAt.toDate && u.createdAt.toDate().toDateString() === new Date().toDateString(); } catch (e) { return false; } }).length;
       var html = '<div class="ph"><div><div class="ph__t">Overview</div><div class="ph__s">Live stats</div></div></div>';
       html += '<div class="stats"><div class="stat"><div class="stat__l">Total Users</div><div class="stat__v">' + users.length + '</div></div><div class="stat"><div class="stat__l">Active Paying</div><div class="stat__v stat__v--g">' + paid.length + '</div></div><div class="stat"><div class="stat__l">On Trial</div><div class="stat__v stat__v--a">' + trials.length + '</div></div><div class="stat"><div class="stat__l">In Gift</div><div class="stat__v" style="color:var(--gold)">' + gifts.length + '</div></div><div class="stat"><div class="stat__l">Post-Gift</div><div class="stat__v">' + postGift.length + '</div></div><div class="stat"><div class="stat__l">Lapsed Payers</div><div class="stat__v text-purple">' + lapsed.length + '</div></div><div class="stat"><div class="stat__l">Pro</div><div class="stat__v">' + proCount + '</div></div><div class="stat"><div class="stat__l">Business</div><div class="stat__v">' + bizCount + '</div></div><div class="stat"><div class="stat__l">Est. MRR</div><div class="stat__v stat__v--g">' + moneyW(proCount * 2000 + bizCount * 4000) + '</div></div><div class="stat"><div class="stat__l">New Today</div><div class="stat__v">' + todayCount + '</div></div></div>';
-      html += '<div class="maintenance-card"><div class="fw7 mb-8">🧹 Maintenance · Expiry Sweep</div>';
-      if (stale.length > 0) {
-        html += '<div class="hint mb-12">⚠️ <strong>' + stale.length + ' subscription(s) have passed their end-date</strong> but are still marked active. The daily Cloud Function normally cleans these automatically. Use this manual sweep only if you want to run it now.</div>';
-      } else {
-        html += '<div class="hint mb-12">✓ Everything is clean. The daily Cloud Function keeps this tidy automatically.</div>';
-      }
-      html += '<button class="btn btn--primary btn--sm" id="sweepBtn">🧹 Run manual sweep now</button>';
-      html += '<div class="hint mt-8" id="sweepMsg"></div>';
-      html += '</div>';
       html += '<div class="card mb-16"><div class="fw7 mb-8">🎁 Gift funnel snapshot</div><div class="stat-row"><span>Users who received a gift</span><strong>' + subs.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div><div class="stat-row"><span>Currently in gift</span><strong>' + gifts.length + '</strong></div><div class="stat-row"><span>Post-gift users</span><strong>' + postGift.length + '</strong></div><div class="stat-row"><span>Converted to paid after gift</span><strong>' + paid.filter(function(s) { return s.giftStartedAt; }).length + '</strong></div></div>';
       html += '<div class="card mb-16"><div class="fw7 mb-8">🔁 Reactivation pipeline</div><div class="stat-row"><span>Lapsed payers (win-back targets)</span><strong class="text-purple">' + lapsed.length + '</strong></div><div class="stat-row"><span>Post-gift users (never paid)</span><strong>' + postGift.length + '</strong></div></div>';
       html += '<div class="card"><div class="fw7 mb-8">Recent Users</div>' + (users.slice(0, 10).map(function(u) { return '<div class="stat-row"><span>' + esc(u.email || '—') + '</span><strong>' + esc(u.plan || 'free') + (u.lastPaidTier ? ' <span class="hint">(was ' + u.lastPaidTier + ')</span>' : '') + '</strong></div>'; }).join('') || '<div class="hint">No users yet.</div>') + '</div>';
